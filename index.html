@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科二代 · 上海高考选校决策路径</title>
+<style>
+  :root {
+    --ustc: #004098;
+    --ustc-light: #e8edf6;
+    --gold: #c8972b;
+    --bg: #fafafa;
+    --card: #fff;
+    --text: #1a1a1a;
+    --text-muted: #666;
+    --border: #e5e5e5;
+    --radius: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+  }
+
+  /* Navigation */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); padding: 0 24px;
+  }
+  nav .inner { max-width: 1080px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+  nav a {
+    display: block; padding: 14px 16px; font-size: 14px; color: var(--text-muted);
+    text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: .15s;
+  }
+  nav a:hover, nav a.active { color: var(--ustc); border-bottom-color: var(--ustc); }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--ustc) 0%, #1a3a6e 40%, #0d2540 100%);
+    color: #fff; padding: 72px 24px 56px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,.06) 0%, transparent 60%);
+  }
+  .hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; position: relative; letter-spacing: .02em; }
+  .hero .subtitle { font-size: 18px; opacity: .85; margin-top: 12px; position: relative; }
+  .hero .badge {
+    display: inline-block; margin-top: 20px; padding: 6px 18px;
+    border: 1px solid rgba(255,255,255,.3); border-radius: 20px;
+    font-size: 13px; opacity: .75; position: relative;
+  }
+
+  /* Sections */
+  section { max-width: 1080px; margin: 0 auto; padding: 56px 24px; }
+  section h2 {
+    font-size: 26px; font-weight: 700; color: var(--ustc);
+    margin-bottom: 8px; padding-bottom: 16px; border-bottom: 2px solid var(--ustc-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+  section h2 .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; background: var(--ustc); color: #fff;
+    border-radius: 50%; font-size: 16px; font-weight: 700; flex-shrink: 0;
+  }
+  section h3 { font-size: 20px; margin: 32px 0 12px; color: #2c3e50; }
+  section p { margin-bottom: 12px; color: var(--text-muted); }
+
+  /* Cards */
+  .card {
+    background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 24px; margin-bottom: 16px; border: 1px solid var(--border);
+  }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  th { background: var(--ustc-light); color: var(--ustc); font-weight: 600; font-size: 13px; white-space: nowrap; }
+  tr:hover td { background: #f8f9fb; }
+  td.tag { font-size: 12px; }
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+  }
+  .tag-s { background: #e3f2fd; color: #1565c0; }
+  .tag-a { background: #e8f5e9; color: #2e7d32; }
+  .tag-b { background: #fff3e0; color: #e65100; }
+  .tag-c { background: #fce4ec; color: #c62828; }
+
+  /* Tier colors */
+  .tier-1 { border-left: 4px solid #004098; }
+  .tier-2 { border-left: 4px solid #1565c0; }
+  .tier-3 { border-left: 4px solid #42a5f5; }
+  .tier-4 { border-left: 4px solid #90caf9; }
+
+  /* Flow chart */
+  .flow { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 24px 0; }
+  .flow-step {
+    background: var(--ustc); color: #fff; padding: 12px 20px; border-radius: 8px;
+    font-weight: 600; font-size: 14px; text-align: center; min-width: 120px;
+  }
+  .flow-arrow { font-size: 20px; color: var(--ustc); font-weight: 700; }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 10px 0 10px 32px; position: relative; border-bottom: 1px solid var(--border);
+  }
+  .checklist li::before {
+    content: '☐'; position: absolute; left: 0; color: var(--ustc); font-size: 18px;
+  }
+  .checklist li.done::before { content: '☑'; color: #2e7d32; }
+
+  /* Quote */
+  blockquote {
+    border-left: 3px solid var(--gold); background: #fdfaf3; padding: 16px 20px;
+    margin: 16px 0; border-radius: 0 var(--radius) var(--radius) 0; font-style: italic;
+  }
+
+  /* Interactive */
+  .score-input-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .score-input-group input {
+    padding: 10px 16px; border: 2px solid var(--border); border-radius: 8px;
+    font-size: 16px; width: 160px; font-family: inherit;
+  }
+  .score-input-group input:focus { border-color: var(--ustc); outline: none; }
+  .score-input-group button {
+    padding: 10px 24px; background: var(--ustc); color: #fff; border: none;
+    border-radius: 8px; font-size: 16px; cursor: pointer; font-family: inherit; font-weight: 600;
+  }
+  .score-input-group button:hover { opacity: .9; }
+  .result-box { margin-top: 16px; padding: 20px; background: var(--ustc-light); border-radius: var(--radius); }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 40px 24px; color: var(--text-muted);
+    font-size: 13px; border-top: 1px solid var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    nav a { padding: 12px 10px; font-size: 12px; }
+    section { padding: 32px 16px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
+  /* Highlight */
+  .highlight { background: linear-gradient(180deg, transparent 60%, #fff3b0 60%); }
+  .num-big { font-size: 32px; font-weight: 800; color: var(--ustc); }
+  .muted { color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="inner">
+    <a href="#profile">1.科二代画像</a>
+    <a href="#tiers">2.院校分层</a>
+    <a href="#matrix">3.匹配矩阵</a>
+    <a href="#path">4.分位次路径</a>
+    <a href="#detail">5.院校详解</a>
+    <a href="#checklist">6.Checklist</a>
+    <a href="#tools">7.资源工具</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <h1>🎓 科二代 · 上海高考选校决策路径</h1>
+  <p class="subtitle">父母中科大毕业 → 上海高考 → 限定上海本地大学 → STEM优先</p>
+  <div class="badge">🏫 中国科学技术大学校友家庭 · 专属决策框架</div>
+</header>
+
+<!-- Section 1: Profile -->
+<section id="profile">
+  <h2><span class="num">1</span> 科二代身份画像与决策前提</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3 style="margin-top:0">🧬 什么是"科二代"</h3>
+      <p>父母一方或双方为中国科学技术大学（USTC）毕业生。USTC以<strong>物理、数学、计算机、化学</strong>等基础科学与工程学科见长，1958年建校，C9联盟成员，学风务实严谨。</p>
+      <p>科二代通常具备：<strong>理科基因、学术导向、务实风格、对"硬核"学科的价值认同</strong>。</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">📋 决策前提假设</h3>
+      <table>
+        <tr><td><strong>选科</strong></td><td>物化双选（覆盖 98.5% 理工专业组）</td></tr>
+        <tr><td><strong>地域</strong></td><td>限定上海本地大学（留沪偏好）</td></tr>
+        <tr><td><strong>方向</strong></td><td>STEM优先：数学/物理/CS/EE/数据/AI</td></tr>
+        <tr><td><strong>价值观</strong></td><td>重学科硬实力 > 学校虚名；重长期发展 > 短期热门</td></tr>
+        <tr><td><strong>家庭资源</strong></td><td>USTC校友网络 + 上海本地信息优势</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <blockquote>
+    <strong>科二代决策原则</strong>：在孩子兴趣与能力范围内，优先选择与 USTC 学科基因相近的专业方向——基础扎实的理科、硬核的工科、前沿的交叉学科。不盲目追逐"热门"但学科底蕴薄的专业。
+  </blockquote>
+</section>
+
+<!-- Section 2: Tiers -->
+<section id="tiers">
+  <h2><span class="num">2</span> 上海本地高校 STEM 实力分层</h2>
+  <p>限定上海本地，按 STEM 学科实力 + 综合层次分为四档。科二代重点关注 <strong>T1-T2 档</strong> 中与 USTC 基因匹配的专业组。</p>
+
+  <div class="card tier-1">
+    <h3 style="margin-top:0"><span class="tag tag-s">T1 · 顶尖</span> 复旦大学 · 上海交通大学</h3>
+    <table>
+      <tr><th>维度</th><th>复旦大学</th><th>上海交通大学</th></tr>
+      <tr><td>层次</td><td>985 / C9 / 双一流A类</td><td>985 / C9 / 双一流A类</td></tr>
+      <tr><td>STEM王牌</td><td>数学(A+)·物理(A)·CS(A-)·微电子</td><td>CS(A+)·机械(A+)·船舶(A+)·EE(A)·生物(A+)</td></tr>
+      <tr><td>与USTC基因匹配度</td><td>⭐⭐⭐⭐⭐ 基础科学+CS</td><td>⭐⭐⭐⭐⭐ 工科应用+CS</td></tr>
+      <tr><td>2025预估位次</td><td>综评/普通批 前~2000</td><td>综评/普通批 前~2000</td></tr>
+      <tr><td>科二代特别关注</td><td>数学英才班·自科试验班·微电子·AI</td><td>IEEE班·ACM班·AI班·电院·密院</td></tr>
+    </table>
+  </div>
+
+  <div class="card tier-2">
+    <h3 style="margin-top:0"><span class="tag tag-a">T2 · 优秀</span> 同济大学 · 华东师范大学</h3>
+    <table>
+      <tr><th>维度</th><th>同济大学</th><th>华东师范大学</th></tr>
+      <tr><td>层次</td><td>985 / 双一流A类</td><td>985 / 双一流A类</td></tr>
+      <tr><td>STEM王牌</td><td>土木(A+)·建筑·汽车·AI·测绘</td><td>统计学(A+)·CS(B+)·软件工程·数据科学</td></tr>
+      <tr><td>与USTC基因匹配度</td><td>⭐⭐⭐⭐ 工科硬核</td><td>⭐⭐⭐⭐ 数学/统计/CS方向</td></tr>
+      <tr><td>2025预估位次</td><td>~2000-5000</td><td>~1500-4500（统计/CS线更高）</td></tr>
+      <tr><td>科二代特别关注</td><td>智能科学与技术·车辆工程(新能源)·AI</td><td>统计学院·软件工程学院·数据学院</td></tr>
+    </table>
+  </div>
+
+  <div class="card tier-3">
+    <h3 style="margin-top:0"><span class="tag tag-b">T3 · 特色强校</span> 上海科技大学 · 华东理工大学</h3>
+    <table>
+      <tr><th>维度</th><th>上海科技大学</th><th>华东理工大学</th></tr>
+      <tr><td>层次</td><td>新型研究型（双一流）</td><td>211 / 双一流</td></tr>
+      <tr><td>STEM王牌</td><td>CS·生物·材料·物理·电子</td><td>化工(A+)·材料·生物工程·制药</td></tr>
+      <tr><td>与USTC基因匹配度</td><td>⭐⭐⭐⭐⭐ 极似"小USTC"</td><td>⭐⭐⭐ 化工/材料方向</td></tr>
+      <tr><td>2025预估位次</td><td>~3000-7000</td><td>~5000-10000</td></tr>
+      <tr><td>科二代特别关注</td><td>🌟最像USTC的上海高校：小班制·科研导向·导师制</td><td>化工/材料方向全国顶尖</td></tr>
+    </table>
+  </div>
+
+  <div class="card tier-4">
+    <h3 style="margin-top:0"><span class="tag tag-c">T4 · 保底选择</span> 上海大学 · 东华大学</h3>
+    <table>
+      <tr><th>维度</th><th>上海大学</th><th>东华大学</th></tr>
+      <tr><td>层次</td><td>211 / 双一流</td><td>211 / 双一流</td></tr>
+      <tr><td>STEM王牌</td><td>CS·机械·通信·数学</td><td>材料(A+)·纺织·服装工程</td></tr>
+      <tr><td>与USTC基因匹配度</td><td>⭐⭐⭐ 均衡工科</td><td>⭐⭐ 材料/纺织特色</td></tr>
+      <tr><td>2025预估位次</td><td>~6000-12000</td><td>~8000-15000</td></tr>
+      <tr><td>科二代特别关注</td><td>钱伟长学院·计算机学院</td><td>材料科学（纤维材料改性国重实验室）</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- Section 3: Matrix -->
+<section id="matrix">
+  <h2><span class="num">3</span> 学科方向 → 院校 → 专业组匹配矩阵</h2>
+  <p>物化双选前提下，按学科兴趣方向推荐上海院校优先级排序。</p>
+
+  <table>
+    <thead>
+      <tr><th>学科方向</th><th>🥇 第一选择</th><th>🥈 第二选择</th><th>🥉 第三选择</th><th>保底</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>数学 / 统计</strong></td>
+        <td>复旦数学英才班</td>
+        <td>华东师大统计学院</td>
+        <td>上交数学科学学院</td>
+        <td>上大理学院</td>
+      </tr>
+      <tr>
+        <td><strong>物理学</strong></td>
+        <td>复旦物理系</td>
+        <td>上交物理与天文</td>
+        <td>上科大物质学院</td>
+        <td>华东师大物理</td>
+      </tr>
+      <tr>
+        <td><strong>计算机 / AI</strong></td>
+        <td>上交电院(IEEE/ACM/AI)</td>
+        <td>复旦CS学院</td>
+        <td>同济智能科学</td>
+        <td>上科大/上大</td>
+      </tr>
+      <tr>
+        <td><strong>电子信息 / 微电子</strong></td>
+        <td>复旦微电子学院</td>
+        <td>上交电院</td>
+        <td>上科大信息学院</td>
+        <td>上大通信</td>
+      </tr>
+      <tr>
+        <td><strong>数据科学</strong></td>
+        <td>华东师大数据学院</td>
+        <td>复旦大数据学院</td>
+        <td>上交数学科学学院</td>
+        <td>上大</td>
+      </tr>
+      <tr>
+        <td><strong>化学 / 材料</strong></td>
+        <td>华东理工化工学院</td>
+        <td>复旦化学系</td>
+        <td>上交材料/化学</td>
+        <td>东华材料</td>
+      </tr>
+      <tr>
+        <td><strong>生物 / 医学</strong></td>
+        <td>上交医学院</td>
+        <td>复旦医学院</td>
+        <td>同济医学院</td>
+        <td>华东理工</td>
+      </tr>
+      <tr>
+        <td><strong>机械 / 汽车</strong></td>
+        <td>上交机械与动力</td>
+        <td>同济汽车学院</td>
+        <td>上大机电</td>
+        <td>—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <strong>科二代特别提示</strong>：上科大（上海科技大学）虽办学时间短，但其"小规模·研究型·国际化·导师制"模式与 USTC 建校初期的办学理念高度相似，是上海本地最接近"科"基因的高校，推荐重点关注。
+  </blockquote>
+</section>
+
+<!-- Section 4: Path by Rank -->
+<section id="path">
+  <h2><span class="num">4</span> 按位次分段的决策路径（核心）</h2>
+  <p>以 <strong>2025 年上海市位次</strong> 为参考基准，给出各分段推荐策略。注意 2025 年考生 ~6.3 万，位次含金量较往年略有稀释。</p>
+
+  <!-- Interactive lookup -->
+  <div class="card" style="margin-bottom:24px">
+    <h3 style="margin-top:0">🔍 快速定位：输入预估位次</h3>
+    <div class="score-input-group">
+      <input type="number" id="rankInput" placeholder="输入上海市位次（如 3500）" min="1" max="63000">
+      <button onclick="lookupRank()">查看推荐</button>
+    </div>
+    <div class="result-box" id="rankResult" style="display:none"></div>
+  </div>
+
+  <div class="card tier-1">
+    <h3 style="margin-top:0">🏆 位次 1-500：清北复交任意选</h3>
+    <p><strong>策略</strong>：综合评价批次主攻复交，零志愿冲清北。专业选择空间极大，应以<strong>兴趣和长期发展</strong>为唯一标准。</p>
+    <p><strong>科二代推荐</strong>：</p>
+    <ul class="checklist">
+      <li class="done">复旦综评：数学英才班 / 自然科学试验班 / 微电子 / CS</li>
+      <li class="done">交大综评：IEEE试点班 / ACM班 / AI班 / 电子信息类</li>
+      <li>零志愿：清华 / 北大（与科一代校友圈互补）</li>
+    </ul>
+    <p class="muted">📌 此段位考生建议"兴趣导向"——选你真正想深耕的方向，而非"最热门"的方向。你已经有资格定义什么是好专业了。</p>
+  </div>
+
+  <div class="card tier-1">
+    <h3 style="margin-top:0">🥇 位次 500-2000：复交普通批 + 综评双保险</h3>
+    <p><strong>策略</strong>：综评+普通批双线作战。综评保复交录取机会，普通批用于专业保底。此段位是竞争最激烈的区间。</p>
+    <p><strong>科二代推荐</strong>：</p>
+    <table>
+      <tr><th>策略</th><th>院校专业组</th><th>说明</th></tr>
+      <tr><td>综评冲</td><td>复交综评（不限专业组）</td><td>面试权重高，综合素质是关键</td></tr>
+      <tr><td>普通批稳</td><td>复交物化组 → 同济AI/智能 → 华东师大统计</td><td>按位次梯度排列</td></tr>
+      <tr><td>提前批</td><td>复交医学院 / 同济</td><td>有医学兴趣可考虑</td></tr>
+    </table>
+    <p class="muted">📌 此段位最忌"综评孤注一掷"，建议普通批做好完整梯度。</p>
+  </div>
+
+  <div class="card tier-2">
+    <h3 style="margin-top:0">🥈 位次 2000-5000：同济/华师大 + 上科大黄金区间</h3>
+    <p><strong>策略</strong>：复交普通批"冲一冲"（物化组个别专业组可能够到），主战场在<strong>同济、华东师大、上科大</strong>。</p>
+    <p><strong>科二代推荐</strong>：</p>
+    <table>
+      <tr><th>策略</th><th>院校专业组</th><th>说明</th></tr>
+      <tr><td>冲</td><td>复交末位专业组 / 同济AI实验班</td><td>位次边缘可尝试</td></tr>
+      <tr><td>稳</td><td>同济智能科学·车辆工程 / 华东师大统计·CS·软件</td><td>核心战场</td></tr>
+      <tr><td>稳</td><td>上科大 CS / 电子信息 / 材料</td><td>🌟科二代重点推荐</td></tr>
+      <tr><td>保</td><td>华东理工化工 / 上大钱伟长学院</td><td>确保不滑档</td></tr>
+    </table>
+    <p class="muted">📌 此段位是科二代"最优性价比"区间——同济的硬核工科、华师大的统计CS、上科大的科研导向，均与USTC基因高度匹配。</p>
+  </div>
+
+  <div class="card tier-3">
+    <h3 style="margin-top:0">🥉 位次 5000-10000：华东理工 / 上科大 / 上大</h3>
+    <p><strong>策略</strong>：上述三校为主战场，同济/华师大个别专业组可冲。</p>
+    <table>
+      <tr><th>策略</th><th>院校专业组</th><th>说明</th></tr>
+      <tr><td>冲</td><td>同济/华师大偏冷门专业组</td><td>位次边缘</td></tr>
+      <tr><td>稳</td><td>上科大物化组 / 华东理工化工·材料·制药</td><td>核心战场</td></tr>
+      <tr><td>稳</td><td>上大计算机·通信·数学</td><td>性价比高</td></tr>
+      <tr><td>保</td><td>东华材料 / 上大其他工科</td><td>确保录取</td></tr>
+    </table>
+    <p class="muted">📌 此段位上科大是最优解——科研导向、小班教学、导师制，与USTC本科教育理念最近似。</p>
+  </div>
+
+  <div class="card tier-4">
+    <h3 style="margin-top:0">📌 位次 10000+：上大/东华 + 中外合作选项</h3>
+    <p><strong>策略</strong>：以上大、东华为基本盘，考虑中外合作办学项目获取额外资源。</p>
+    <table>
+      <tr><th>策略</th><th>院校专业组</th><th>说明</th></tr>
+      <tr><td>稳</td><td>上大工科 / 东华材料</td><td>211保底</td></tr>
+      <tr><td>保</td><td>上大中外合作 / 其他市属院校</td><td>确保有学上</td></tr>
+    </table>
+    <p class="muted">📌 此段位关注上大计算机学院的就业导向优势——上海本地IT企业对上大CS认可度高。</p>
+  </div>
+</section>
+
+<!-- Section 5: Detail -->
+<section id="detail">
+  <h2><span class="num">5</span> 重点院校专业组详解（科二代视角）</h2>
+
+  <div class="card tier-1">
+    <h3 style="margin-top:0">🔬 复旦大学 —— 基础科学的南方重镇</h3>
+    <table>
+      <tr><th>专业组/学院</th><th>核心方向</th><th>科二代推荐度</th><th>备注</th></tr>
+      <tr><td>数学科学学院</td><td>数学与应用数学·信息与计算科学</td><td>⭐⭐⭐⭐⭐</td><td>A+学科，与USTC数学系基因最近</td></tr>
+      <tr><td>物理学系</td><td>物理学·核物理</td><td>⭐⭐⭐⭐⭐</td><td>理论物理强，契合科二代理科偏好</td></tr>
+      <tr><td>微电子学院</td><td>微电子科学与工程</td><td>⭐⭐⭐⭐⭐</td><td>国家示范性微电子学院，芯片方向</td></tr>
+      <tr><td>计算机科学技术学院</td><td>CS·AI·信息安全</td><td>⭐⭐⭐⭐</td><td>上升势头强，上海IT圈核心圈层</td></tr>
+      <tr><td>大数据学院</td><td>数据科学与大数据技术</td><td>⭐⭐⭐⭐</td><td>新兴学院，交叉学科</td></tr>
+      <tr><td>自然科学试验班</td><td>物理·化学·生物·材料</td><td>⭐⭐⭐⭐</td><td>大类招生，大二分流</td></tr>
+    </table>
+    <p class="muted">📌 科一代如为物理/数学方向，复旦是上海最接近USTC基因的综合性大学。</p>
+  </div>
+
+  <div class="card tier-1">
+    <h3 style="margin-top:0">⚙️ 上海交通大学 —— 工科应用的东方MIT</h3>
+    <table>
+      <tr><th>专业组/学院</th><th>核心方向</th><th>科二代推荐度</th><th>备注</th></tr>
+      <tr><td>电子信息与电气工程学院</td><td>CS·EE·自动化·AI·微电子</td><td>⭐⭐⭐⭐⭐</td><td>上交第一大院，方向全覆盖</td></tr>
+      <tr><td>IEEE试点班</td><td>EE/CS精英班</td><td>⭐⭐⭐⭐⭐</td><td>全英文授课，国际对标</td></tr>
+      <tr><td>ACM班</td><td>计算机科学精英班</td><td>⭐⭐⭐⭐⭐</td><td>俞勇教授创办，竞赛/科研导向</td></tr>
+      <tr><td>人工智能学院</td><td>AI·机器学习·CV·NLP</td><td>⭐⭐⭐⭐⭐</td><td>新兴独立学院，资源集中</td></tr>
+      <tr><td>机械与动力工程学院</td><td>机械工程·能源·机器人</td><td>⭐⭐⭐⭐</td><td>A+学科，传统工科强项</td></tr>
+      <tr><td>密西根学院</td><td>EE·CS·ME（中美双学位）</td><td>⭐⭐⭐⭐</td><td>全英文，出国导向，学费高</td></tr>
+      <tr><td>数学科学学院</td><td>数学·统计</td><td>⭐⭐⭐⭐</td><td>近年上升快</td></tr>
+    </table>
+    <p class="muted">📌 科一代如为工科/CS方向，上交是上海最优选择。IEEE/ACM/AI三班的选拔竞争极为激烈。</p>
+  </div>
+
+  <div class="card tier-2">
+    <h3 style="margin-top:0">🏗️ 同济大学 —— 硬核工科的德国基因</h3>
+    <table>
+      <tr><th>专业组</th><th>核心方向</th><th>科二代推荐度</th></tr>
+      <tr><td>智能科学与技术</td><td>AI·自动化·机器人·智能建造</td><td>⭐⭐⭐⭐⭐ 最推荐</td></tr>
+      <tr><td>车辆工程（新能源）</td><td>智能汽车·新能源·自动驾驶</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td>土木工程</td><td>智能建造·地下空间</td><td>⭐⭐⭐（行业下行，需慎重）</td></tr>
+      <tr><td>测绘与地理信息</td><td>遥感·GIS·导航</td><td>⭐⭐⭐</td></tr>
+      <tr><td>中德工程学院</td><td>机械·电子（中德双学位）</td><td>⭐⭐⭐</td></tr>
+    </table>
+    <p class="muted">📌 同济的王牌正在从传统土木向"智能+X"转型，智能科学与技术是科二代最应关注的方向。</p>
+  </div>
+
+  <div class="card tier-2">
+    <h3 style="margin-top:0">📊 华东师范大学 —— 被低估的STEM力量</h3>
+    <table>
+      <tr><th>专业组</th><th>核心方向</th><th>科二代推荐度</th></tr>
+      <tr><td>统计学院</td><td>统计学·保险精算·生物统计</td><td>⭐⭐⭐⭐⭐ A+学科，全国前三</td></tr>
+      <tr><td>软件工程学院</td><td>软件工程·云计算·可信计算</td><td>⭐⭐⭐⭐⭐ 何积丰院士领衔</td></tr>
+      <tr><td>数据科学与工程学院</td><td>数据科学·大数据·数据库</td><td>⭐⭐⭐⭐⭐ 周傲英教授团队</td></tr>
+      <tr><td>计算机科学与技术学院</td><td>CS·AI·NLP</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td>数学科学学院</td><td>数学·应用数学</td><td>⭐⭐⭐⭐</td></tr>
+    </table>
+    <p class="muted">📌 很多科二代不了解华东师大的STEM实力——统计学A+全国前三，软院/数据学院在沪上互联网圈的认可度极高，是"被名字耽误的工科强校"。</p>
+  </div>
+
+  <div class="card tier-3">
+    <h3 style="margin-top:0">🌟 上海科技大学 —— 最像"科"的上海高校</h3>
+    <table>
+      <tr><th>特征</th><th>细节</th></tr>
+      <tr><td>创办</td><td>2013年，上海市政府与中国科学院共建</td></tr>
+      <tr><td>模式</td><td>小规模（本科年招~500人）·研究型·导师制·国际化</td></tr>
+      <tr><td>学院</td><td>物质·生命·信息·创管·创艺·数学·生医工</td></tr>
+      <tr><td>科研</td><td>本科生即进实验室；大科学装置（光源·活细胞·超强激光）</td></tr>
+      <tr><td>深造</td><td>80%+ 继续深造，大量去往海外top PhD</td></tr>
+      <tr><td>与USTC相似点</td><td>理科导向·小而精·科研氛围浓·师生比高·录取分逐年攀升</td></tr>
+    </table>
+    <blockquote>
+      <strong>科二代对上科大的评价框架</strong>：如果把USTC比作"合肥的Caltech"，上科大就是"上海的迷你版"——同样中科院背景、同样研究导向、同样小而精。对于位次3000-7000的科二代，上科大可能是性价比最高的选择。
+    </blockquote>
+  </div>
+</section>
+
+<!-- Section 6: Checklist -->
+<section id="checklist">
+  <h2><span class="num">6</span> 科二代决策 Checklist</h2>
+  <p>从高三上学期到志愿提交，逐项打勾确认。</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">📅 高三上学期 · 准备期</h3>
+    <ul class="checklist">
+      <li>确认选科组合（物化双选 = 全覆盖理工专业组）</li>
+      <li>了解各校强基计划/综合评价的报名条件与时间节点</li>
+      <li>初步圈定目标院校范围（T1-T3 中 3-5 所）</li>
+      <li>与科一代深度沟通：USTC校友圈内对各校的真实评价</li>
+    </ul>
+
+    <h3>📅 高三下学期（6月前）· 信息收集期</h3>
+    <ul class="checklist">
+      <li>关注上海教育考试院公众号，获取最新政策推送</li>
+      <li>下载上一年《各专业录取人数及考分》，建立位次对标表</li>
+      <li>参加目标院校的校园开放日 / 线上宣讲</li>
+      <li>与孩子深入讨论兴趣方向：基础科学 vs 工程应用 vs 交叉学科</li>
+    </ul>
+
+    <h3>📅 6月9日-22日 · 出分前窗口</h3>
+    <ul class="checklist">
+      <li>熟悉志愿辅助填报系统（fzzytb.shmeea.edu.cn），模拟填报</li>
+      <li>利用阳光志愿系统进行个性化筛选</li>
+      <li>准备综评面试材料（如报名了综评）</li>
+      <li>与孩子预估分数区间，制定 A/B/C 三套预案</li>
+    </ul>
+
+    <h3>📅 6月23日-7月1日 · 核心决策期（10天）</h3>
+    <ul class="checklist">
+      <li>出分后立即获取准确位次</li>
+      <li>根据位次确定主攻院校档位（参考第4章分位次路径）</li>
+      <li>核对选科与目标专业组的匹配关系（系统自动校验，但人工确认）</li>
+      <li>排列志愿梯度：冲（1-2个）→ 稳（核心3-4个）→ 保（1-2个）</li>
+      <li>参加 6月24-25日网上咨询，向招办确认关键问题</li>
+      <li>科一代利用校友网络交叉验证关键信息</li>
+      <li><strong>确认"是否服从专业调剂"的每个志愿选择</strong>（不服从=退档风险）</li>
+      <li>最终方案全家共识确认</li>
+    </ul>
+
+    <h3>📅 7月1-2日 · 正式提交</h3>
+    <ul class="checklist">
+      <li>在系统开放时间内提交（每天8:00-17:00）</li>
+      <li>截图保存提交确认页面</li>
+      <li><strong>绝不等到最后1小时提交</strong>（系统拥堵风险）</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">⚠️ 科二代最易犯的5个错误</h3>
+    <table>
+      <tr><th>#</th><th>错误</th><th>正确做法</th></tr>
+      <tr><td>1</td><td>过度自信，全部填"冲"，无保底</td><td>必须设1-2个绝对安全的保底志愿</td></tr>
+      <tr><td>2</td><td>只看分数不看位次，跨年直接比较</td><td>位次是唯一可比锚点，分数每年波动</td></tr>
+      <tr><td>3</td><td>认为"不服从调剂也没关系"</td><td>不服从=进档后退档=直接滑入征求志愿</td></tr>
+      <tr><td>4</td><td>综评孤注一掷，普通批不认真填</td><td>综评不确定性高，普通批同样重要</td></tr>
+      <tr><td>5</td><td>用"USTC当年我怎么报的"套用上海新高考</td><td>院校专业组+平行志愿与30年前完全不同</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- Section 7: Tools -->
+<section id="tools">
+  <h2><span class="num">7</span> 资源与工具</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3 style="margin-top:0">🏛️ 官方平台</h3>
+      <table>
+        <tr><td><strong>上海招考热线</strong></td><td><a href="https://www.shmeea.edu.cn" target="_blank">shmeea.edu.cn</a></td></tr>
+        <tr><td><strong>志愿辅助填报系统</strong></td><td>fzzytb.shmeea.edu.cn（6月16日开放）</td></tr>
+        <tr><td><strong>阳光志愿系统</strong></td><td><a href="https://gaokao.chsi.com.cn/zyck/zy/" target="_blank">gaokao.chsi.com.cn</a></td></tr>
+        <tr><td><strong>公众号</strong></td><td>微信搜"上海市教育考试院"</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">📚 官方指导书</h3>
+      <table>
+        <tr><td>①</td><td>《上海高考指南》（政策+规则）</td></tr>
+        <tr><td>②</td><td>《招生专业目录》（当年计划）</td></tr>
+        <tr><td>③</td><td>《各专业录取人数及考分》（历史位次）</td></tr>
+      </table>
+      <p class="muted">三本书≈完整决策数据集</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">🎓 科二代专属资源</h3>
+      <table>
+        <tr><td><strong>USTC上海校友会</strong></td><td>各高校/行业校友分布，可咨询真实就读体验</td></tr>
+        <tr><td><strong>校友子女升学经验</strong></td><td>联系已有子女在上海就读大学的科大校友</td></tr>
+        <tr><td><strong>各校招生组科大校友</strong></td><td>复旦/交大/同济招办中可能有科大毕业的老师</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">📞 关键时间节点速查（2026年预估，以官方发布为准）</h3>
+    <div class="flow" style="flex-wrap:wrap; justify-content:center">
+      <div class="flow-step">6月7-9日<br>高考</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">6月13日<br>阳光志愿上线</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">6月16日<br>辅助系统开放</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background:#c8972b">6月23日<br>⭐出分</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">6月24-25日<br>网上咨询</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step" style="background:#c0392b">7月1-2日<br>🔥提交</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">7月5日起<br>录取</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>科二代 · 上海高考选校决策路径 v1.0 | 2026年5月 | 基于2025年招生数据分析</p>
+  <p style="margin-top:8px">数据来源：上海市教育考试院 · 阳光高考平台 · 各校招生网 | 仅供决策参考，请以当年官方发布为准</p>
+  <p style="margin-top:8px;opacity:.6">Made with ❤️ for USTC families in Shanghai</p>
+</footer>
+
+<script>
+function lookupRank() {
+  const rank = parseInt(document.getElementById('rankInput').value);
+  const box = document.getElementById('rankResult');
+  if (!rank || rank < 1) { box.style.display='none'; return; }
+
+  let tier, strategy, schools;
+  if (rank <= 500) {
+    tier = '🏆 顶尖段位';
+    strategy = '复交综评任意选，专业以兴趣为唯一标准。';
+    schools = '复旦数学英才班/物理/微电子 · 交大IEEE/ACM/AI班 · 零志愿清北';
+  } else if (rank <= 2000) {
+    tier = '🥇 第一梯队';
+    strategy = '综评+普通批双线。综评冲复交，普通批做好完整梯度。';
+    schools = '复交物化组 → 同济智能科学 → 华东师大统计/CS';
+  } else if (rank <= 5000) {
+    tier = '🥈 第二梯队 · 科二代黄金区间';
+    strategy = '复交末位专业组可冲，主战场在同济/华师大/上科大。';
+    schools = '同济智能科学·车辆工程 · 华东师大统计·CS·软件 · 上科大CS·电子信息';
+  } else if (rank <= 10000) {
+    tier = '🥉 第三梯队';
+    strategy = '同济/华师大可冲，华东理工/上科大/上大为稳健选择。';
+    schools = '上科大物化组 · 华东理工化工·材料 · 上大CS·通信·数学';
+  } else {
+    tier = '📌 保底梯队';
+    strategy = '上大/东华为基本盘，关注中外合作项目。';
+    schools = '上大工科·中外合作 · 东华材料 · 其他市属院校';
+  }
+
+  box.style.display = 'block';
+  box.innerHTML = `
+    <p><strong>${tier}</strong>（位次 ~${rank.toLocaleString()}）</p>
+    <p style="margin-top:8px"><strong>策略：</strong>${strategy}</p>
+    <p style="margin-top:4px"><strong>推荐院校专业组：</strong>${schools}</p>
+    <p class="muted" style="margin-top:8px">⚠️ 此为基于2025年数据的估算，仅供参考。最终决策请结合当年位次与招生计划。</p>
+  `;
+}
+</script>
+
+</body>
+</html>
