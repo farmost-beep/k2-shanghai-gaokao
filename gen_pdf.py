@@ -37,47 +37,32 @@ print(f"Using font: {stheit_path}")
 # ── Cleaners ──
 
 def clean_text(text):
-    """Remove emoji-only ranges, preserve all CJK and ASCII."""
-    # Only strip actual emoji ranges
+    """Remove true emoji only (U+1Fxxx range). Keep all CJK, symbols, and ★."""
+    # Step 1: replace specific symbols BEFORE emoji cleanup
+    text = text.replace('☑', '[v]')    # keep ballot box with check
+    text = text.replace('☐', '[ ]')    # ballot box
+    text = text.replace('✔', '[v]')    # check mark
+    text = text.replace('✖', 'x')      # heavy multiplication x
+    text = text.replace('⚙', '')       # gear
+    text = text.replace('⭐', '')       # star (emoji-style)
+    text = text.replace('✅', '')       # white heavy check mark
+
+    # Step 2: Remove only TRUE emoji (Supplementary Multilingual Plane U+1F000+)
+    # These are pictographic emoji that Chinese fonts often lack
     emoji_ranges = [
-        (0x1F600, 0x1F64F), (0x1F300, 0x1F5FF), (0x1F680, 0x1F6FF),
-        (0x1F1E0, 0x1F1FF), (0x1F900, 0x1F9FF), (0x1FA00, 0x1FA6F),
-        (0x1FA70, 0x1FAFF), (0xFE00, 0xFE0F), (0x200D, 0x200D),
+        (0x1F600, 0x1F64F),  # Emoticons
+        (0x1F300, 0x1F5FF),  # Misc Symbols and Pictographs
+        (0x1F680, 0x1F6FF),  # Transport and Map
+        (0x1F1E0, 0x1F1FF),  # Regional Indicators (flags)
+        (0x1F900, 0x1F9FF),  # Supplemental Symbols
+        (0x1FA00, 0x1FA6F),  # Chess Symbols
+        (0x1FA70, 0x1FAFF),  # Symbols Extended-A
+        (0xFE00, 0xFE0F),    # Variation Selectors
+        (0x200D, 0x200D),    # Zero-Width Joiner
     ]
     for lo, hi in emoji_ranges:
         text = re.sub(f'[\\U{lo:08X}-\\U{hi:08X}]', '', text)
-    # Replace specific symbols
-    text = text.replace('★', '*')      # ★
-    text = text.replace('☑', '[v]')    # ☑
-    text = text.replace('☐', '[ ]')    # ☐
-    text = text.replace('✔', '[v]')    # ✔
-    text = text.replace('✖', 'x')      # ✖
-    text = text.replace('⚙', '')       # ⚙
-    text = text.replace('⭐', '')       # ⭐
-    text = text.replace('✅', '')       # ✅
-    text = text.replace('➕', '+')      # ➕
-    text = text.replace('➖', '-')      # ➖
-    text = text.replace('⬆', '^')      # ⬆
-    text = text.replace('⬇', 'v')      # ⬇
-    text = text.replace('▶', '>')      # ▶
-    text = text.replace('◀', '<')      # ◀
-    text = text.replace('■', '*')      # ■
-    text = text.replace('□', '[ ]')    # □
-    text = text.replace('●', '*')      # ●
-    text = text.replace('○', '*')      # ○
-    text = text.replace('◆', '*')      # ◆
-    text = text.replace('◇', '*')      # ◇
-    text = text.replace('☀', '')       # ☀
-    text = text.replace('☁', '')       # ☁
-    text = text.replace('⚠', '')       # ⚠
-    text = text.replace('❗', '!')      # ❗
-    text = text.replace('→', '->')     # →
-    text = text.replace('←', '<-')     # ←
-    text = text.replace('⇒', '=>')     # ⇒
-    text = text.replace('⇐', '<=')     # ⇐
-    text = text.replace('↔', '<->')    # ↔
-    text = text.replace('↩', '<')      # ↩
-    text = text.replace('↪', '>')      # ↪
+
     return text
 
 def strip_markdown(text):
@@ -215,8 +200,8 @@ def build_pdf(output_path):
             # Parse table row cells
             cells = [c.strip() for c in line.strip("|").split("|")]
             cells = [strip_markdown(clean_text(c)) for c in cells]
-            cells = [c for c in cells if c]  # remove empty
-            if cells:
+            # Keep empty cells to preserve column structure
+            if cells and any(c for c in cells):
                 table_rows.append(cells)
             continue
         else:
