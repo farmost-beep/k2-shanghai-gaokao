@@ -463,8 +463,8 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
         </tr>
         <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
           <td style="padding:6px 8px;font-weight:600">校友加成</td>
-          <td style="padding:6px 8px;text-align:center">15</td>
-          <td style="padding:6px 8px;font-size:11px">仅中科大(父母母校) +15，其他=0。计入总分上限100</td>
+          <td style="padding:6px 8px;text-align:center">0-15（可调）</td>
+          <td style="padding:6px 8px;font-size:11px">仅中科大(父母母校) 可调0-15，默认15。结果页滑块可即时调整</td>
         </tr>
         <tr style="border-bottom:1px solid var(--border)">
           <td style="padding:6px 8px;font-weight:600">C9加成</td>
@@ -656,7 +656,7 @@ let state = {
   subject: null,
   location: null,
   plan: null,
-  ustcWeight: 15,    // 校友身份重视度 0-30 (默认15)
+  ustcWeight: 15,    // 校友身份重视度 0-15 (默认15)
   currentStep: 0,
   results: []
 };
@@ -853,11 +853,11 @@ function generateResults() {
     score += strengthScore;
     breakdown.实力 = { score: strengthScore, max: 10 };
 
-    // ── (6) USTC 校友加成 ── 可调权重 0-30
+    // ── (6) USTC 校友加成 ── 可调权重 0-15
     const uw = state.ustcWeight || 15;
     let ustcScore = (s.id === 'ustc') ? uw : 0;
     score += ustcScore;
-    if (ustcScore) breakdown.校友 = { score: uw, max: 30 };
+    if (ustcScore) breakdown.校友 = { score: uw, max: 15 };
 
     // ── (7) C9 加成 0-5 ──
     let c9Score = s.c9 ? 5 : 0;
@@ -966,7 +966,7 @@ function renderResults() {
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span style="font-weight:600;color:var(--ustc);white-space:nowrap">校友身份重视度</span>
         <span style="font-size:11px;color:var(--text-muted)">不考虑</span>
-        <input type="range" id="ustcSlider" min="0" max="30" value="${uw}" step="1"
+        <input type="range" id="ustcSlider" min="0" max="15" value="${uw}" step="1"
           style="flex:1;min-width:120px;max-width:200px;accent-color:var(--ustc)"
           oninput="updateUstcWeight(this.value)">
         <span style="font-size:11px;color:var(--text-muted)">非常重要</span>
