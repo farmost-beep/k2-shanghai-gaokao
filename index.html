@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="format-detection" content="telephone=no">
-<title>科二代 · 高考选校个人定制</title>
+<title>科二代 · 高考选校个人定制（模拟）</title>
 <style>
 :root {
   --ustc: #004098; --ustc-light: #e8edf6; --ustc-dark: #0d2540;
@@ -420,6 +420,104 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
   </div>
 </div>
 
+<!-- ================================ ALGORITHM REFERENCE ================================ -->
+<div class="guide-section" style="max-width:800px;margin:0 auto;padding:0 16px 24px">
+  <button class="guide-toggle" onclick="toggleAlgo()">评分算法参考（权重公示）</button>
+  <div class="guide-content" id="algoContent">
+    <div class="wizard-card" style="margin-top:12px">
+      <h3 style="font-size:15px;color:var(--ustc);margin-bottom:8px">推荐引擎 7因子评分模型</h3>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px">
+        总分上限 <strong>100分</strong>，由 7 个维度加权求和。每校每项得分在结果卡片中通过进度条可视化展示。
+      </p>
+
+      <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px">
+        <tr style="background:var(--ustc);color:#fff">
+          <th style="padding:6px 8px;text-align:left">因子</th>
+          <th style="padding:6px 8px;text-align:center">权重</th>
+          <th style="padding:6px 8px;text-align:left">评分逻辑</th>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">位次匹配</td>
+          <td style="padding:6px 8px;text-align:center">30</td>
+          <td style="padding:6px 8px;font-size:11px">用户位次距该校录取区间中心的距离。在区间内=高分(21-30)，略超=中等(15-20)，远离=保底分(8-14)</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
+          <td style="padding:6px 8px;font-weight:600">学科方向</td>
+          <td style="padding:6px 8px;text-align:center">25</td>
+          <td style="padding:6px 8px;font-size:11px">该校对所选学科的推荐度(1-5星) x 5。无对应学科=4分，选"不限"=13分</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">地域偏好</td>
+          <td style="padding:6px 8px;text-align:center">15</td>
+          <td style="padding:6px 8px;font-size:11px">留沪+上海校=15，留沪+C9异地=8~14(距离折扣)，C9优先+C9校=15，中立=8</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
+          <td style="padding:6px 8px;font-weight:600">未来规划</td>
+          <td style="padding:6px 8px;text-align:center">15</td>
+          <td style="padding:6px 8px;font-size:11px">深造导向=深造率归一化得分(0-15)，就业导向=实习评分x3(3-15)，未定=8</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">综合实力</td>
+          <td style="padding:6px 8px;text-align:center">10</td>
+          <td style="padding:6px 8px;font-size:11px">每校strengthScore(1-10)直接得分。清北=10，复交浙科=9，同济华师=7，华理=5，上大=4</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
+          <td style="padding:6px 8px;font-weight:600">校友加成</td>
+          <td style="padding:6px 8px;text-align:center">15</td>
+          <td style="padding:6px 8px;font-size:11px">仅中科大(父母母校) +15，其他=0。计入总分上限100</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:6px 8px;font-weight:600">C9加成</td>
+          <td style="padding:6px 8px;text-align:center">5</td>
+          <td style="padding:6px 8px;font-size:11px">C9联盟成员 +5，非C9=0</td>
+        </tr>
+      </table>
+
+      <div style="background:var(--ustc-light);border-radius:8px;padding:10px 14px;font-size:12px;margin-top:8px">
+        <strong style="color:var(--ustc)">总分公式：</strong>
+        位次(0-30) + 学科(0-25) + 地域(0-15) + 规划(0-15) + 实力(0-10) + 校友(0/15) + C9(0/5)，
+        上限100分。
+        <span style="color:var(--text-muted);display:block;margin-top:4px">
+        冲刺/稳妥/保底判定独立于总分，基于位次与该校录取区间的关系。
+        </span>
+      </div>
+    </div>
+
+    <div class="wizard-card" style="margin-top:12px">
+      <h3 style="font-size:15px;color:var(--ustc);margin-bottom:8px">16校多维指标总表</h3>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
+        每校数据源：2025年上海录取位次 + 学科评估 + 招生简章。通道=[零志愿/综评/普通批/强基]
+      </p>
+      <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:10px">
+        <tr style="background:var(--ustc);color:#fff">
+          <th style="padding:4px 6px">院校</th>
+          <th style="padding:4px 6px">Tier</th>
+          <th style="padding:4px 6px">位次区间</th>
+          <th style="padding:4px 6px">招录通道</th>
+          <th style="padding:4px 6px">实力</th>
+          <th style="padding:4px 6px">深造率</th>
+          <th style="padding:4px 6px">实习</th>
+        </tr>
+        ${SCHOOLS.map(s => `
+        <tr style="border-bottom:1px solid var(--border)">
+          <td style="padding:4px 6px;font-weight:600">${s.name}</td>
+          <td style="padding:4px 6px;text-align:center">${s.tier}</td>
+          <td style="padding:4px 6px;text-align:center">${s.rankMin}-${s.rankMax}</td>
+          <td style="padding:4px 6px;font-size:9px">${s.channels || '-'}</td>
+          <td style="padding:4px 6px;text-align:center">${s.strengthScore}/10</td>
+          <td style="padding:4px 6px;text-align:center">${s.gradRate || '-'}</td>
+          <td style="padding:4px 6px;text-align:center">${'★'.repeat(s.internshipScore||0)}</td>
+        </tr>`).join('')}
+      </table>
+      </div>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:6px">
+        实习评分: 1-2偏弱(外地非一线) / 3一般 / 4丰富(一线+产业生态) / 5极丰富(上海/北京/深圳)
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- ================================ REFERENCE GUIDE ================================ -->
 <div class="guide-section">
   <button class="guide-toggle" onclick="toggleGuide()">参考指南（完整版8章）</button>
@@ -443,61 +541,113 @@ const PLAN_NAMES = { grad: '继续深造', job: '本科就业', undecided: '尚�
 const LOC_SH = { sh: '沪', bj: '京', hf: '合肥', hz: '杭州', nj: '南京', hrb: '哈尔滨', xa: '西安' };
 const LOC_COLOR = { sh: 'sh', bj: 'bj', hf: 'hf', hz: 'hz', nj: 'nj', hrb: 'hrb', xa: 'xa' };
 
+/* ── 16校多维指标数据 ──
+   每校含：录取位次区间、学科推荐度、招生通道、综合评分
+   学科 recommend: 1=不推荐 2=一般 3=可选 4=推荐 5=王牌 */
+
 const SCHOOLS = [
-  // T0
-  { id:'thu', name:'清华大学', tier:'T0', loc:'bj', c9:true, rankMin:1, rankMax:150,
-    subjects:{cs:{majors:'CS/EE/AI/工程',recommend:5}, ee:{majors:'EE/微电子',recommend:5}, mech:{majors:'机械/力学',recommend:5}, elec:{majors:'电气',recommend:4}},
-    strength:'工科顶尖，C9顶端', desc:'清华工科全国第一，与USTC工科基因高度匹配。零志愿批次。' },
-  { id:'pku', name:'北京大学', tier:'T0', loc:'bj', c9:true, rankMin:1, rankMax:150,
-    subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}, data:{majors:'数据科学',recommend:4}},
-    strength:'理科顶尖，C9顶端', desc:'北大理科全国第一，与USTC理科基因最匹配。零志愿批次。' },
-  // T1 - SH
-  { id:'fudan', name:'复旦大学', tier:'T1', loc:'sh', c9:true, rankMin:1, rankMax:2200,
-    subjects:{math:{majors:'数学英才班(A+)',recommend:5}, phys:{majors:'物理学系',recommend:5}, cs:{majors:'CS学院',recommend:4}, ee:{majors:'微电子学院(国家级)',recommend:5}, data:{majors:'大数据学院',recommend:4}, chem:{majors:'化学系',recommend:4}, bio:{majors:'医学院',recommend:5}},
-    strength:'基础科学强校，上海最优', desc:'复旦数学/物理基础科学顶尖，微电子为国家示范学院。上海综评通道。' },
-  { id:'sjtu', name:'上海交通大学', tier:'T1', loc:'sh', c9:true, rankMin:1, rankMax:2200,
-    subjects:{cs:{majors:'IEEE/ACM/AI学院',recommend:5}, ee:{majors:'电院',recommend:5}, mech:{majors:'机动学院',recommend:5}, elec:{majors:'电院电气',recommend:4}, data:{majors:'数据科学',recommend:4}, bio:{majors:'医学院(顶尖)',recommend:5}},
-    strength:'工科应用强校，上海最优', desc:'上交CS/EE/机械均为全国顶尖，ACM班精英培养。上海综评通道。' },
-  // T1 - C9 out of SH
-  { id:'ustc', name:'中国科学技术大学', tier:'T1', loc:'hf', c9:true, rankMin:1, rankMax:1800,
-    subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}},
-    strength:'基础科学殿堂，父母母校', desc:'100%自由转专业，全员导师制，科研门槛低。科二代基因完美匹配。父母母校，校友圈直通。' },
-  { id:'zju', name:'浙江大学', tier:'T1', loc:'hz', c9:true, rankMin:1, rankMax:2200,
-    subjects:{cs:{majors:'CS(A+)/光工(A+)/控制(A+)',recommend:5}, ee:{majors:'信息大类',recommend:4}, data:{majors:'数据科学',recommend:4}, mech:{majors:'机械/控制',recommend:4}, bio:{majors:'医学院',recommend:4}},
-    strength:'CS/工科极强，杭州互联网生态', desc:'CS与上交持平/略优。高铁1小时回沪。杭州阿里/蚂蚁/网易实习资源丰富。' },
-  { id:'nju', name:'南京大学', tier:'T1', loc:'nj', c9:true, rankMin:1, rankMax:2000,
-    subjects:{phys:{majors:'物理(A+)/天文(A+)',recommend:5}, math:{majors:'数学(A-)',recommend:4}, cs:{majors:'CS(A+)',recommend:5}},
-    strength:'基础科学底蕴深厚', desc:'物理A+/天文A+全国顶尖，CS新晋A+。理科基因与USTC最接近的非母校C9。高铁1.5h回沪。' },
-  // T2
-  { id:'tongji', name:'同济大学', tier:'T2', loc:'sh', c9:false, rankMin:2000, rankMax:5500,
-    subjects:{cs:{majors:'智能科学与技术',recommend:5}, mech:{majors:'车辆工程(新能源)',recommend:4}, elec:{majors:'电气/能源',recommend:3}},
-    strength:'工科硬核+上海985', desc:'土木(A+)建筑传统强势，AI/智能科学上升迅速。上海985，留沪最优工科选择之一。' },
-  { id:'ecnu', name:'华东师范大学', tier:'T2', loc:'sh', c9:false, rankMin:1500, rankMax:5000,
-    subjects:{math:{majors:'统计学院(A+)',recommend:5}, cs:{majors:'软件工程',recommend:4}, data:{majors:'数据学院',recommend:5}},
-    strength:'统计/数据科学被低估', desc:'统计学A+全国顶尖，数据学院新兴强势。被名字耽误的工科强校。' },
-  { id:'hitsz', name:'哈工大(深圳)', tier:'T2', loc:'sz', c9:true, rankMin:3000, rankMax:6000,
-    subjects:{cs:{majors:'计算机',recommend:4}, mech:{majors:'机械/控制(A+)',recommend:5}},
-    strength:'C9工科+深圳地域', desc:'哈工大C9身份+深圳校区，兼具学科实力与地域优势。若在沪招生值得高度关注。' },
-  { id:'hit', name:'哈尔滨工业大学', tier:'T2', loc:'hrb', c9:true, rankMin:3000, rankMax:6500,
-    subjects:{mech:{majors:'机械(A+)/控制(A+)/力学(A+)',recommend:5}, cs:{majors:'CS(A)',recommend:4}},
-    strength:'工科硬核C9', desc:'机械/控制/力学A+，焊接亚洲第一。用4年地域换C9工科学位。' },
-  { id:'xjtu', name:'西安交通大学', tier:'T2', loc:'xa', c9:true, rankMin:3500, rankMax:7500,
-    subjects:{elec:{majors:'电气(A+)/动力(A+)',recommend:5}, mech:{majors:'机械(A)',recommend:4}},
-    strength:'电气/能源顶尖C9', desc:'电气A+全国前二，能源电力行业统治力。用地域换学科精度。' },
-  // T3
-  { id:'shanghaitech', name:'上海科技大学', tier:'T3', loc:'sh', c9:false, rankMin:3000, rankMax:7500,
-    subjects:{cs:{majors:'CS/电子',recommend:4}, phys:{majors:'物质学院(物理)',recommend:4}, chem:{majors:'材料',recommend:3}, bio:{majors:'生命科学',recommend:4}},
-    strength:'最像"科"的上海高校', desc:'中科院共建，小班导师制，80%+深造率。上科大=上海的迷你版USTC。位次性价比之王。' },
-  { id:'ecust', name:'华东理工大学', tier:'T3', loc:'sh', c9:false, rankMin:5000, rankMax:11000,
-    subjects:{chem:{majors:'化工(A+)/材料(A)/制药',recommend:5}, bio:{majors:'生物工程',recommend:3}},
-    strength:'化工/材料全国顶尖', desc:'化工A+全国前三，材料A，制药工程强。211性价比之选。' },
-  // T4
-  { id:'shu', name:'上海大学', tier:'T4', loc:'sh', c9:false, rankMin:6000, rankMax:13000,
-    subjects:{cs:{majors:'CS/通信',recommend:3}, math:{majors:'数学',recommend:3}, mech:{majors:'机械',recommend:3}},
-    strength:'211保底，工科全面', desc:'上海211基本盘，CS/通信/机械/数学均可选。中外合作项目可关注。' },
-  { id:'dhu', name:'东华大学', tier:'T4', loc:'sh', c9:false, rankMin:8000, rankMax:16000,
-    subjects:{chem:{majors:'材料(A+)',recommend:4}},
-    strength:'材料A+特色校', desc:'材料A+全国领先，纺织独步。211保底选项之一。' },
+//═ T0 ═══════════════════════════════
+{ id:'thu', name:'清华大学', tier:'T0', loc:'bj', c9:true,
+  rankMin:1, rankMax:150,
+  channels:'零志愿',
+  strengthScore:10, internshipScore:5, gradRate:'85%+',
+  subjects:{cs:{majors:'CS/EE/AI/工程',recommend:5}, ee:{majors:'EE/微电子',recommend:5}, mech:{majors:'机械/力学',recommend:5}, elec:{majors:'电气',recommend:4}},
+  strength:'工科顶尖，C9顶端', desc:'清华工科全国第一。零志愿批次，位次前150可选。' },
+{ id:'pku', name:'北京大学', tier:'T0', loc:'bj', c9:true,
+  rankMin:1, rankMax:150,
+  channels:'零志愿',
+  strengthScore:10, internshipScore:5, gradRate:'85%+',
+  subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}, data:{majors:'数据科学',recommend:4}},
+  strength:'理科顶尖，C9顶端', desc:'北大理科全国第一，与USTC理科基因最匹配。零志愿批次。' },
+//═ T1 ⊶ SH ═════════════════════════
+{ id:'fudan', name:'复旦大学', tier:'T1', loc:'sh', c9:true,
+  rankMin:1, rankMax:2200,
+  channels:'综评·普通批·强基',
+  strengthScore:9, internshipScore:5, gradRate:'70%',
+  subjects:{math:{majors:'数学英才班(A+)',recommend:5}, phys:{majors:'物理学系',recommend:5}, cs:{majors:'CS学院',recommend:4}, ee:{majors:'微电子学院(国家级)',recommend:5}, data:{majors:'大数据学院',recommend:4}, chem:{majors:'化学系',recommend:4}, bio:{majors:'医学院',recommend:5}},
+  strength:'基础科学强校', desc:'数学/物理A+，微电子国家示范学院。综评通道为上海生源主渠道。' },
+{ id:'sjtu', name:'上海交通大学', tier:'T1', loc:'sh', c9:true,
+  rankMin:1, rankMax:2200,
+  channels:'综评·普通批·强基',
+  strengthScore:9, internshipScore:5, gradRate:'72%',
+  subjects:{cs:{majors:'IEEE/ACM/AI学院',recommend:5}, ee:{majors:'电院',recommend:5}, mech:{majors:'机动学院',recommend:5}, elec:{majors:'电院电气',recommend:4}, data:{majors:'数据科学',recommend:4}, bio:{majors:'医学院(顶尖)',recommend:5}},
+  strength:'工科应用强校', desc:'CS/EE/机械顶尖，ACM班精英培养。综评通道为上海生源主渠道。' },
+//═ T1 ⊶ C9异地 ════════════════════
+{ id:'ustc', name:'中国科学技术大学', tier:'T1', loc:'hf', c9:true,
+  rankMin:1, rankMax:1800,
+  channels:'普通批·强基',
+  strengthScore:9, internshipScore:3, gradRate:'78%',
+  subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}},
+  strength:'基础科学殿堂，父母母校', desc:'100%自由转专业，全员导师制。科二代基因完美匹配，校友圈直通。' },
+{ id:'zju', name:'浙江大学', tier:'T1', loc:'hz', c9:true,
+  rankMin:1, rankMax:2200,
+  channels:'普通批·强基',
+  strengthScore:9, internshipScore:4, gradRate:'70%',
+  subjects:{cs:{majors:'CS(A+)/光工(A+)/控制(A+)',recommend:5}, ee:{majors:'信息大类',recommend:4}, data:{majors:'数据科学',recommend:4}, mech:{majors:'机械/控制',recommend:4}, bio:{majors:'医学院',recommend:4}},
+  strength:'CS/工科极强', desc:'CS与上交持平/略优。高铁1h回沪，杭州互联网实习资源丰富。' },
+{ id:'nju', name:'南京大学', tier:'T1', loc:'nj', c9:true,
+  rankMin:1, rankMax:2000,
+  channels:'普通批·强基',
+  strengthScore:8, internshipScore:3, gradRate:'68%',
+  subjects:{phys:{majors:'物理(A+)/天文(A+)',recommend:5}, math:{majors:'数学(A-)',recommend:4}, cs:{majors:'CS(A+)',recommend:5}},
+  strength:'基础科学底蕴深厚', desc:'物理/天文全国顶尖。理科基因与USTC最接近的非母校C9。高铁1.5h回沪。' },
+//═ T2 ═══════════════════════════════
+{ id:'tongji', name:'同济大学', tier:'T2', loc:'sh', c9:false,
+  rankMin:2000, rankMax:5500,
+  channels:'普通批',
+  strengthScore:7, internshipScore:5, gradRate:'55%',
+  subjects:{cs:{majors:'智能科学与技术',recommend:5}, mech:{majors:'车辆工程(新能源)',recommend:4}, elec:{majors:'电气/能源',recommend:3}},
+  strength:'工科硬核+上海985', desc:'AI/智能科学上升迅速。上海985，留沪工科优选。' },
+{ id:'ecnu', name:'华东师范大学', tier:'T2', loc:'sh', c9:false,
+  rankMin:1500, rankMax:5000,
+  channels:'普通批·综评',
+  strengthScore:7, internshipScore:4, gradRate:'60%',
+  subjects:{math:{majors:'统计学院(A+)',recommend:5}, cs:{majors:'软件工程',recommend:4}, data:{majors:'数据学院',recommend:5}},
+  strength:'统计/数据科学强校', desc:'统计学A+全国顶尖。被名字耽误的工科强校。' },
+{ id:'hitsz', name:'哈工大(深圳)', tier:'T2', loc:'sz', c9:true,
+  rankMin:3000, rankMax:6000,
+  channels:'普通批',
+  strengthScore:7, internshipScore:4, gradRate:'65%',
+  subjects:{cs:{majors:'计算机',recommend:4}, mech:{majors:'机械/控制(A+)',recommend:5}},
+  strength:'C9工科+深圳地域', desc:'哈工大C9身份+深圳校区。兼具学科实力与地域优势。' },
+{ id:'hit', name:'哈尔滨工业大学', tier:'T2', loc:'hrb', c9:true,
+  rankMin:3000, rankMax:6500,
+  channels:'普通批',
+  strengthScore:7, internshipScore:2, gradRate:'62%',
+  subjects:{mech:{majors:'机械(A+)/控制(A+)/力学(A+)',recommend:5}, cs:{majors:'CS(A)',recommend:4}},
+  strength:'工科硬核C9', desc:'机械/控制/力学A+，焊接亚洲第一。用4年地域换C9工科学位。' },
+{ id:'xjtu', name:'西安交通大学', tier:'T2', loc:'xa', c9:true,
+  rankMin:3500, rankMax:7500,
+  channels:'普通批',
+  strengthScore:7, internshipScore:2, gradRate:'60%',
+  subjects:{elec:{majors:'电气(A+)/动力(A+)',recommend:5}, mech:{majors:'机械(A)',recommend:4}},
+  strength:'电气/能源顶尖C9', desc:'电气A+全国前二。用地域换学科精度。' },
+//═ T3 ═══════════════════════════════
+{ id:'shanghaitech', name:'上海科技大学', tier:'T3', loc:'sh', c9:false,
+  rankMin:3000, rankMax:7500,
+  channels:'综合评价',
+  strengthScore:6, internshipScore:4, gradRate:'80%+',
+  subjects:{cs:{majors:'CS/电子',recommend:4}, phys:{majors:'物质学院(物理)',recommend:4}, chem:{majors:'材料',recommend:3}, bio:{majors:'生命科学',recommend:4}},
+  strength:'最像"科"的上海高校', desc:'中科院共建，小班导师制，80%+深造率。性价比之王。' },
+{ id:'ecust', name:'华东理工大学', tier:'T3', loc:'sh', c9:false,
+  rankMin:5000, rankMax:11000,
+  channels:'普通批',
+  strengthScore:5, internshipScore:4, gradRate:'45%',
+  subjects:{chem:{majors:'化工(A+)/材料(A)/制药',recommend:5}, bio:{majors:'生物工程',recommend:3}},
+  strength:'化工/材料全国顶尖', desc:'化工A+全国前三，211性价比之选。' },
+//═ T4 ═══════════════════════════════
+{ id:'shu', name:'上海大学', tier:'T4', loc:'sh', c9:false,
+  rankMin:6000, rankMax:13000,
+  channels:'普通批',
+  strengthScore:4, internshipScore:4, gradRate:'40%',
+  subjects:{cs:{majors:'CS/通信',recommend:3}, math:{majors:'数学',recommend:3}, mech:{majors:'机械',recommend:3}},
+  strength:'211保底，工科全面', desc:'上海211基本盘。中外合作项目可关注。' },
+{ id:'dhu', name:'东华大学', tier:'T4', loc:'sh', c9:false,
+  rankMin:8000, rankMax:16000,
+  channels:'普通批',
+  strengthScore:4, internshipScore:3, gradRate:'38%',
+  subjects:{chem:{majors:'材料(A+)',recommend:4}},
+  strength:'材料A+特色校', desc:'材料A+全国领先，纺织独步。211保底选项。' },
 ];
 
 // ============================== STATE ==============================
@@ -629,74 +779,108 @@ function generateResults() {
     return true;
   });
 
-  // Score each candidate
+  // Score each candidate — 7 factors × continuous scoring
   candidates = candidates.map(s => {
     let score = 0;
-    const reasons = [];
+    const breakdown = {};
 
-    // 1. Rank fit (0-30)
+    // ── (1) 位次匹配度 0-30 ── 连续评分（不再离散跳变）
+    const center = (s.rankMin + s.rankMax) / 2;
+    const range = Math.max(s.rankMax - s.rankMin, 100);
+    const dist = Math.abs(rank - center) / range; // 距离中心的倍数
+    let rankScore;
     if (rank < s.rankMin) {
-      score += 15; reasons.push('位次达标，可冲刺');
+      rankScore = Math.round(30 * Math.max(0.4, 1 - dist * 0.3));
     } else if (rank <= s.rankMax) {
-      score += 30; reasons.push('位次匹配度高，稳妥选择');
-    } else if (rank <= s.rankMax * 1.5) {
-      score += 20; reasons.push('位次可触及，可作为保底');
+      rankScore = Math.round(30 * Math.max(0.7, 1 - dist * 0.5));
     } else {
-      score += 10; reasons.push('位次安全，绝对保底');
+      rankScore = Math.round(30 * Math.max(0.25, 1 - dist * 0.4));
     }
+    score += rankScore;
+    breakdown.位次 = { score: rankScore, max: 30 };
 
-    // 2. Subject match (0-30)
+    // ── (2) 学科方向匹配度 0-25 ──
+    let subjScore = 0;
     if (subject !== 'any' && s.subjects[subject]) {
       const rec = s.subjects[subject].recommend;
-      score += rec * 6;
-      reasons.push(`${SUBJECT_NAMES[subject]}方向匹配度${'★★★★★'.substring(0,rec)}`);
+      subjScore = rec * 5; // 5-25
     } else if (subject === 'any') {
-      score += 15;
+      subjScore = 13; // 中位数
     } else {
-      score += 5;
+      subjScore = 4;  // 该校缺乏此方向
     }
+    score += subjScore;
+    breakdown.学科 = { score: subjScore, max: 25 };
 
-    // 3. Location match (0-20)
+    // ── (3) 地域偏好匹配 0-15 ──
+    let locScore = 0;
     if (location === 'sh' && s.loc === 'sh') {
-      score += 20; reasons.push('上海本地，留沪优势');
+      locScore = 15;
     } else if (location === 'sh' && s.c9 && s.tier !== 'T4') {
-      score += 10; reasons.push('C9院校，虽异地但层次高');
+      locScore = 8;
     } else if (location === 'c9' && s.c9) {
-      score += 20; reasons.push('C9院校，符合偏好');
+      locScore = 15;
     } else if (location === 'both' || location === 'any') {
-      score += 10;
+      locScore = 8;
+    } else if (location === 'c9' && !s.c9) {
+      locScore = 3;
     } else {
-      score += 5;
+      locScore = 4;
     }
+    // 距离折扣：异地越远折扣越大（但仅当用户选了留沪优先）
+    if (location === 'sh' && s.loc !== 'sh') {
+      const distFactor = {bj:0.9, hf:0.85, hz:0.95, nj:0.95, hrb:0.6, xa:0.65, sz:0.9};
+      locScore = Math.round(locScore * (distFactor[s.loc] || 0.8));
+    }
+    score += locScore;
+    breakdown.地域 = { score: locScore, max: 15 };
 
-    // 4. Future plan (0-20)
+    // ── (4) 未来规划匹配 0-15 ──
+    let planScore = 0;
     if (plan === 'grad') {
-      if (s.tier === 'T0' || s.tier === 'T1' || (s.id === 'shanghaitech')) {
-        score += 20; reasons.push('深造导向，科研资源丰富');
-      } else {
-        score += 10; reasons.push('可有深造机会');
-      }
+      planScore = s.gradRate ? Math.round(15 * (parseInt(s.gradRate) / 85)) : 8;
     } else if (plan === 'job') {
-      if (s.loc === 'sh' || s.loc === 'sz' || s.loc === 'hz') {
-        score += 20; reasons.push('就业导向，城市实习资源丰富');
-      } else {
-        score += 10; reasons.push('异地就业需提前规划');
-      }
+      planScore = s.internshipScore * 3; // 3-15
     } else {
-      score += 10; reasons.push('灵活选择，未来可塑');
+      planScore = 8;
     }
+    score += planScore;
+    breakdown.规划 = { score: planScore, max: 15 };
 
-    // 5. USTC tie bonus
-    if (s.id === 'ustc') {
-      score += 15; reasons.push('父母母校，基因匹配+校友圈');
+    // ── (5) 综合实力 0-10 ──
+    const strengthScore = Math.round(s.strengthScore || 5);
+    score += strengthScore;
+    breakdown.实力 = { score: strengthScore, max: 10 };
+
+    // ── (6) USTC 校友加成 0-15 ──
+    let ustcScore = (s.id === 'ustc') ? 15 : 0;
+    score += ustcScore;
+    if (ustcScore) breakdown.校友 = { score: 15, max: 15 };
+
+    // ── (7) C9 加成 0-5 ──
+    let c9Score = s.c9 ? 5 : 0;
+    score += c9Score;
+    if (c9Score) breakdown.C9 = { score: 5, max: 5 };
+
+    // ── 总分 ──
+    score = Math.min(score, 100); // 上限100
+
+    // ── 生成理由 ──
+    const reasons = [];
+    if (rank <= s.rankMax) reasons.push(`位次${rank}在区间[${s.rankMin}-${s.rankMax}]内，匹配度高`);
+    else if (rank <= s.rankMax * 1.5) reasons.push(`位次${rank}接近区间[${s.rankMin}-${s.rankMax}]，可作保底`);
+    else reasons.push(`位次${rank}超过区间，作为安全保底`);
+    if (subject !== 'any' && s.subjects[subject]) {
+      const rec = s.subjects[subject].recommend;
+      reasons.push(`${SUBJECT_NAMES[subject]}方向${'★★★★★'.substring(0,rec)}`);
     }
+    if (s.loc === 'sh') reasons.push('上海本地院校，留沪优势');
+    if (s.c9) reasons.push('C9联盟，全国认可');
+    if (s.id === 'ustc') reasons.push('父母母校，校友圈直通');
+    if (plan === 'grad' && parseInt(s.gradRate) > 60) reasons.push(`深造率${s.gradRate}，深造导向推荐`);
+    if (plan === 'job' && s.internshipScore >= 4) reasons.push('实习资源丰富，就业导向推荐');
 
-    // 6. C9 bonus
-    if (s.c9) {
-      score += 5; reasons.push('C9联盟，全国认可');
-    }
-
-    return { ...s, score, reasons };
+    return { ...s, score, reasons, breakdown };
   });
 
   // Sort by score descending
@@ -766,10 +950,13 @@ function renderResults() {
       规划 ${PLAN_NAMES[plan]}
     </p>
     <p style="margin-top:4px;font-size:12px">
-      对应层级：<strong>${tierLabel}</strong> | 以下按匹配度排序，
-      <span style="color:var(--red)">红色=冲刺</span>，
-      <span style="color:var(--blue)">蓝色=稳妥</span>，
+      对应层级：<strong>${tierLabel}</strong>
+    </p>
+    <p style="margin-top:2px;font-size:11px;color:var(--text-muted)">
+      <span style="color:var(--red)">红色=冲刺</span> ·
+      <span style="color:var(--blue)">蓝色=稳妥</span> ·
       <span style="color:var(--green)">绿色=保底</span>
+      &nbsp;|&nbsp;每校分项评分见进度条&nbsp;|&nbsp;<a href="javascript:toggleAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
     </p>
   `;
 
@@ -786,25 +973,45 @@ function renderResults() {
 
     const card = document.createElement('div');
     card.className = 'result-card';
+    // Build per-factor breakdown bar
+    let breakdownHtml = '';
+    if (s.breakdown) {
+      breakdownHtml = '<div class="rc-breakdown" style="margin:6px 0;font-size:11px;color:var(--text-muted)">';
+      for (const [key, val] of Object.entries(s.breakdown)) {
+        const pct = Math.round(val.score / val.max * 100);
+        const barColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--blue)' : pct >= 30 ? 'var(--orange)' : 'var(--red)';
+        breakdownHtml += `<div style="display:flex;align-items:center;gap:6px;margin:2px 0">
+          <span style="min-width:40px;font-size:10px">${key}</span>
+          <div style="flex:1;height:8px;background:#eee;border-radius:4px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:${barColor};border-radius:4px;transition:.3s"></div>
+          </div>
+          <span style="min-width:50px;text-align:right;font-size:10px">${val.score}/${val.max}</span>
+        </div>`;
+      }
+      breakdownHtml += '</div>';
+    }
+
     card.innerHTML = `
       <div class="rc-header">
         <span class="rc-name">${s.name}</span>
         <span class="result-tag ${s.tier.toLowerCase()}">${s.tier}</span>
         <span class="result-tag ${labelClass}">${labelText}</span>
         ${s.c9 ? '<span class="result-tag c9">C9</span>' : ''}
-        <span class="result-tag ${s.loc === 'sh' ? 'sh' : ''}" style="background:${s.loc === 'sh' ? '#e3f2fd' : '#f5f5f5'};color:#666;font-weight:400">
+        <span class="result-tag" style="background:${s.loc === 'sh' ? '#e3f2fd' : '#f5f5f5'};color:#666;font-weight:400">
           ${LOC_SH[s.loc] || s.loc}
         </span>
       </div>
       <div class="rc-sub">
         <strong>推荐专业：</strong>${majors}
+        ${s.channels ? ` | <span style="color:var(--text-muted);font-size:11px">通道: ${s.channels}</span>` : ''}
       </div>
       <div class="rc-reason">
         <strong>推荐理由：</strong>${s.desc} ${s.reasons.slice(0,3).join('；')}
       </div>
+      ${breakdownHtml}
       <dl class="rc-detail">
         <dt>学科强项</dt><dd>${s.strength}</dd>
-        <dt>匹配度评分</dt><dd>${s.score}/100</dd>
+        <dt>综合评分</dt><dd>${s.score}/100 | 实力${s.strengthScore}/10 | 深造${s.gradRate || 'N/A'} | 实习${'★'.repeat(s.internshipScore||3)}</dd>
       </dl>
     `;
     cardsDiv.appendChild(card);
@@ -836,10 +1043,17 @@ function renderCompare() {
   tbl.innerHTML = html;
 }
 
+// ============================== TOGGLES ==============================
 let compareVisible = false;
 function toggleCompare() {
   compareVisible = !compareVisible;
   document.getElementById('compareWrap').classList.toggle('active', compareVisible);
+}
+function toggleAlgo() {
+  document.getElementById('algoContent').classList.toggle('open');
+}
+function toggleGuide() {
+  document.getElementById('guideContent').classList.toggle('open');
 }
 
 // ============================== RESET ==============================
@@ -894,10 +1108,6 @@ const GUIDE_HTML = `
 </section>
 `;
 document.getElementById('guideContent').innerHTML = GUIDE_HTML;
-
-function toggleGuide() {
-  document.getElementById('guideContent').classList.toggle('open');
-}
 </script>
 </body>
 </html>
