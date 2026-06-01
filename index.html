@@ -497,7 +497,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
         <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">冲刺/保底 波动比例（基于历年录取线波动设定）</h4>
         <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
           冲刺上浮比例 = 位次超出区间上限仍可视为冲刺的幅度。
-          保底下浮比例 = 位次需优于区间下限多少才算真正保底。
+          保底安全线距离 = 位次需优于区间下限多少才算真正保底。
           不同层级学校录取线稳定性不同，比例有所区别。
         </p>
         <table style="width:100%;border-collapse:collapse;font-size:11px">
@@ -505,7 +505,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
             <th style="padding:4px 8px;text-align:left">层级</th>
             <th style="padding:4px 8px;text-align:center">代表校</th>
             <th style="padding:4px 8px;text-align:center">冲刺上浮</th>
-            <th style="padding:4px 8px;text-align:center">保底下浮</th>
+            <th style="padding:4px 8px;text-align:center">保底安全线</th>
             <th style="padding:4px 8px;text-align:left">说明</th>
           </tr>
           <tr style="border-bottom:1px solid var(--border)">
@@ -958,7 +958,7 @@ function generateResults() {
 
   // Categorize into chong/wen/bao with historical波动 buffers
   // 冲刺上浮比例: 位次超出区间上限多少%仍可冲刺(基于历年录取线波动)
-  // 保底下浮比例: 位次优于rankMin多少%才算真正保底
+  // 保底安全线距离: 位次优于rankMin多少%才算真正保底
   const TIER_BUFFERS = {
     T0: { up: 0.05, down: 0.08 },  // 清北零志愿极稳定
     T1: { up: 0.08, down: 0.10 },  // 复交综评/C9波动较小
@@ -969,7 +969,7 @@ function generateResults() {
   const withLabels = state.results.map(s => {
     const buf = TIER_BUFFERS[s.tier] || TIER_BUFFERS.T3;
     const chongUpper = Math.round(s.rankMax * (1 + buf.up));   // 冲刺上限
-    const baoLower = Math.round(s.rankMin * (1 - buf.down));   // 保底下限
+    const baoLower = Math.round(s.rankMin * (1 - buf.down));   // 保底安全线
     let label;
     if (state.rank > s.rankMax && state.rank <= chongUpper) {
       label = 'chong'; // 略超区间上限,在上浮比例内,冲刺够得着
