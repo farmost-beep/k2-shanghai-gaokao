@@ -494,11 +494,12 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       </div>
 
       <div style="margin-top:12px;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;font-size:12px">
-        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">梯队边界与保底安全线距离</h4>
+        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">保底安全线距离（按学校）</h4>
         <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
-          冲刺 = 位次所在梯队 <strong>以上</strong>的学校（需努力够到）。<br>
-          稳妥 = 位次所在<strong>同梯队</strong>的学校（匹配度高）。<br>
-          保底 = 位次所在梯队 <strong>以下</strong>的学校（安全落入下一档）。
+          冲刺 = 该校录取区间上限 <strong>以上</strong>的位次（需努力够到）。<br>
+          稳妥 = 位次在录取区间<strong>内</strong>（匹配度高）。<br>
+          保底 = 位次 <strong>优于</strong>该校最佳录取生源（安全垫充足）。<br>
+          保底安全线距离 = 该校 rankMin - 你的位次，差值越大越安全。
         </p>
         <table style="width:100%;border-collapse:collapse;font-size:11px">
           <tr style="background:var(--ustc);color:#fff">
@@ -951,47 +952,29 @@ function generateResults() {
   // Keep top 6
   state.results = candidates.slice(0, 6);
 
-  // 按梯队标签：冲刺=上一梯队，稳妥=本梯队，保底=下一梯队
-  // 梯队边界基于2025年各校录取位次区间综合划定
-  const TIER_BOUNDS = [
-    { tier: 'T0', label: '清北', max: 150 },
-    { tier: 'T1', label: '复交/C9核心', max: 2200 },
-    { tier: 'T2', label: '上海985/C9工科', max: 5500 },
-    { tier: 'T3', label: '特色强校', max: 11000 },
-    { tier: 'T4', label: '保底211', max: 99999 },
-  ];
-  const TIER_IDX = { T0: 0, T1: 1, T2: 2, T3: 3, T4: 4 };
-
-  // 确定用户所属梯队
-  let userTier = 'T4';
-  for (const b of TIER_BOUNDS) {
-    if (state.rank <= b.max) { userTier = b.tier; break; }
-  }
-  const userTierIdx = TIER_IDX[userTier];
-
-  // 计算保底安全线：用户距下一梯队上限的位次距离
-  const nextTier = TIER_BOUNDS[userTierIdx + 1];
-  const safetyDist = nextTier ? Math.max(0, nextTier.max - state.rank) : 0;
-  const safetyPct = state.rank > 0 ? Math.round(safetyDist / state.rank * 100) : 0;
-
+  // 标签：基于该校录取区间 vs 用户位次
+  // 冲刺 = 位次超区间上限(rank > rankMax)
+  // 稳妥 = 位次在区间内(rankMin < rank <= rankMax)
+  // 保底 = 位次优于区间下限(rank <= rankMin)
+  // 保底安全线距离 = rankMin - rank(用户比最佳录取生源优多少位)
   const withLabels = state.results.map(s => {
-    const sIdx = TIER_IDX[s.tier] || 4;
     let label;
-    if (sIdx < userTierIdx) {
-      label = 'chong';  // 学校梯队高于用户梯队 -> 冲刺
-    } else if (sIdx === userTierIdx) {
-      label = 'wen';    // 同梯队 -> 稳妥
+    if (state.rank > s.rankMax) {
+      label = 'chong';  // 超区间上限 -> 冲刺
+    } else if (state.rank > s.rankMin) {
+      label = 'wen';    // 在区间内 -> 稳妥
     } else {
-      label = 'bao';    // 学校梯队低于用户梯队 -> 保底
+      label = 'bao';    // 优于区间下限 -> 保底
     }
-    return { ...s, label };
+
+    // 保底安全线距离(仅保底校计算): 用户位次比rankMin优多少
+    const baoDist = label === 'bao' ? s.rankMin - state.rank : 0;
+
+    return { ...s, label, _baoDist: baoDist };
   });
 
-  // 存入保底安全线供渲染
-  state._safetyDist = safetyDist;
-  state._safetyPct = safetyPct;
-  state._userTier = userTier;
-  state._nextTierName = nextTier ? nextTier.label : '—';
+  // 保底安全线距离(全局参考值): 所有保底校中安全线最大的
+  state._maxBaoDist = Math.max(0, ...withLabels.filter(s => s.label === 'bao').map(s => s._baoDist));
 
   // 按 冲刺→稳妥→保底 排序，各组内按得分降序
   const labelOrder = { chong: 0, wen: 1, bao: 2 };
@@ -1042,7 +1025,7 @@ function renderResults() {
       <span style="color:var(--red)">红色=冲刺</span> ·
       <span style="color:var(--blue)">蓝色=稳妥</span> ·
       <span style="color:var(--green)">绿色=保底</span>
-      &nbsp;|&nbsp;保底安全线距离 <strong>${state._safetyDist?.toLocaleString() || '—'}</strong> 位&nbsp;|&nbsp;<a href="javascript:scrollToAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
+      &nbsp;|&nbsp;保底校安全线距最佳录取 <strong>${state._maxBaoDist?.toLocaleString() || '—'}</strong> 位&nbsp;|&nbsp;<a href="javascript:scrollToAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
     </p>
   `;
 
@@ -1098,6 +1081,7 @@ function renderResults() {
       <dl class="rc-detail">
         <dt>学科强项</dt><dd>${s.strength}</dd>
         <dt>综合评分</dt><dd>${s.score}/100 | 实力${s.strengthScore}/10 | 深造${s.gradRate || 'N/A'} | 实习${'★'.repeat(s.internshipScore||3)}</dd>
+        ${s.label === 'bao' ? `<dt>保底安全线</dt><dd>距最佳录取还余 <strong>${s._baoDist}</strong> 位空间</dd>` : ''}
       </dl>
     `;
     cardsDiv.appendChild(card);
