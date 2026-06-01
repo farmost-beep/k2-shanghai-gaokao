@@ -85,6 +85,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
 .result-tag.t2 { background: #e8f5e9; color: #2e7d32; }
 .result-tag.t3 { background: #fff3e0; color: #e65100; }
 .result-tag.t4 { background: #fce4ec; color: #c62828; }
+.result-tag.t5 { background: #f1f8e9; color: #33691e; }
 .result-tag.c9 { background: #fff9c4; color: #f57f17; }
 .result-tag.chong { background: #ffe0e0; color: #c0392b; }
 .result-tag.wen { background: #fff3cd; color: #856404; }
@@ -263,9 +264,9 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       <span style="font-size:14px;color:var(--text-muted)">名</span>
     </div>
     <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">
-      <span>位次参考：前150→清北 | 前2200→复交 | 前5500→同济/华师大 | 前7500→上科大 | 前11000→华理/上大</span>
+      <span>位次参考：前150→清北 | 前2200→复交 | 前5500→同济/华师大 | 前7500→上科大 | 前11000→华理/上大 | 前22000→上理工/海事 | 前42000→工程大</span>
     </div>
-    <div style="margin-top:14px;padding:10px 14px;background:#f0f4fa;border-radius:8px;font-size:12px">
+    <div style="margin-top:14px;padding:10px 14px;background:#f0f4fa;border-radius:8px;font-size:12px;display:none">
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span style="font-weight:600;color:var(--ustc);white-space:nowrap">校友身份重视度</span>
         <span style="font-size:11px;color:var(--text-muted)">不考虑</span>
@@ -494,9 +495,9 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       </div>
 
       <div style="margin-top:12px;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;font-size:12px">
-        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">保底安全线距离（按学校）</h4>
+        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">冲刺上浮2% + 保底安全线距离（按学校）</h4>
         <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
-          冲刺 = 该校录取区间上限 <strong>以上</strong>的位次（需努力够到）。<br>
+          冲刺 = 该校录取区间上限以上<strong>2%内</strong>可够到，超出需较大努力。<br>
           稳妥 = 位次在录取区间<strong>内</strong>（匹配度高）。<br>
           保底 = 位次 <strong>优于</strong>该校最佳录取生源（安全垫充足）。<br>
           保底安全线距离 = 该校 rankMin - 你的位次，差值越大越安全。
@@ -547,7 +548,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       </div>
 
     <div class="wizard-card" style="margin-top:12px">
-      <h3 style="font-size:15px;color:var(--ustc);margin-bottom:8px">16校多维指标总表</h3>
+      <h3 style="font-size:15px;color:var(--ustc);margin-bottom:8px">23校多维指标总表</h3>
       <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
         每校数据源：2025年上海录取位次 + 学科评估 + 招生简章。通道=[零志愿/综评/普通批/强基]
       </p>
@@ -711,6 +712,42 @@ const SCHOOLS = [
   strengthScore:4, internshipScore:3, gradRate:'38%',
   subjects:{chem:{majors:'材料(A+)',recommend:4}},
   strength:'材料A+特色校', desc:'材料A+全国领先，纺织独步。211保底选项。' },
+//═ T5 — 上海其他STEM院校 ═══════════════════
+{ id:'usst', name:'上海理工大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:13000, rankMax:22000, channels:'普通批',
+  strengthScore:3, internshipScore:4, gradRate:'30%',
+  subjects:{cs:{majors:'CS/光电/机械',recommend:3}, mech:{majors:'机械/车辆',recommend:3}, elec:{majors:'电气/能动',recommend:3}},
+  strength:'工科全面', desc:'上海老牌工科院校，光学/机械/能动传统强项。' },
+{ id:'shmtu', name:'上海海事大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:16000, rankMax:27000, channels:'普通批',
+  strengthScore:3, internshipScore:3, gradRate:'28%',
+  subjects:{cs:{majors:'CS/信息',recommend:2}, mech:{majors:'机械/船舶',recommend:3}, elec:{majors:'电气/自动化',recommend:3}},
+  strength:'海事特色工科', desc:'航运/物流/船舶工程为特色，工科体系完整。' },
+{ id:'shnu', name:'上海师范大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:17000, rankMax:30000, channels:'普通批',
+  strengthScore:3, internshipScore:3, gradRate:'25%',
+  subjects:{math:{majors:'数学(师范)',recommend:3}, cs:{majors:'CS/人工智能',recommend:2}, chem:{majors:'化学(师范)',recommend:3}},
+  strength:'师范+理学基础', desc:'数学/化学等基础学科有师范背景，理科教学扎实。' },
+{ id:'shiep', name:'上海电力大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:19000, rankMax:30000, channels:'普通批',
+  strengthScore:3, internshipScore:3, gradRate:'25%',
+  subjects:{elec:{majors:'电气/能源/自动化',recommend:4}, mech:{majors:'机械/能动',recommend:3}},
+  strength:'电力行业强校', desc:'电气工程在电力行业有很强就业优势，国家电网定点校。' },
+{ id:'shou', name:'上海海洋大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:22000, rankMax:35000, channels:'普通批',
+  strengthScore:2, internshipScore:2, gradRate:'22%',
+  subjects:{bio:{majors:'生物/食品/海洋',recommend:3}, chem:{majors:'食品/环境',recommend:2}},
+  strength:'海洋/食品特色', desc:'水产/食品科学全国领先，生物/环境学科有特色。' },
+{ id:'sues', name:'上海工程技术大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:28000, rankMax:42000, channels:'普通批',
+  strengthScore:2, internshipScore:3, gradRate:'20%',
+  subjects:{cs:{majors:'CS/数据',recommend:2}, mech:{majors:'机械/汽车',recommend:3}, elec:{majors:'电气/轨道',recommend:2}},
+  strength:'应用型工科', desc:'城市轨道交通/航空运输/汽车工程等应用领域有特色。' },
+{ id:'sit', name:'上海应用技术大学', tier:'T5', loc:'sh', c9:false,
+  rankMin:35000, rankMax:48000, channels:'普通批',
+  strengthScore:2, internshipScore:2, gradRate:'18%',
+  subjects:{chem:{majors:'化工/材料/香料',recommend:3}, mech:{majors:'机械/电气',recommend:2}},
+  strength:'应用技术特色', desc:'香料香精全国独有，化工/材料有行业优势。' },
 ];
 
 // ============================== STATE ==============================
@@ -813,8 +850,8 @@ function generateResults() {
 
   // Determine tier range — 含目标档向上1级(供冲刺)+向下所有档(供保底)
   let tierMatch;
-  if (rank <= 150) tierMatch = ['T0','T1','T2','T3','T4'];
-  else if (rank <= 2200) tierMatch = ['T0','T1','T2','T3','T4']; // +T0供冲刺
+  if (rank <= 150) tierMatch = ['T0','T1','T2','T3','T4','T5'];
+  else if (rank <= 2200) tierMatch = ['T0','T1','T2','T3','T4','T5']; // +T0供冲刺
   else if (rank <= 5500) tierMatch = ['T1','T2','T3','T4'];      // +T1供冲刺
   else if (rank <= 11000) tierMatch = ['T2','T3','T4'];          // +T2供冲刺
   else tierMatch = ['T3','T4'];                                    // +T3供冲刺
@@ -953,14 +990,18 @@ function generateResults() {
   state.results = candidates.slice(0, 6);
 
   // 标签：基于该校录取区间 vs 用户位次
-  // 冲刺 = 位次超区间上限(rank > rankMax)
+  // 冲刺上浮2%：位次超区间上限2%以内仍视为可够到的冲刺
   // 稳妥 = 位次在区间内(rankMin < rank <= rankMax)
   // 保底 = 位次优于区间下限(rank <= rankMin)
   // 保底安全线距离 = rankMin - rank(用户比最佳录取生源优多少位)
+  const CHONG_BUFFER = 0.02; // 冲刺上浮比例2%
   const withLabels = state.results.map(s => {
+    const chongLimit = Math.round(s.rankMax * (1 + CHONG_BUFFER));
     let label;
-    if (state.rank > s.rankMax) {
-      label = 'chong';  // 超区间上限 -> 冲刺
+    if (state.rank > chongLimit) {
+      label = 'chong';  // 超上限2%以上 -> 冲刺(需较大努力)
+    } else if (state.rank > s.rankMax) {
+      label = 'chong';  // 在上浮2%内 -> 冲刺(可够到)
     } else if (state.rank > s.rankMin) {
       label = 'wen';    // 在区间内 -> 稳妥
     } else {
