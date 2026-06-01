@@ -892,12 +892,21 @@ function generateResults() {
   state.results = candidates.slice(0, 6);
 
   // Categorize into chong/wen/bao
+  // 排名规则：数字越小=成绩越好。rankMin=最低分(最好)录取者，rankMax=最高分(最差)录取者
   const withLabels = state.results.map(s => {
-    let label = 'wen';
-    if (state.rank <= s.rankMin * 0.8) label = 'chong'; // rank is well above min
-    else if (state.rank <= s.rankMin) label = 'chong';   // at lower bound
-    else if (state.rank > s.rankMax * 1.2) label = 'bao'; // well above max
-    else if (state.rank > s.rankMax) label = 'bao';
+    const mid = (s.rankMin + s.rankMax) / 2;
+    let label;
+    if (state.rank <= s.rankMin) {
+      label = 'wen';   // 位次 <= 最佳录取位次 -> 稳妥
+    } else if (state.rank <= mid) {
+      label = 'wen';   // 在上半区间内 -> 稳妥
+    } else if (state.rank <= s.rankMax) {
+      label = 'wen';   // 在下半区间内 -> 稳妥(接近边缘)
+    } else if (state.rank <= Math.round(s.rankMax * 1.3)) {
+      label = 'chong'; // 略超区间上限 -> 可以冲刺
+    } else {
+      label = 'chong'; // 远超区间上限 -> 冲刺(需超常发挥)
+    }
     return { ...s, label };
   });
 
