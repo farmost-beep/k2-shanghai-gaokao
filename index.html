@@ -265,6 +265,20 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
     <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">
       <span>位次参考：前150→清北 | 前2200→复交 | 前5500→同济/华师大 | 前7500→上科大 | 前11000→华理/上大</span>
     </div>
+    <div style="margin-top:14px;padding:10px 14px;background:#f0f4fa;border-radius:8px;font-size:12px">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-weight:600;color:var(--ustc);white-space:nowrap">校友身份重视度</span>
+        <span style="font-size:11px;color:var(--text-muted)">不考虑</span>
+        <input type="range" id="ustcSlider" min="0" max="15" value="15" step="1"
+          style="flex:1;min-width:120px;max-width:180px;accent-color:var(--ustc)"
+          oninput="updateUstcWeight(this.value)">
+        <span style="font-size:11px;color:var(--text-muted)">非常重要</span>
+        <span id="ustcWeightDisplay" style="font-weight:700;color:var(--ustc);min-width:50px;text-align:center">15分</span>
+      </div>
+      <p style="font-size:10px;color:var(--text-muted);margin-top:4px;line-height:1.5">
+        父母（中科大）母校身份在你选校决策中的份量。越高则中科大越被优先推荐，<br>拉低则更纯粹以分数和学科实力判断。
+      </p>
+    </div>
     <div class="wizard-actions">
       <span></span>
       <button class="btn-next" onclick="nextStep(0)">下一步 →</button>
@@ -952,8 +966,6 @@ function renderResults() {
   else if (rank <= 11000) tierLabel = 'T3（上海特色强校）';
   else tierLabel = 'T4（上海211保底）';
 
-  const uw = state.ustcWeight || 15;
-
   summary.innerHTML = `
     <h2>你的个性化选校方案</h2>
     <p>
@@ -971,20 +983,6 @@ function renderResults() {
       <span style="color:var(--green)">绿色=保底</span>
       &nbsp;|&nbsp;<a href="javascript:scrollToAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
     </p>
-    <div style="margin-top:10px;padding:10px 14px;background:var(--ustc-light);border-radius:8px;font-size:12px">
-      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span style="font-weight:600;color:var(--ustc);white-space:nowrap">校友身份重视度</span>
-        <span style="font-size:11px;color:var(--text-muted)">不考虑</span>
-        <input type="range" id="ustcSlider" min="0" max="15" value="${uw}" step="1"
-          style="flex:1;min-width:120px;max-width:200px;accent-color:var(--ustc)"
-          oninput="updateUstcWeight(this.value)">
-        <span style="font-size:11px;color:var(--text-muted)">非常重要</span>
-        <span id="ustcWeightDisplay" style="font-weight:700;color:var(--ustc);min-width:50px;text-align:center">${uw}分</span>
-      </div>
-      <p style="font-size:10px;color:var(--text-muted);margin-top:4px">
-        拉动滑块调整对"父母母校"身份的重视程度 —— 权重越高，中科大越被优先推荐
-      </p>
-    </div>
   `;
 
   // Cards
@@ -1090,9 +1088,11 @@ function scrollToAlgo() {
 }
 function updateUstcWeight(val) {
   state.ustcWeight = parseInt(val);
-  document.getElementById('ustcWeightDisplay').textContent = val + '分';
-  // Re-run scoring
-  generateResults();
+  const display = document.getElementById('ustcWeightDisplay');
+  if (display) display.textContent = val + '分';
+  // 如果结果已生成，即时重新评分
+  const rw = document.getElementById('resultsWrap');
+  if (rw && rw.classList.contains('active')) generateResults();
 }
 
 // ============================== RESET ==============================
