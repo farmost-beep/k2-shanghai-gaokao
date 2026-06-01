@@ -269,11 +269,11 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
         <span style="font-weight:600;color:var(--ustc);white-space:nowrap">校友身份重视度</span>
         <span style="font-size:11px;color:var(--text-muted)">不考虑</span>
-        <input type="range" id="ustcSlider" min="0" max="15" value="15" step="1"
+        <input type="range" id="ustcSlider" min="0" max="15" value="5" step="1"
           style="flex:1;min-width:120px;max-width:180px;accent-color:var(--ustc)"
           oninput="updateUstcWeight(this.value)">
         <span style="font-size:11px;color:var(--text-muted)">非常重要</span>
-        <span id="ustcWeightDisplay" style="font-weight:700;color:var(--ustc);min-width:50px;text-align:center">15分</span>
+        <span id="ustcWeightDisplay" style="font-weight:700;color:var(--ustc);min-width:50px;text-align:center">5分</span>
       </div>
       <p style="font-size:10px;color:var(--text-muted);margin-top:4px;line-height:1.5">
         父母（中科大）母校身份在你选校决策中的份量。越高则中科大越被优先推荐，<br>拉低则更纯粹以分数和学科实力判断。
@@ -494,61 +494,56 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       </div>
 
       <div style="margin-top:12px;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;font-size:12px">
-        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">冲刺/保底 波动比例（基于历年录取线波动设定）</h4>
+        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">梯队边界与保底安全线距离</h4>
         <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
-          冲刺上浮比例 = 位次超出区间上限仍可视为冲刺的幅度。
-          保底安全线距离 = 位次需优于区间下限多少才算真正保底。
-          不同层级学校录取线稳定性不同，比例有所区别。
+          冲刺 = 位次所在梯队 <strong>以上</strong>的学校（需努力够到）。<br>
+          稳妥 = 位次所在<strong>同梯队</strong>的学校（匹配度高）。<br>
+          保底 = 位次所在梯队 <strong>以下</strong>的学校（安全落入下一档）。
         </p>
         <table style="width:100%;border-collapse:collapse;font-size:11px">
           <tr style="background:var(--ustc);color:#fff">
-            <th style="padding:4px 8px;text-align:left">层级</th>
+            <th style="padding:4px 8px;text-align:left">梯队</th>
             <th style="padding:4px 8px;text-align:center">代表校</th>
-            <th style="padding:4px 8px;text-align:center">冲刺上浮</th>
-            <th style="padding:4px 8px;text-align:center">保底安全线</th>
+            <th style="padding:4px 8px;text-align:center">位次区间</th>
             <th style="padding:4px 8px;text-align:left">说明</th>
           </tr>
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:4px 8px;font-weight:600">T0</td>
             <td style="padding:4px 8px;text-align:center">清北</td>
-            <td style="padding:4px 8px;text-align:center">5%</td>
-            <td style="padding:4px 8px;text-align:center">8%</td>
-            <td style="padding:4px 8px;font-size:10px">零志愿批次极稳定</td>
+            <td style="padding:4px 8px;text-align:center">1-150</td>
+            <td style="padding:4px 8px;font-size:10px">零志愿批次</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
             <td style="padding:4px 8px;font-weight:600">T1</td>
             <td style="padding:4px 8px;text-align:center">复交/中科大/浙大/南大</td>
-            <td style="padding:4px 8px;text-align:center">8%</td>
-            <td style="padding:4px 8px;text-align:center">10%</td>
-            <td style="padding:4px 8px;font-size:10px">综评+普通批，波动较小</td>
+            <td style="padding:4px 8px;text-align:center">151-2200</td>
+            <td style="padding:4px 8px;font-size:10px">综评+普通批</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:4px 8px;font-weight:600">T2</td>
             <td style="padding:4px 8px;text-align:center">同济/华师大/哈工大/西交</td>
-            <td style="padding:4px 8px;text-align:center">10%</td>
-            <td style="padding:4px 8px;text-align:center">12%</td>
-            <td style="padding:4px 8px;font-size:10px">专业组间梯度大</td>
+            <td style="padding:4px 8px;text-align:center">2201-5500</td>
+            <td style="padding:4px 8px;font-size:10px">梯度较大</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
             <td style="padding:4px 8px;font-weight:600">T3</td>
             <td style="padding:4px 8px;text-align:center">上科大/华理</td>
-            <td style="padding:4px 8px;text-align:center">12%</td>
-            <td style="padding:4px 8px;text-align:center">15%</td>
-            <td style="padding:4px 8px;font-size:10px">特色校波动较大</td>
+            <td style="padding:4px 8px;text-align:center">5501-11000</td>
+            <td style="padding:4px 8px;font-size:10px">特色校</td>
           </tr>
           <tr style="border-bottom:1px solid var(--border)">
             <td style="padding:4px 8px;font-weight:600">T4</td>
             <td style="padding:4px 8px;text-align:center">上大/东华</td>
-            <td style="padding:4px 8px;text-align:center">15%</td>
-            <td style="padding:4px 8px;text-align:center">18%</td>
-            <td style="padding:4px 8px;font-size:10px">保底校位次波动明显</td>
+            <td style="padding:4px 8px;text-align:center">11001+</td>
+            <td style="padding:4px 8px;font-size:10px">211保底</td>
           </tr>
         </table>
         <p style="font-size:10px;color:var(--text-muted);margin-top:6px">
-          示例：位次8000看上科大(T3,区间3000-7500) -> 超区间上限500位 -> 7500x1.12=8400 -> 8000&lt;8400 -> <strong>冲刺</strong>（在上浮12%范围内）
+          保底安全线距离 = 用户位次距下一梯队上限的位次差。
+          例如位次8000(T3,区间5501-11000) -> 下一梯队T4上限11000 -> 安全线距离=11000-8000=<strong>3000位</strong>。
+          安全线距离越大，落入下一梯队的安全空间越充足。
         </p>
       </div>
-    </div>
 
     <div class="wizard-card" style="margin-top:12px">
       <h3 style="font-size:15px;color:var(--ustc);margin-bottom:8px">16校多维指标总表</h3>
@@ -723,7 +718,7 @@ let state = {
   subject: null,
   location: null,
   plan: null,
-  ustcWeight: 15,    // 校友身份重视度 0-15 (默认15)
+  ustcWeight: 5,     // 校友身份重视度 0-15 (默认5)
   currentStep: 0,
   results: []
 };
@@ -956,32 +951,47 @@ function generateResults() {
   // Keep top 6
   state.results = candidates.slice(0, 6);
 
-  // Categorize into chong/wen/bao with historical波动 buffers
-  // 冲刺上浮比例: 位次超出区间上限多少%仍可冲刺(基于历年录取线波动)
-  // 保底安全线距离: 位次优于rankMin多少%才算真正保底
-  const TIER_BUFFERS = {
-    T0: { up: 0.05, down: 0.08 },  // 清北零志愿极稳定
-    T1: { up: 0.08, down: 0.10 },  // 复交综评/C9波动较小
-    T2: { up: 0.10, down: 0.12 },  // 同济华师梯度较大
-    T3: { up: 0.12, down: 0.15 },  // 上科大华理波动更大
-    T4: { up: 0.15, down: 0.18 },  // 上大东华保底校波动明显
-  };
+  // 按梯队标签：冲刺=上一梯队，稳妥=本梯队，保底=下一梯队
+  // 梯队边界基于2025年各校录取位次区间综合划定
+  const TIER_BOUNDS = [
+    { tier: 'T0', label: '清北', max: 150 },
+    { tier: 'T1', label: '复交/C9核心', max: 2200 },
+    { tier: 'T2', label: '上海985/C9工科', max: 5500 },
+    { tier: 'T3', label: '特色强校', max: 11000 },
+    { tier: 'T4', label: '保底211', max: 99999 },
+  ];
+  const TIER_IDX = { T0: 0, T1: 1, T2: 2, T3: 3, T4: 4 };
+
+  // 确定用户所属梯队
+  let userTier = 'T4';
+  for (const b of TIER_BOUNDS) {
+    if (state.rank <= b.max) { userTier = b.tier; break; }
+  }
+  const userTierIdx = TIER_IDX[userTier];
+
+  // 计算保底安全线：用户距下一梯队上限的位次距离
+  const nextTier = TIER_BOUNDS[userTierIdx + 1];
+  const safetyDist = nextTier ? Math.max(0, nextTier.max - state.rank) : 0;
+  const safetyPct = state.rank > 0 ? Math.round(safetyDist / state.rank * 100) : 0;
+
   const withLabels = state.results.map(s => {
-    const buf = TIER_BUFFERS[s.tier] || TIER_BUFFERS.T3;
-    const chongUpper = Math.round(s.rankMax * (1 + buf.up));   // 冲刺上限
-    const baoLower = Math.round(s.rankMin * (1 - buf.down));   // 保底安全线
+    const sIdx = TIER_IDX[s.tier] || 4;
     let label;
-    if (state.rank > s.rankMax && state.rank <= chongUpper) {
-      label = 'chong'; // 略超区间上限,在上浮比例内,冲刺够得着
-    } else if (state.rank > s.rankMax) {
-      label = 'chong'; // 大幅超区间,冲刺需较大运气
-    } else if (state.rank >= baoLower) {
-      label = 'wen';   // 在区间内或略优于rankMin,在下浮比例内
+    if (sIdx < userTierIdx) {
+      label = 'chong';  // 学校梯队高于用户梯队 -> 冲刺
+    } else if (sIdx === userTierIdx) {
+      label = 'wen';    // 同梯队 -> 稳妥
     } else {
-      label = 'bao';   // 远优于rankMin,超出下浮比例,真正保底
+      label = 'bao';    // 学校梯队低于用户梯队 -> 保底
     }
-    return { ...s, label, _buf: { chongUpper, baoLower } };
+    return { ...s, label };
   });
+
+  // 存入保底安全线供渲染
+  state._safetyDist = safetyDist;
+  state._safetyPct = safetyPct;
+  state._userTier = userTier;
+  state._nextTierName = nextTier ? nextTier.label : '—';
 
   // 按 冲刺→稳妥→保底 排序，各组内按得分降序
   const labelOrder = { chong: 0, wen: 1, bao: 2 };
@@ -1032,7 +1042,7 @@ function renderResults() {
       <span style="color:var(--red)">红色=冲刺</span> ·
       <span style="color:var(--blue)">蓝色=稳妥</span> ·
       <span style="color:var(--green)">绿色=保底</span>
-      &nbsp;|&nbsp;<a href="javascript:scrollToAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
+      &nbsp;|&nbsp;保底安全线距离 <strong>${state._safetyDist?.toLocaleString() || '—'}</strong> 位&nbsp;|&nbsp;<a href="javascript:scrollToAlgo()" style="color:var(--ustc);text-decoration:underline">查看算法权重</a>
     </p>
   `;
 
