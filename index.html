@@ -3,644 +3,836 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>科二代 · 上海高考选校决策路径（上海本地 + C9）</title>
+<title>科二代 · 高考选校个人定制</title>
 <style>
-  :root {
-    --ustc: #004098; --ustc-light: #e8edf6; --gold: #c8972b;
-    --bg: #fafafa; --card: #fff; --text: #1a1a1a; --text-muted: #666;
-    --border: #e5e5e5; --radius: 10px; --shadow: 0 1px 3px rgba(0,0,0,.08);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; }
-  nav .inner { max-width: 1120px; margin: 0 auto; display: flex; overflow-x: auto; }
-  nav a { display: block; padding: 14px 14px; font-size: 13px; color: var(--text-muted); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: .15s; }
-  nav a:hover, nav a.active { color: var(--ustc); border-bottom-color: var(--ustc); }
-  .hero { background: linear-gradient(135deg, var(--ustc) 0%, #1a3a6e 40%, #0d2540 100%); color: #fff; padding: 64px 24px 48px; text-align: center; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,.06) 0%, transparent 60%); }
-  .hero h1 { font-size: clamp(26px, 5vw, 40px); font-weight: 800; position: relative; }
-  .hero .subtitle { font-size: 16px; opacity: .85; margin-top: 10px; position: relative; }
-  .hero .badge { display: inline-block; margin-top: 16px; padding: 5px 16px; border: 1px solid rgba(255,255,255,.3); border-radius: 20px; font-size: 12px; opacity: .75; position: relative; }
-  section { max-width: 1120px; margin: 0 auto; padding: 48px 24px; }
-  section h2 { font-size: 24px; font-weight: 700; color: var(--ustc); margin-bottom: 6px; padding-bottom: 14px; border-bottom: 2px solid var(--ustc-light); display: flex; align-items: center; gap: 10px; }
-  section h2 .num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: var(--ustc); color: #fff; border-radius: 50%; font-size: 15px; font-weight: 700; flex-shrink: 0; }
-  section h3 { font-size: 18px; margin: 28px 0 10px; color: #2c3e50; }
-  section p { margin-bottom: 10px; color: var(--text-muted); font-size: 14px; }
-  .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; margin-bottom: 14px; border: 1px solid var(--border); }
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
-  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
-  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-  th { background: var(--ustc-light); color: var(--ustc); font-weight: 600; font-size: 12px; white-space: nowrap; }
-  tr:hover td { background: #f8f9fb; }
-  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
-  .tag-t0 { background: #f3e5f5; color: #7b1fa2; }
-  .tag-s { background: #e3f2fd; color: #1565c0; }
-  .tag-a { background: #e8f5e9; color: #2e7d32; }
-  .tag-b { background: #fff3e0; color: #e65100; }
-  .tag-c { background: #fce4ec; color: #c62828; }
-  .tag-c9 { background: #fff9c4; color: #f57f17; }
-  .tier-0 { border-left: 4px solid #7b1fa2; }
-  .tier-1 { border-left: 4px solid #004098; }
-  .tier-2 { border-left: 4px solid #1565c0; }
-  .tier-3 { border-left: 4px solid #42a5f5; }
-  .tier-4 { border-left: 4px solid #90caf9; }
-  .flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 20px 0; justify-content: center; }
-  .flow-step { background: var(--ustc); color: #fff; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; text-align: center; min-width: 100px; }
-  .flow-arrow { font-size: 18px; color: var(--ustc); font-weight: 700; }
-  .checklist { list-style: none; }
-  .checklist li { padding: 8px 0 8px 30px; position: relative; border-bottom: 1px solid var(--border); font-size: 14px; }
-  .checklist li::before { content: '☐'; position: absolute; left: 0; color: var(--ustc); font-size: 17px; }
-  .checklist li.done::before { content: '☑'; color: #2e7d32; }
-  blockquote { border-left: 3px solid var(--gold); background: #fdfaf3; padding: 14px 18px; margin: 14px 0; border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px; }
-  .score-input-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .score-input-group input { padding: 10px 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 16px; width: 160px; font-family: inherit; }
-  .score-input-group input:focus { border-color: var(--ustc); outline: none; }
-  .score-input-group button { padding: 10px 22px; background: var(--ustc); color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: inherit; font-weight: 600; }
-  .score-input-group button:hover { opacity: .9; }
-  .result-box { margin-top: 14px; padding: 18px; background: var(--ustc-light); border-radius: var(--radius); font-size: 14px; }
-  footer { text-align: center; padding: 36px 24px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border); }
-  .muted { color: var(--text-muted); font-size: 12px; }
-  .highlight-box { background: linear-gradient(135deg, #fffde7, #fff9c4); border: 1px solid #fdd835; border-radius: var(--radius); padding: 18px; margin: 14px 0; }
-  .ustc-box { background: linear-gradient(135deg, var(--ustc-light), #dce8f8); border: 2px solid var(--ustc); border-radius: var(--radius); padding: 18px; margin: 14px 0; }
-  .geo-tag { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 4px; }
-  .geo-sh { background: #e3f2fd; color: #1565c0; }
-  .geo-nj { background: #e8f5e9; color: #2e7d32; }
-  .geo-hz { background: #fff3e0; color: #e65100; }
-  .geo-hf { background: #e8edf6; color: #004098; }
-  .geo-bj { background: #fce4ec; color: #c62828; }
-  .geo-hrb { background: #e0f7fa; color: #006064; }
-  .geo-xa { background: #fff9c4; color: #f57f17; }
-  @media (max-width: 640px) { nav a { padding: 10px 9px; font-size: 11px; } section { padding: 28px 14px; } .card-grid { grid-template-columns: 1fr; } .flow { flex-direction: column; } .flow-arrow { transform: rotate(90deg); } }
+:root {
+  --ustc: #004098; --ustc-light: #e8edf6; --ustc-dark: #0d2540;
+  --gold: #c8972b; --gold-light: #fdf6e3;
+  --bg: #f5f7fa; --card: #fff; --text: #1a1a1a; --text-muted: #666;
+  --border: #e5e5e5; --radius: 12px; --shadow: 0 2px 8px rgba(0,0,0,.06);
+  --green: #27ae60; --red: #e74c3c; --orange: #f39c12;
+  --blue: #3498db;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--ustc) 0%, #1a3a6e 40%, var(--ustc-dark) 100%);
+  color: #fff; padding: 56px 24px 48px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,.06) 0%, transparent 60%); }
+.hero h1 { font-size: clamp(22px, 4vw, 34px); font-weight: 800; position: relative; letter-spacing: 1px; }
+.hero .subtitle { font-size: 15px; opacity: .85; margin-top: 8px; position: relative; }
+.hero .badge { display: inline-block; margin-top: 12px; padding: 4px 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; font-size: 11px; opacity: .7; position: relative; }
+.hero .start-btn { display: inline-block; margin-top: 20px; padding: 12px 40px; background: var(--gold); color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; position: relative; transition: .2s; }
+.hero .start-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(200,151,43,.4); }
+
+/* Container */
+.container { max-width: 800px; margin: 0 auto; padding: 0 16px; }
+
+/* Progress Bar */
+.progress-wrap { max-width: 800px; margin: 0 auto; padding: 24px 16px 0; }
+.progress-steps { display: flex; justify-content: space-between; position: relative; }
+.progress-steps::before { content: ''; position: absolute; top: 14px; left: 40px; right: 40px; height: 2px; background: var(--border); z-index: 1; }
+.progress-step { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 2; cursor: pointer; }
+.progress-dot { width: 30px; height: 30px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; transition: .3s; }
+.progress-step.active .progress-dot { background: var(--ustc); box-shadow: 0 0 0 4px var(--ustc-light); }
+.progress-step.done .progress-dot { background: var(--green); }
+.progress-label { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+.progress-step.active .progress-label { color: var(--ustc); font-weight: 600; }
+.progress-step.done .progress-label { color: var(--green); }
+
+/* Wizard cards */
+.wizard { display: none; max-width: 800px; margin: 0 auto; padding: 24px 16px 0; }
+.wizard.active { display: block; }
+.wizard-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 28px 24px; border: 1px solid var(--border); }
+.wizard h2 { font-size: 18px; font-weight: 700; color: var(--ustc); margin-bottom: 4px; }
+.wizard .step-hint { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.wizard .desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+/* Options grid */
+.options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+.option-card {
+  padding: 14px 12px; border: 2px solid var(--border); border-radius: 10px;
+  text-align: center; cursor: pointer; transition: .2s; background: #fff;
+}
+.option-card:hover { border-color: var(--ustc-light); background: #f8f9fc; }
+.option-card.selected { border-color: var(--ustc); background: var(--ustc-light); }
+.option-card .opt-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.option-card .opt-label { font-size: 13px; font-weight: 600; }
+.option-card .opt-desc { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+/* Big input */
+.big-input-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
+.big-input { padding: 14px 20px; border: 2px solid var(--border); border-radius: 10px; font-size: 22px; width: 200px; font-family: inherit; font-weight: 700; text-align: center; transition: .2s; }
+.big-input:focus { border-color: var(--ustc); outline: none; box-shadow: 0 0 0 3px var(--ustc-light); }
+.big-btn { padding: 14px 32px; background: var(--ustc); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: .2s; }
+.big-btn:hover { opacity: .92; transform: translateY(-1px); }
+.big-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+/* Results */
+.results-wrap { display: none; max-width: 800px; margin: 0 auto; padding: 24px 16px 0; }
+.results-wrap.active { display: block; }
+.result-summary { background: linear-gradient(135deg, var(--ustc-light), #dce8f8); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; border: 1px solid var(--ustc); }
+.result-summary h2 { font-size: 16px; color: var(--ustc); margin-bottom: 4px; }
+.result-summary p { font-size: 13px; color: var(--text-muted); }
+.result-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; margin-right: 4px; }
+.result-tag.t0 { background: #f3e5f5; color: #7b1fa2; }
+.result-tag.t1 { background: #e3f2fd; color: #1565c0; }
+.result-tag.t2 { background: #e8f5e9; color: #2e7d32; }
+.result-tag.t3 { background: #fff3e0; color: #e65100; }
+.result-tag.t4 { background: #fce4ec; color: #c62828; }
+.result-tag.c9 { background: #fff9c4; color: #f57f17; }
+.result-tag.chong { background: #ffe0e0; color: #c0392b; }
+.result-tag.wen { background: #fff3cd; color: #856404; }
+.result-tag.bao { background: #d4edda; color: #155724; }
+.result-tag.sh { background: #e3f2fd; color: #1565c0; }
+.result-card {
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 20px 22px; margin-bottom: 12px; border: 1px solid var(--border);
+  transition: .2s; border-left: 4px solid var(--ustc);
+}
+.result-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+.result-card .rc-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.result-card .rc-name { font-size: 16px; font-weight: 700; color: var(--ustc); }
+.result-card .rc-sub { font-size: 12px; color: var(--text-muted); }
+.result-card .rc-reason { font-size: 13px; padding: 10px 14px; background: #f8f9fb; border-radius: 8px; margin: 8px 0; line-height: 1.6; }
+.result-card .rc-detail { font-size: 12px; color: var(--text-muted); display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin-top: 6px; }
+.result-card .rc-detail dt { color: #888; }
+.result-card .rc-detail dd { }
+
+/* Comparison table */
+.compare-wrap { max-width: 800px; margin: 0 auto; padding: 0 16px 24px; display: none; }
+.compare-wrap.active { display: block; }
+.compare-wrap table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+.compare-wrap th, .compare-wrap td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+.compare-wrap th { background: var(--ustc); color: #fff; font-weight: 600; font-size: 11px; }
+.compare-wrap tr:nth-child(even) td { background: #f8f9fb; }
+
+/* Nav buttons */
+.wizard-actions { display: flex; gap: 10px; justify-content: space-between; margin-top: 20px; }
+.btn-prev { padding: 10px 20px; background: #fff; color: var(--text-muted); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.btn-prev:hover { background: #f5f5f5; }
+.btn-next { padding: 10px 28px; background: var(--ustc); color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: .2s; }
+.btn-next:hover { opacity: .9; }
+.btn-next:disabled { opacity: .4; cursor: not-allowed; }
+
+/* Guide below (collapsible) */
+.guide-section { max-width: 1120px; margin: 40px auto; padding: 0 16px; }
+.guide-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--text-muted); cursor: pointer; font-family: inherit; }
+.guide-toggle:hover { border-color: var(--ustc); color: var(--ustc); }
+.guide-content { display: none; margin-top: 16px; }
+.guide-content.open { display: block; }
+
+/* Reset and "start over" */
+.reset-bar { max-width: 800px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: flex-end; }
+.reset-link { font-size: 12px; color: var(--text-muted); cursor: pointer; padding: 6px 12px; border-radius: 6px; }
+.reset-link:hover { color: var(--red); }
+
+/* Toast / alert */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--red); color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 13px; z-index: 999; display: none; box-shadow: 0 4px 20px rgba(0,0,0,.15); animation: fadeIn .3s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* responsive */
+@media (max-width: 640px) {
+  .options-grid { grid-template-columns: repeat(2, 1fr); }
+  .big-input { width: 100%; }
+  .big-input-group { flex-direction: column; }
+  .big-btn { width: 100%; }
+  .progress-label { font-size: 9px; }
+  .compare-wrap { overflow-x: auto; }
+  .progress-steps::before { left: 20px; right: 20px; }
+}
+
+/* Subject badge */
+.subject-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; margin: 1px; }
+.subject-badge.math { background: #e3f2fd; color: #1565c0; }
+.subject-badge.phys { background: #fce4ec; color: #c62828; }
+.subject-badge.cs { background: #e8f5e9; color: #2e7d32; }
+.subject-badge.ee { background: #fff3e0; color: #e65100; }
+.subject-badge.data { background: #f3e5f5; color: #7b1fa2; }
+.subject-badge.chem { background: #e0f7fa; color: #006064; }
+.subject-badge.bio { background: #f1f8e9; color: #558b2f; }
+.subject-badge.mech { background: #fff9c4; color: #f57f17; }
+.subject-badge.elec { background: #fbe9e7; color: #bf360c; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="inner">
-    <a href="#profile">1.画像</a>
-    <a href="#tiers">2.院校分层</a>
-    <a href="#c9-detail">3.C9详解</a>
-    <a href="#matrix">4.匹配矩阵</a>
-    <a href="#path">5.分位次路径</a>
-    <a href="#shanghai">6.上海校详解</a>
-    <a href="#checklist">7.Checklist</a>
-    <a href="#tools">8.资源</a>
-  </div>
-</nav>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
+<!-- Hero -->
 <header class="hero">
-  <h1>🎓 科二代 · 上海高考选校决策路径</h1>
-  <p class="subtitle">父母中科大毕业 → 上海高考 → <strong>上海本地大学 或 C9联盟</strong> → STEM优先</p>
-  <div class="badge">🏫 USTC校友家庭专属 · 上海 + C9 双维度决策框架 · v2.0</div>
+  <h1>科二代 高考选校个人定制</h1>
+  <p class="subtitle">父母中科大毕业 &middot; 上海高考 &middot; STEM优先 &middot; 上海本地 + C9联盟</p>
+  <div class="badge">USTC校友家庭专属 &middot; v3.0</div>
+  <button class="start-btn" onclick="startWizard()">开始定制我的选校方案</button>
 </header>
 
-<!-- ====== 1. PROFILE ====== -->
-<section id="profile">
-  <h2><span class="num">1</span> 科二代身份画像与决策前提</h2>
-  <div class="card-grid">
-    <div class="card">
-      <h3 style="margin-top:0">🧬 科二代画像</h3>
-      <p>父母一方或双方为中国科学技术大学（USTC）毕业生。USTC以<strong>物理、数学、CS、化学</strong>见长，C9联盟成员，学风务实严谨。科二代通常具备：理科基因 + 学术导向 + 务实风格 + 对"硬核"学科的认同。</p>
-    </div>
-    <div class="card">
-      <h3 style="margin-top:0">📋 决策边界</h3>
-      <table>
-        <tr><td><strong>选科</strong></td><td>物化双选（覆盖 98.5% 理工专业组）</td></tr>
-        <tr><td><strong>地域</strong></td><td>上海本地优先；接受 C9 异地（南京/杭州/合肥/北京/哈尔滨/西安）</td></tr>
-        <tr><td><strong>方向</strong></td><td>STEM：数学/物理/CS/EE/数据/AI/材料/生医</td></tr>
-        <tr><td><strong>价值观</strong></td><td>学科硬实力 > 城市便利；长期发展 > 短期热门</td></tr>
-      </table>
-    </div>
+<!-- Progress -->
+<div class="progress-wrap" id="progressWrap" style="display:none">
+  <div class="progress-steps">
+    <div class="progress-step" onclick="goStep(0)"><div class="progress-dot">1</div><div class="progress-label">位次</div></div>
+    <div class="progress-step" onclick="goStep(1)"><div class="progress-dot">2</div><div class="progress-label">学科</div></div>
+    <div class="progress-step" onclick="goStep(2)"><div class="progress-dot">3</div><div class="progress-label">地域</div></div>
+    <div class="progress-step" onclick="goStep(3)"><div class="progress-dot">4</div><div class="progress-label">规划</div></div>
+    <div class="progress-step" onclick="goStep(4)"><div class="progress-dot">5</div><div class="progress-label">推荐</div></div>
   </div>
-  <blockquote>
-    <strong>科二代决策原则</strong>：上海本地优先（留沪优势），但 C9 中清北/中科大/浙大/南大等若专业匹配度显著更高，应纳入考量。核心问题是：<strong>出沪的学科增益是否值得 4 年离开上海？</strong>
-  </blockquote>
-</section>
+</div>
 
-<!-- ====== 2. TIERS ====== -->
-<section id="tiers">
-  <h2><span class="num">2</span> 上海本地 + C9 院校 STEM 实力分层</h2>
-  <p>按 STEM 学科实力+综合层次分五档。<span class="tag tag-c9">C9</span> = C9联盟成员，<span class="geo-sh">沪</span> = 上海本地。</p>
+<div class="reset-bar" id="resetBar" style="display:none">
+  <span class="reset-link" onclick="resetAll()">重新开始</span>
+</div>
 
-  <!-- T0 -->
-  <div class="card tier-0">
-    <h3 style="margin-top:0"><span class="tag tag-t0">T0 · C9顶端</span> 清华大学 · 北京大学 <span class="geo-tag geo-bj">北京</span></h3>
-    <table>
-      <tr><th>维度</th><th>清华大学</th><th>北京大学</th></tr>
-      <tr><td>层次</td><td>C9 / 985 / 双一流A类</td><td>C9 / 985 / 双一流A类</td></tr>
-      <tr><td>STEM王牌</td><td>CS(A+)·EE(A+)·工程各领域·AI</td><td>数学(A+)·物理(A+)·CS(A+)·化学(A+)</td></tr>
-      <tr><td>与USTC基因匹配</td><td>⭐⭐⭐⭐⭐ 工科顶尖</td><td>⭐⭐⭐⭐⭐ 理科顶尖</td></tr>
-      <tr><td>上海录取通道</td><td>零志愿批次</td><td>零志愿批次</td></tr>
-      <tr><td>2025上海预估位次</td><td>前~150</td><td>前~150</td></tr>
-      <tr><td>科二代建议</td><td>位次前150且愿赴京 → 清华工科 = 最优工程教育</td><td>位次前150且愿赴京 → 北大理科 = 基础科学殿堂</td></tr>
-    </table>
-  </div>
-
-  <!-- T1 -->
-  <div class="card tier-1">
-    <h3 style="margin-top:0"><span class="tag tag-s">T1 · C9核心</span> 复旦 · 上交 · 中科大 · 浙大 · 南大</h3>
-    <table>
-      <tr><th>院校</th><th>地域</th><th>C9</th><th>STEM王牌学科</th><th>上海位次</th><th>科二代匹配度</th></tr>
-      <tr>
-        <td><strong>复旦大学</strong></td>
-        <td><span class="geo-tag geo-sh">沪</span></td>
-        <td><span class="tag tag-c9">C9</span></td>
-        <td>数学(A+)·物理(A)·CS(A-)·微电子</td>
-        <td>前~2000</td>
-        <td>⭐⭐⭐⭐⭐ 基础科学+CS</td>
-      </tr>
-      <tr>
-        <td><strong>上海交通大学</strong></td>
-        <td><span class="geo-tag geo-sh">沪</span></td>
-        <td><span class="tag tag-c9">C9</span></td>
-        <td>CS(A+)·机械(A+)·船舶(A+)·EE(A)·生物(A+)</td>
-        <td>前~2000</td>
-        <td>⭐⭐⭐⭐⭐ 工科应用+CS</td>
-      </tr>
-      <tr style="background:#e8edf6">
-        <td><strong>中国科学技术大学</strong> 🏫</td>
-        <td><span class="geo-tag geo-hf">合肥</span></td>
-        <td><span class="tag tag-c9">C9</span></td>
-        <td>物理(A+)·数学(A+)·CS(A+)·化学(A+)·核科学(A+)</td>
-        <td>前~1500</td>
-        <td>⭐⭐⭐⭐⭐ 父母的母校！</td>
-      </tr>
-      <tr>
-        <td><strong>浙江大学</strong></td>
-        <td><span class="geo-tag geo-hz">杭州</span></td>
-        <td><span class="tag tag-c9">C9</span></td>
-        <td>CS(A+)·光工(A+)·控制(A+)·农学(A+)</td>
-        <td>前~2000</td>
-        <td>⭐⭐⭐⭐⭐ CS/工科极强</td>
-      </tr>
-      <tr>
-        <td><strong>南京大学</strong></td>
-        <td><span class="geo-tag geo-nj">南京</span></td>
-        <td><span class="tag tag-c9">C9</span></td>
-        <td>物理学(A+)·天文(A+)·CS(A+)·地质(A+)</td>
-        <td>前~1800</td>
-        <td>⭐⭐⭐⭐⭐ 理科底蕴深厚</td>
-      </tr>
-    </table>
-    <div class="ustc-box">
-      <strong>🌟 特别议题：科二代是否应报考中科大？</strong><br>
-      <strong>支持因素</strong>：学科基因完美匹配 · 校友网络无缝对接 · 科一代对培养模式有深度理解 · "科二代回科大"有传承意义<br>
-      <strong>需权衡</strong>：合肥 vs 上海的城市差距（实习/就业/视野）· 孩子是否愿意被贴上"走父母老路"标签 · 独立成长空间的压缩<br>
-      <strong>建议</strong>：如果孩子对基础科学有真正热情且不排斥合肥，USTC是 T1 中与科二代基因最匹配的选择。但最终决定权在孩子——"回科大"必须是孩子自己的选择。
+<!-- ================================ STEP 1: 位次 ================================ -->
+<div class="wizard active" id="step0">
+  <div class="wizard-card">
+    <h2>你的上海市高考位次是多少？</h2>
+    <p class="step-hint">第1步 / 共5步</p>
+    <p class="desc">位次是高考选校最重要的锚点。上海市每年约5-6万考生，本科线约对应位次40000左右。理工科目标院校集中在位次前15000。</p>
+    <div class="big-input-group">
+      <input type="number" class="big-input" id="rankInput" placeholder="上海市位次" min="1" max="63000" oninput="clearError()">
+      <span style="font-size:14px;color:var(--text-muted)">名</span>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">
+      <span>位次参考：前150→清北 | 前2000→复交 | 前5000→同济/华师大 | 前10000→上科大/华理 | 前15000→上大</span>
+    </div>
+    <div class="wizard-actions">
+      <span></span>
+      <button class="btn-next" onclick="nextStep(0)">下一步 →</button>
     </div>
   </div>
+</div>
 
-  <!-- T2 -->
-  <div class="card tier-2">
-    <h3 style="margin-top:0"><span class="tag tag-a">T2 · C9工科 + 上海985</span> 哈工大 · 西交大 · 同济 · 华东师大</h3>
-    <table>
-      <tr><th>院校</th><th>地域</th><th>层次</th><th>STEM王牌</th><th>上海位次</th><th>科二代匹配度</th></tr>
-      <tr>
-        <td><strong>哈尔滨工业大学</strong></td>
-        <td><span class="geo-tag geo-hrb">哈尔滨</span></td>
-        <td><span class="tag tag-c9">C9</span> 985</td>
-        <td>机械(A+)·控制(A+)·力学(A+)·CS(A)·焊接</td>
-        <td>~3000-6000</td>
-        <td>⭐⭐⭐⭐ 工科硬核但地域远</td>
-      </tr>
-      <tr>
-        <td><strong>西安交通大学</strong></td>
-        <td><span class="geo-tag geo-xa">西安</span></td>
-        <td><span class="tag tag-c9">C9</span> 985</td>
-        <td>电气(A+)·动力(A+)·机械(A)·CS(A-)</td>
-        <td>~3500-7000</td>
-        <td>⭐⭐⭐⭐ 电气/能源顶尖</td>
-      </tr>
-      <tr>
-        <td><strong>同济大学</strong></td>
-        <td><span class="geo-tag geo-sh">沪</span></td>
-        <td>985</td>
-        <td>土木(A+)·建筑·汽车·AI·测绘</td>
-        <td>~2000-5000</td>
-        <td>⭐⭐⭐⭐ 工科硬核+上海</td>
-      </tr>
-      <tr>
-        <td><strong>华东师范大学</strong></td>
-        <td><span class="geo-tag geo-sh">沪</span></td>
-        <td>985</td>
-        <td>统计学(A+)·CS(B+)·软件工程·数据科学</td>
-        <td>~1500-4500</td>
-        <td>⭐⭐⭐⭐ 统计/CS被低估</td>
-      </tr>
-    </table>
-    <p class="muted">📌 哈工大/西交大C9身份+工科实力强劲，但地域偏远。适合"宁可去东北/西安读C9工科，也不在上海读普通211"的科二代。哈工大深圳校区如在上海招生可作为折中选择。</p>
-  </div>
-
-  <!-- T3 & T4 -->
-  <div class="card-grid">
-    <div class="card tier-3">
-      <h3 style="margin-top:0"><span class="tag tag-b">T3 · 特色强校</span> 上海科技大学 · 华东理工大学 <span class="geo-tag geo-sh">沪</span></h3>
-      <table>
-        <tr><th>校</th><th>层次</th><th>STEM王牌</th><th>位次</th></tr>
-        <tr><td><strong>上科大</strong></td><td>双一流·研究型</td><td>CS·生物·材料·物理·电子</td><td>~3000-7000</td></tr>
-        <tr><td><strong>华东理工</strong></td><td>211·双一流</td><td>化工(A+)·材料·制药</td><td>~5000-10000</td></tr>
-      </table>
-      <p class="muted">上科大是最像"科"的上海高校——中科院共建·小班·导师制·科研导向。</p>
+<!-- ================================ STEP 2: 学科方向 ================================ -->
+<div class="wizard" id="step1">
+  <div class="wizard-card">
+    <h2>你最感兴趣的学科方向？</h2>
+    <p class="step-hint">第2步 / 共5步</p>
+    <p class="desc">选校首先是选专业。科二代物化双选，所有STEM方向均可报考。选择你最倾向的方向（或"不限"）。</p>
+    <div class="options-grid" id="subjectGrid">
+      <div class="option-card" onclick="selectSubject('math')">
+        <span class="opt-icon">∑</span>
+        <div class="opt-label">数学</div>
+        <div class="opt-desc">纯数学、应用数学、统计</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('phys')">
+        <span class="opt-icon">⚛</span>
+        <div class="opt-label">物理/天文</div>
+        <div class="opt-desc">物理、天文、核科学</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('cs')">
+        <span class="opt-icon">💻</span>
+        <div class="opt-label">计算机/AI</div>
+        <div class="opt-desc">CS、AI、网络安全</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('ee')">
+        <span class="opt-icon">⚡</span>
+        <div class="opt-label">EE/微电子</div>
+        <div class="opt-desc">电子、通信、芯片</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('data')">
+        <span class="opt-icon">📊</span>
+        <div class="opt-label">数据科学</div>
+        <div class="opt-desc">大数据、数据分析</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('chem')">
+        <span class="opt-icon">🧪</span>
+        <div class="opt-label">化学/材料</div>
+        <div class="opt-desc">化学、材料、化工</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('bio')">
+        <span class="opt-icon">🧬</span>
+        <div class="opt-label">生物/医学</div>
+        <div class="opt-desc">生物、生医工、医学</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('mech')">
+        <span class="opt-icon">🤖</span>
+        <div class="opt-label">机械/机器人</div>
+        <div class="opt-desc">机械、机器人、力学</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('elec')">
+        <span class="opt-icon">🔌</span>
+        <div class="opt-label">电气/能源</div>
+        <div class="opt-desc">电气工程、能源动力</div>
+      </div>
+      <div class="option-card" onclick="selectSubject('any')">
+        <span class="opt-icon">⊘</span>
+        <div class="opt-label">不限方向</div>
+        <div class="opt-desc">学科未定，先看学校</div>
+      </div>
     </div>
-    <div class="card tier-4">
-      <h3 style="margin-top:0"><span class="tag tag-c">T4 · 保底</span> 上海大学 · 东华大学 <span class="geo-tag geo-sh">沪</span></h3>
-      <table>
-        <tr><th>校</th><th>层次</th><th>STEM王牌</th><th>位次</th></tr>
-        <tr><td><strong>上海大学</strong></td><td>211·双一流</td><td>CS·机械·通信·数学</td><td>~6000-12000</td></tr>
-        <tr><td><strong>东华大学</strong></td><td>211·双一流</td><td>材料(A+)·纺织</td><td>~8000-15000</td></tr>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ====== 3. C9 DETAIL ====== -->
-<section id="c9-detail">
-  <h2><span class="num">3</span> C9 非上海院校详解：出沪值不值？</h2>
-  <p>对上海科二代而言，出沪读 C9 是一个需要<strong>量化权衡</strong>的决策。以下逐校分析"出沪的学科增益"。</p>
-
-  <div class="card tier-0">
-    <h3 style="margin-top:0">🏆 清华/北大：零志愿的终极选择</h3>
-    <table>
-      <tr><th>因素</th><th>评估</th></tr>
-      <tr><td>学科增益 vs 复交</td><td>清北整体平台高半档，但复交在上海的学科精度（尤其CS/EE/微电子）已接近或持平</td></tr>
-      <tr><td>留沪损失</td><td>4年北京生活，但清北光环回沪就业无障碍</td></tr>
-      <tr><td>科二代建议</td><td><strong>位次前150 → 清北值得去。</strong>位次150-300 → 复交综评更稳，不必冒险零志愿落榜后滑入普通批。</td></tr>
-    </table>
-  </div>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">🌟 中科大（USTC）：父母的母校</h3>
-    <table>
-      <tr><th>因素</th><th>评估</th></tr>
-      <tr><td>学科匹配</td><td>物理/数学/CS/化学均为A+级别，与科二代基因 100% 匹配</td></tr>
-      <tr><td>培养模式</td><td>100%自由转专业、全员导师制、科研门槛低——科一代深度理解其价值，外行家长可能低估</td></tr>
-      <tr><td>城市代价</td><td>合肥 vs 上海：实习机会/国际视野/文化生活的客观差距</td></tr>
-      <tr><td>校友网络</td><td>科一代的USTC校友圈直接为科二代所用——这是其他任何学校无法提供的资源</td></tr>
-      <tr><td>心理维度</td><td>孩子是否会觉得"活在父母阴影下"？需开放讨论，尊重孩子感受</td></tr>
-      <tr><td><strong>科二代建议</strong></td><td>位次前1500且对基础科学（物理/数学/CS）有真正热情 → USTC可能是最优选。但<strong>必须是孩子的选择，不是父母的期望</strong>。建议高三寒假带孩子去合肥校园走一圈，亲身体验。</td></tr>
-    </table>
-  </div>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">🌊 浙江大学（杭州）：CS领域的华东霸主</h3>
-    <table>
-      <tr><th>因素</th><th>评估</th></tr>
-      <tr><td>学科增益 vs 复交</td><td>CS与上交持平或略优（A+），光工/控制独步全国。对CS方向的科二代，浙大 = 交大级别选择</td></tr>
-      <tr><td>城市代价</td><td>杭州 vs 上海：互联网实习机会（阿里/蚂蚁/网易）不逊于上海；但非互联网行业弱</td></tr>
-      <tr><td>距离</td><td>高铁1小时，周末可回家——是C9异地中<strong>距离上海最近的选项之一</strong></td></tr>
-      <tr><td><strong>科二代建议</strong></td><td>位次前2000，CS/EE方向 → 浙大与交大并列考虑。杭州的互联网生态 + C9身份 + 距离近 = 出沪最优解之一。</td></tr>
-    </table>
-  </div>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">📐 南京大学（南京）：基础科学的江南殿堂</h3>
-    <table>
-      <tr><th>因素</th><th>评估</th></tr>
-      <tr><td>学科增益 vs 复交</td><td>物理A+/天文A+全国顶尖；CS新晋A+。理科底蕴与复旦相当，CS略弱于上交</td></tr>
-      <tr><td>城市代价</td><td>南京 vs 上海：高校资源密度高（南大+东大+南航+南理），但产业生态弱于上海</td></tr>
-      <tr><td>距离</td><td>高铁1.5小时，同样<strong>距离上海极近</strong></td></tr>
-      <tr><td><strong>科二代建议</strong></td><td>位次前1800，物理/天文/CS方向 → 南大与复旦并列考虑。理科基因与USTC最接近的非母校C9。</td></tr>
-    </table>
-  </div>
-
-  <div class="card-grid">
-    <div class="card tier-2">
-      <h3 style="margin-top:0">❄️ 哈工大（哈尔滨）</h3>
-      <p><strong>学科增益</strong>：机械/控制/力学A+，焊接亚洲第一。工科硬核度在C9中第一梯队。</p>
-      <p><strong>城市代价</strong>：哈尔滨——C9中地域最远、气候最极端。但哈工大深圳校区若在沪招生，一举解决地域问题。</p>
-      <p><strong>科二代建议</strong>：位次3000-6000，接受"用4年地域换C9工科学位"→可选。更推荐关注<strong>哈工大深圳</strong>在沪招生计划。</p>
-    </div>
-    <div class="card tier-2">
-      <h3 style="margin-top:0">🏯 西交大（西安）</h3>
-      <p><strong>学科增益</strong>：电气A+（全国前二）、动力A+、机械A。在能源/电力行业有极强话语权。</p>
-      <p><strong>城市代价</strong>：西安——历史文化名城，但产业生态与上海差距明显。</p>
-      <p><strong>科二代建议</strong>：位次3500-7000，电气/能源方向→西交大是"用地域换学科精度"的典型案例。如果孩子对能源/电力方向有兴趣，西交大在该领域的行业地位不逊于复交。</p>
+    <div class="wizard-actions">
+      <button class="btn-prev" onclick="prevStep(1)">← 上一步</button>
+      <button class="btn-next" id="step1Btn" onclick="nextStep(1)" disabled>下一步 →</button>
     </div>
   </div>
+</div>
 
-  <div class="highlight-box">
-    <strong>📊 出沪决策速查表</strong>
-    <table>
-      <tr><th>若位次在</th><th>上海选项</th><th>C9异地选项</th><th>出沪建议</th></tr>
-      <tr><td>前150</td><td>复交任意专业</td><td>清北</td><td>✅ 清北值得去</td></tr>
-      <tr><td>150-1500</td><td>复交核心专业组</td><td>中科大/浙大/南大</td><td>⚖️ 看专业匹配度</td></tr>
-      <tr><td>1500-3000</td><td>复交末位/同济王牌/华师大统计</td><td>中科大/浙大/南大(冲)</td><td>⚠️ 仅当学科匹配度极高</td></tr>
-      <tr><td>3000-6000</td><td>同济/华师大/上科大</td><td>哈工大/西交大</td><td>⚠️ 仅当接受地域牺牲</td></tr>
-      <tr><td>6000+</td><td>上科大/华东理工/上大</td><td>—</td><td>❌ 留沪更优，C9无望</td></tr>
-    </table>
-  </div>
-</section>
-
-<!-- ====== 4. MATRIX ====== -->
-<section id="matrix">
-  <h2><span class="num">4</span> 学科方向 → 院校匹配矩阵（上海+C9）</h2>
-  <p>物化双选前提。每个学科方向给出<strong>上海最优</strong>和<strong>C9异地最优</strong>两条路径。</p>
-  <table>
-    <thead><tr><th>学科方向</th><th>🥇 上海第一</th><th>🥈 上海第二</th><th>🏆 C9异地最优</th><th>保底</th></tr></thead>
-    <tbody>
-      <tr><td><strong>数学</strong></td><td>复旦数学英才班</td><td>华东师大统计</td><td>北大/中科大</td><td>上大理学院</td></tr>
-      <tr><td><strong>物理学</strong></td><td>复旦物理系</td><td>上交物理与天文</td><td><strong>中科大</strong>/北大/南大</td><td>上科大物质学院</td></tr>
-      <tr><td><strong>计算机/AI</strong></td><td>上交电院(IEEE/ACM/AI)</td><td>复旦CS学院</td><td><strong>浙大</strong>/清华/中科大</td><td>上科大/上大</td></tr>
-      <tr><td><strong>EE/微电子</strong></td><td>复旦微电子</td><td>上交电院</td><td>清华/浙大</td><td>上科大信息学院</td></tr>
-      <tr><td><strong>数据科学</strong></td><td>华东师大数据学院</td><td>复旦大数据学院</td><td>浙大/中科大</td><td>上大</td></tr>
-      <tr><td><strong>化学/材料</strong></td><td>华东理工化工</td><td>复旦化学系</td><td><strong>中科大</strong>/浙大</td><td>东华材料</td></tr>
-      <tr><td><strong>生物/医学</strong></td><td>上交医学院</td><td>复旦医学院</td><td>浙大医学院</td><td>华东理工</td></tr>
-      <tr><td><strong>机械/机器人</strong></td><td>上交机动学院</td><td>同济汽车学院</td><td><strong>哈工大</strong>/清华</td><td>上大机电</td></tr>
-      <tr><td><strong>电气/能源</strong></td><td>上交电院</td><td>同济</td><td><strong>西交大</strong>/清华</td><td>上大</td></tr>
-    </tbody>
-  </table>
-  <p class="muted">📌 <strong>加粗</strong> = 该学科方向C9异地的"压倒性优势"选项。例如物理→中科大（父母母校+学科A+），电气→西交大（A+，行业统治力）。</p>
-</section>
-
-<!-- ====== 5. PATH ====== -->
-<section id="path">
-  <h2><span class="num">5</span> 按位次分段的决策路径（含上海+C9）</h2>
-  <div class="card" style="margin-bottom:20px">
-    <h3 style="margin-top:0">🔍 快速定位</h3>
-    <div class="score-input-group">
-      <input type="number" id="rankInput" placeholder="输入上海市位次" min="1" max="63000">
-      <button onclick="lookupRank()">查看推荐</button>
+<!-- ================================ STEP 3: 地域偏好 ================================ -->
+<div class="wizard" id="step2">
+  <div class="wizard-card">
+    <h2>你对地域有什么偏好？</h2>
+    <p class="step-hint">第3步 / 共5步</p>
+    <p class="desc">科二代的核心权衡：留沪的本地优势 vs 出沪的C9增益。你更倾向于哪种选择？</p>
+    <div class="options-grid" id="locationGrid">
+      <div class="option-card" onclick="selectLocation('sh')">
+        <span class="opt-icon">🏙</span>
+        <div class="opt-label">留沪优先</div>
+        <div class="opt-desc">优先上海院校，除非C9有压倒性优势学科</div>
+      </div>
+      <div class="option-card" onclick="selectLocation('both')">
+        <span class="opt-icon">⚖</span>
+        <div class="opt-label">上海+异地均可</div>
+        <div class="opt-desc">同等看待上海与C9异地，以专业质量为先</div>
+      </div>
+      <div class="option-card" onclick="selectLocation('c9')">
+        <span class="opt-icon">🏆</span>
+        <div class="opt-label">看重C9，地域次要</div>
+        <div class="opt-desc">C9身份优先，可以接受哈工大/西交大地域代价</div>
+      </div>
+      <div class="option-card" onclick="selectLocation('any')">
+        <span class="opt-icon">🌐</span>
+        <div class="opt-label">无偏好</div>
+        <div class="opt-desc">还没想好，先看推荐再决定</div>
+      </div>
     </div>
-    <div class="result-box" id="rankResult" style="display:none"></div>
-  </div>
-
-  <div class="card tier-0">
-    <h3 style="margin-top:0">🏆 位次 1-150：清北 vs 复交任意选</h3>
-    <table>
-      <tr><th>策略</th><th>选项</th><th>说明</th></tr>
-      <tr><td>零志愿冲</td><td>清华 / 北大</td><td>C9顶端，学科自由选择</td></tr>
-      <tr><td>综评稳</td><td>复交综评任意专业组</td><td>留沪最优解</td></tr>
-    </table>
-    <p class="muted">📌 位次前150是唯一可以纯粹"兴趣导向"的段位。核心问题是：愿不愿意为清北离开上海？</p>
-  </div>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">🥇 位次 150-2000：复交主战场 + C9异地窗口</h3>
-    <table>
-      <tr><th>策略</th><th>上海选项</th><th>C9异地选项</th></tr>
-      <tr><td>冲</td><td>复交综评/普通批热门专业组</td><td>中科大/浙大/南大（位次前1500可稳）</td></tr>
-      <tr><td>稳</td><td>复交末位专业组 / 同济AI / 华师大统计</td><td>中科大理科试验班 / 浙大信息大类</td></tr>
-      <tr><td>保</td><td>同济工科 / 上科大CS</td><td>—（C9异地超过此位次不再有优势）</td></tr>
-    </table>
-    <p class="muted">📌 此段位是科二代最需要审慎权衡的区间：复交普通专业 vs 中科大/浙大/南大王牌专业？</p>
-  </div>
-
-  <div class="card tier-2">
-    <h3 style="margin-top:0">🥈 位次 2000-5000：上海985 + C9工科</h3>
-    <table>
-      <tr><th>策略</th><th>上海选项</th><th>C9异地选项</th></tr>
-      <tr><td>冲</td><td>复交末位 / 同济AI实验班</td><td>中科大/南大末位（位次3000内）</td></tr>
-      <tr><td>稳</td><td>同济智能·车辆 / 华师大统计·CS·数据</td><td>哈工大 / 西交大</td></tr>
-      <tr><td>保</td><td>上科大CS·电子 / 华东理工</td><td>—</td></tr>
-    </table>
-    <p class="muted">📌 此段位的核心权衡：同济/华师大（上海985）vs 哈工大/西交大（C9工科但地域远）。一般建议留沪优先，除非孩子对哈工大/西交大的特定工科方向（机械/电气/焊接）有明确兴趣。</p>
-  </div>
-
-  <div class="card tier-3">
-    <h3 style="margin-top:0">🥉 位次 5000-10000：上海特色强校</h3>
-    <p>C9异地基本无望（哈工大/西交大可能触及但专业选择受限），建议<strong>安心留沪</strong>。</p>
-    <table>
-      <tr><th>策略</th><th>选项</th></tr>
-      <tr><td>冲</td><td>同济/华师大偏冷门专业组</td></tr>
-      <tr><td>稳</td><td>上科大物化组 · 华东理工化工·材料·制药</td></tr>
-      <tr><td>保</td><td>上大CS·通信·数学 · 东华材料</td></tr>
-    </table>
-  </div>
-
-  <div class="card tier-4">
-    <h3 style="margin-top:0">📌 位次 10000+：上海211保底</h3>
-    <p>上大/东华为基本盘，关注中外合作办学项目。</p>
-  </div>
-</section>
-
-<!-- ====== 6. SHANGHAI DETAIL ====== -->
-<section id="shanghai">
-  <h2><span class="num">6</span> 上海本地重点院校专业组详解</h2>
-  <p>以下聚焦上海本地院校。C9非上海院校详见第3章。</p>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">🔬 复旦大学 — 基础科学的南方重镇</h3>
-    <table>
-      <tr><th>专业组</th><th>方向</th><th>推荐度</th><th>备注</th></tr>
-      <tr><td>数学英才班</td><td>纯数学·应用数学</td><td>⭐⭐⭐⭐⭐</td><td>A+学科，与USTC数学系基因最近</td></tr>
-      <tr><td>物理学系</td><td>物理·核物理</td><td>⭐⭐⭐⭐⭐</td><td>理论物理强</td></tr>
-      <tr><td>微电子学院</td><td>芯片·半导体</td><td>⭐⭐⭐⭐⭐</td><td>国家示范性微电子学院</td></tr>
-      <tr><td>CS学院</td><td>CS·AI·安全</td><td>⭐⭐⭐⭐</td><td>上升势头强</td></tr>
-      <tr><td>大数据学院</td><td>数据科学</td><td>⭐⭐⭐⭐</td><td>新兴交叉学科</td></tr>
-    </table>
-  </div>
-
-  <div class="card tier-1">
-    <h3 style="margin-top:0">⚙️ 上海交通大学 — 工科应用的东方MIT</h3>
-    <table>
-      <tr><th>专业组</th><th>方向</th><th>推荐度</th><th>备注</th></tr>
-      <tr><td>IEEE试点班</td><td>EE/CS精英班</td><td>⭐⭐⭐⭐⭐</td><td>全英文，国际对标</td></tr>
-      <tr><td>ACM班</td><td>CS精英班</td><td>⭐⭐⭐⭐⭐</td><td>俞勇教授创办</td></tr>
-      <tr><td>AI学院</td><td>AI/ML/CV/NLP</td><td>⭐⭐⭐⭐⭐</td><td>独立学院资源集中</td></tr>
-      <tr><td>电院</td><td>CS·EE·自动化</td><td>⭐⭐⭐⭐⭐</td><td>上交第一大院</td></tr>
-      <tr><td>密西根学院</td><td>EE·CS·ME双学位</td><td>⭐⭐⭐⭐</td><td>全英文，出国导向，学费高</td></tr>
-    </table>
-  </div>
-
-  <div class="card-grid">
-    <div class="card tier-2">
-      <h3 style="margin-top:0">🏗️ 同济大学</h3>
-      <table>
-        <tr><th>专业组</th><th>推荐度</th></tr>
-        <tr><td>智能科学与技术</td><td>⭐⭐⭐⭐⭐</td></tr>
-        <tr><td>车辆工程（新能源）</td><td>⭐⭐⭐⭐</td></tr>
-        <tr><td>土木工程</td><td>⭐⭐⭐ 行业下行</td></tr>
-        <tr><td>测绘与地理信息</td><td>⭐⭐⭐</td></tr>
-      </table>
-    </div>
-    <div class="card tier-2">
-      <h3 style="margin-top:0">📊 华东师范大学</h3>
-      <table>
-        <tr><th>专业组</th><th>推荐度</th></tr>
-        <tr><td>统计学院</td><td>⭐⭐⭐⭐⭐ A+</td></tr>
-        <tr><td>软件工程学院</td><td>⭐⭐⭐⭐⭐</td></tr>
-        <tr><td>数据学院</td><td>⭐⭐⭐⭐⭐</td></tr>
-        <tr><td>CS学院</td><td>⭐⭐⭐⭐</td></tr>
-      </table>
-      <p class="muted">"被名字耽误的工科强校"</p>
+    <div class="wizard-actions">
+      <button class="btn-prev" onclick="prevStep(2)">← 上一步</button>
+      <button class="btn-next" id="step2Btn" onclick="nextStep(2)" disabled>下一步 →</button>
     </div>
   </div>
+</div>
 
-  <div class="card tier-3">
-    <h3 style="margin-top:0">🌟 上海科技大学 — 最像"科"的上海高校</h3>
-    <table>
-      <tr><td>创办</td><td>2013年，上海市政府+中国科学院共建</td></tr>
-      <tr><td>模式</td><td>小规模（年招~500）·研究型·导师制·国际化</td></tr>
-      <tr><td>学院</td><td>物质·生命·信息·数学·生医工·创管·创艺</td></tr>
-      <tr><td>科研</td><td>本科生即进实验室；大科学装置（光源·活细胞·超强激光）</td></tr>
-      <tr><td>深造</td><td>80%+ 继续深造，大量海外top PhD</td></tr>
-      <tr><td>与USTC相似</td><td>理科导向·小而精·科研浓·师生比高·中科院血统</td></tr>
-    </table>
-    <blockquote>如果把USTC比作"合肥的Caltech"，上科大就是"上海的迷你版"。位次3000-7000的科二代，上科大可能是性价比最高的<strong>留沪</strong>选择。</blockquote>
-  </div>
-</section>
-
-<!-- ====== 7. CHECKLIST ====== -->
-<section id="checklist">
-  <h2><span class="num">7</span> 科二代决策 Checklist</h2>
-  <div class="card">
-    <h3 style="margin-top:0">📅 高三上学期</h3>
-    <ul class="checklist">
-      <li class="done">确认选科：物化双选（覆盖全部理工专业组）</li>
-      <li>了解强基计划/综合评价报名条件与时间节点（复交浙科南均有强基）</li>
-      <li>初步圈定目标：上海 3-5 所 + C9异地 2-3 所</li>
-      <li>与科一代深度沟通：校友圈对各校的真实评价</li>
-    </ul>
-
-    <h3>📅 高三下学期（6月前）</h3>
-    <ul class="checklist">
-      <li>关注上海教育考试院公众号 + 目标C9院校招生网</li>
-      <li>下载上一年《各专业录取人数及考分》，建立位次对标表</li>
-      <li>参加目标院校校园开放日/线上宣讲（C9异地校可利用寒假实地探访）</li>
-      <li>与孩子深入讨论：<strong>留沪 vs 出沪</strong>的偏好与底线</li>
-      <li>如考虑中科大：寒假安排合肥校园探访 + 与科大在读科二代交流</li>
-    </ul>
-
-    <h3>📅 6月23日出分后（核心10天）</h3>
-    <ul class="checklist">
-      <li>出分后立即获取准确位次 → 对照本指南第5章确定档位</li>
-      <li>如位次前2000：启动"上海 vs C9异地"权衡矩阵</li>
-      <li>核对选科与目标专业组匹配关系</li>
-      <li>志愿梯度：冲(1-2) → 稳(3-4) → 保(1-2)，<strong>上海+C9混合编排</strong></li>
-      <li>科一代利用校友网络交叉验证关键信息（尤其是C9异地校的上海生源就读体验）</li>
-      <li>确认每个志愿"是否服从专业调剂"（不服从=退档风险）</li>
-    </ul>
-
-    <h3>📅 7月1-2日提交</h3>
-    <ul class="checklist">
-      <li>系统开放时间内提交（每天8:00-17:00），不拖到最后一小时</li>
-      <li>截图保存确认页面</li>
-    </ul>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h3 style="margin-top:0">⚠️ 科二代最易犯的6个错误（上海+C9版）</h3>
-    <table>
-      <tr><th>#</th><th>错误</th><th>正确做法</th></tr>
-      <tr><td>1</td><td>用"USTC当年我怎么报的"套用上海新高考</td><td>院校专业组+平行志愿与30年前完全不同</td></tr>
-      <tr><td>2</td><td>过度自信，全部填"冲"，无保底</td><td>必须设1-2个绝对安全的保底志愿</td></tr>
-      <tr><td>3</td><td>不服从专业调剂 → 进档后退档</td><td>不服从=直接滑入征求志愿，极为被动</td></tr>
-      <tr><td>4</td><td>只看分数不看位次</td><td>位次是唯一可比锚点</td></tr>
-      <tr><td>5</td><td><strong>强迫孩子报中科大</strong>（科二代特有）</td><td>USTC可以是选项，但必须是孩子自己的选择</td></tr>
-      <tr><td>6</td><td><strong>因C9情结放弃复交留沪优势</strong>（科二代特有）</td><td>C9身份红利在上海就业市场并不显著优于复交本地资源</td></tr>
-    </table>
-  </div>
-</section>
-
-<!-- ====== 8. TOOLS ====== -->
-<section id="tools">
-  <h2><span class="num">8</span> 资源与工具</h2>
-  <div class="card-grid">
-    <div class="card">
-      <h3 style="margin-top:0">🏛️ 官方平台</h3>
-      <table>
-        <tr><td>上海招考热线</td><td><a href="https://www.shmeea.edu.cn" target="_blank">shmeea.edu.cn</a></td></tr>
-        <tr><td>志愿辅助系统</td><td>fzzytb.shmeea.edu.cn（6月16日开放）</td></tr>
-        <tr><td>阳光志愿</td><td><a href="https://gaokao.chsi.com.cn/zyck/zy/" target="_blank">gaokao.chsi.com.cn</a></td></tr>
-        <tr><td>公众号</td><td>"上海市教育考试院"</td></tr>
-      </table>
+<!-- ================================ STEP 4: 未来规划 ================================ -->
+<div class="wizard" id="step3">
+  <div class="wizard-card">
+    <h2>你对未来的规划倾向？</h2>
+    <p class="step-hint">第4步 / 共5步</p>
+    <p class="desc">这会影响选校策略：深造导向更关注学科实力和科研氛围，就业导向更关注城市和实习机会。</p>
+    <div class="options-grid" id="planGrid">
+      <div class="option-card" onclick="selectPlan('grad')">
+        <span class="opt-icon">🎓</span>
+        <div class="opt-label">继续深造</div>
+        <div class="opt-desc">计划读研/博，看重学科实力和科研机会</div>
+      </div>
+      <div class="option-card" onclick="selectPlan('job')">
+        <span class="opt-icon">💼</span>
+        <div class="opt-label">本科就业</div>
+        <div class="opt-desc">本科后直接工作，看重城市和实习资源</div>
+      </div>
+      <div class="option-card" onclick="selectPlan('undecided')">
+        <span class="opt-icon">❓</span>
+        <div class="opt-label">尚未确定</div>
+        <div class="opt-desc">两边都有可能，先看推荐再决定</div>
+      </div>
     </div>
-    <div class="card">
-      <h3 style="margin-top:0">📚 官方指导书</h3>
-      <table>
-        <tr><td>①</td><td>《上海高考指南》（政策+规则）</td></tr>
-        <tr><td>②</td><td>《招生专业目录》（当年计划）</td></tr>
-        <tr><td>③</td><td>《各专业录取人数及考分》（历史位次）</td></tr>
-      </table>
-    </div>
-    <div class="card">
-      <h3 style="margin-top:0">🎓 科二代专属</h3>
-      <table>
-        <tr><td><strong>USTC上海校友会</strong></td><td>各高校/行业校友分布，真实就读体验</td></tr>
-        <tr><td><strong>校友子女升学经验</strong></td><td>已有子女在上海/C9就读的科大校友</td></tr>
-        <tr><td><strong>C9各校招生组</strong></td><td>可能有科大毕业的老师在招办</td></tr>
-      </table>
+    <div class="wizard-actions">
+      <button class="btn-prev" onclick="prevStep(3)">← 上一步</button>
+      <button class="btn-next" id="step3Btn" onclick="nextStep(3)" disabled>生成推荐 →</button>
     </div>
   </div>
+</div>
 
-  <div class="card" style="margin-top:14px">
-    <h3 style="margin-top:0">📞 关键时间节点速查（2026年预估）</h3>
-    <div class="flow">
-      <div class="flow-step">6月7-9日<br>高考</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step">6月13日<br>阳光志愿</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step">6月16日<br>辅助系统</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step" style="background:#c8972b">6月23日<br>⭐出分</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step">6月24-25日<br>网上咨询</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step" style="background:#c0392b">7月1-2日<br>🔥提交</div>
-      <span class="flow-arrow">→</span>
-      <div class="flow-step">7月5日起<br>录取</div>
-    </div>
+<!-- ================================ RESULTS ================================ -->
+<div class="results-wrap" id="resultsWrap">
+  <div class="result-summary" id="resultSummary"></div>
+  <div id="resultCards"></div>
+  <div style="text-align:center;margin:16px 0">
+    <button class="btn-next" onclick="toggleCompare()">查看完整对比表</button>
+    <button class="btn-prev" style="margin-left:10px" onclick="goStep(0)">修改信息</button>
   </div>
-</section>
+</div>
 
-<footer>
-  <p>科二代 · 上海高考选校决策路径 v2.0 | 2026年5月 | 上海本地 + C9联盟双维度</p>
-  <p style="margin-top:6px">数据来源：上海市教育考试院 · 阳光高考平台 · 各校招生网 | 仅供决策参考，以当年官方发布为准</p>
-  <p style="margin-top:6px;opacity:.6">Made with ❤️ for USTC families in Shanghai</p>
+<!-- ================================ COMPARISON TABLE ================================ -->
+<div class="compare-wrap" id="compareWrap">
+  <div class="wizard-card">
+    <h2 style="font-size:16px;margin-bottom:8px">推荐方案对比表</h2>
+    <div id="compareTable"></div>
+  </div>
+</div>
+
+<!-- ================================ REFERENCE GUIDE ================================ -->
+<div class="guide-section">
+  <button class="guide-toggle" onclick="toggleGuide()">参考指南（完整版8章）</button>
+  <div class="guide-content" id="guideContent"></div>
+</div>
+
+<footer style="text-align:center;padding:24px;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border)">
+  科二代高考选校个人定制 v3.0 | 数据基于2025年招生季 | 仅供参考，以官方发布为准
 </footer>
 
 <script>
-function lookupRank() {
-  const rank = parseInt(document.getElementById('rankInput').value);
-  const box = document.getElementById('rankResult');
-  if (!rank || rank < 1) { box.style.display='none'; return; }
+// ============================== DATA ==============================
 
-  let tier, strategy, shanghai, c9;
-  if (rank <= 150) {
-    tier = '🏆 T0 顶尖段位';
-    shanghai = '复交综评任意专业组';
-    c9 = '清北零志愿（值得去）';
-    strategy = '零志愿冲清北，综评稳复交。专业以兴趣为唯一标准。';
-  } else if (rank <= 1500) {
-    tier = '🥇 T1 核心段位';
-    shanghai = '复交核心专业组 / 同济AI / 华师大统计';
-    c9 = '中科大(稳) / 浙大(稳) / 南大(稳)';
-    strategy = '复交综评+普通批主攻，C9异地（中科大/浙大/南大）作为平行选项。核心权衡：复交普通专业 vs C9王牌专业？';
-  } else if (rank <= 2000) {
-    tier = '🥇 T1 下沿';
-    shanghai = '复交末位专业组 / 同济王牌 / 华师大统计CS';
-    c9 = '中科大/南大(冲) / 浙大(冲)';
-    strategy = '复交普通批末位可冲，同济/华师大为核心战场。C9异地仅当学科匹配度极高（如物理→中科大）才考虑。';
-  } else if (rank <= 5000) {
-    tier = '🥈 T2 上海985 + C9工科';
-    shanghai = '同济智能·车辆 / 华师大统计·CS·数据 / 上科大';
-    c9 = '哈工大 / 西交大';
-    strategy = '主战场在同济/华师大/上科大。哈工大/西交大C9身份+工科强劲但地域远，仅当接受地域牺牲时纳入。一般建议留沪优先。';
-  } else if (rank <= 10000) {
-    tier = '🥉 T3 上海特色强校';
-    shanghai = '上科大 / 华东理工 / 上大CS·通信';
-    c9 = '—（C9基本无望）';
-    strategy = '安心留沪。上科大科研导向最似USTC，华东理工化工/材料顶尖。';
-  } else {
-    tier = '📌 T4 保底';
-    shanghai = '上大工科 / 东华材料 / 中外合作';
-    c9 = '—';
-    strategy = '上大/东华为基本盘，关注中外合作项目。';
+const SUBJECT_NAMES = {
+  math: '数学', phys: '物理/天文', cs: '计算机/AI', ee: 'EE/微电子', data: '数据科学',
+  chem: '化学/材料', bio: '生物/医学', mech: '机械/机器人', elec: '电气/能源', any: '不限'
+};
+
+const LOCATION_NAMES = { sh: '留沪优先', both: '上海+异地均可', c9: '看重C9地域次要', any: '无偏好' };
+const PLAN_NAMES = { grad: '继续深造', job: '本科就业', undecided: '尚未确定' };
+const LOC_SH = { sh: '沪', bj: '京', hf: '合肥', hz: '杭州', nj: '南京', hrb: '哈尔滨', xa: '西安' };
+const LOC_COLOR = { sh: 'sh', bj: 'bj', hf: 'hf', hz: 'hz', nj: 'nj', hrb: 'hrb', xa: 'xa' };
+
+const SCHOOLS = [
+  // T0
+  { id:'thu', name:'清华大学', tier:'T0', loc:'bj', c9:true, rankMin:1, rankMax:150,
+    subjects:{cs:{majors:'CS/EE/AI/工程',recommend:5}, ee:{majors:'EE/微电子',recommend:5}, mech:{majors:'机械/力学',recommend:5}, elec:{majors:'电气',recommend:4}},
+    strength:'工科顶尖，C9顶端', desc:'清华工科全国第一，与USTC工科基因高度匹配。零志愿批次。' },
+  { id:'pku', name:'北京大学', tier:'T0', loc:'bj', c9:true, rankMin:1, rankMax:150,
+    subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}, data:{majors:'数据科学',recommend:4}},
+    strength:'理科顶尖，C9顶端', desc:'北大理科全国第一，与USTC理科基因最匹配。零志愿批次。' },
+  // T1 - SH
+  { id:'fudan', name:'复旦大学', tier:'T1', loc:'sh', c9:true, rankMin:1, rankMax:2200,
+    subjects:{math:{majors:'数学英才班(A+)',recommend:5}, phys:{majors:'物理学系',recommend:5}, cs:{majors:'CS学院',recommend:4}, ee:{majors:'微电子学院(国家级)',recommend:5}, data:{majors:'大数据学院',recommend:4}, chem:{majors:'化学系',recommend:4}, bio:{majors:'医学院',recommend:5}},
+    strength:'基础科学强校，上海最优', desc:'复旦数学/物理基础科学顶尖，微电子为国家示范学院。上海综评通道。' },
+  { id:'sjtu', name:'上海交通大学', tier:'T1', loc:'sh', c9:true, rankMin:1, rankMax:2200,
+    subjects:{cs:{majors:'IEEE/ACM/AI学院',recommend:5}, ee:{majors:'电院',recommend:5}, mech:{majors:'机动学院',recommend:5}, elec:{majors:'电院电气',recommend:4}, data:{majors:'数据科学',recommend:4}, bio:{majors:'医学院(顶尖)',recommend:5}},
+    strength:'工科应用强校，上海最优', desc:'上交CS/EE/机械均为全国顶尖，ACM班精英培养。上海综评通道。' },
+  // T1 - C9 out of SH
+  { id:'ustc', name:'中国科学技术大学', tier:'T1', loc:'hf', c9:true, rankMin:1, rankMax:1800,
+    subjects:{math:{majors:'数学(A+)',recommend:5}, phys:{majors:'物理(A+)',recommend:5}, cs:{majors:'CS(A+)',recommend:5}, chem:{majors:'化学(A+)',recommend:5}},
+    strength:'基础科学殿堂，父母母校', desc:'100%自由转专业，全员导师制，科研门槛低。科二代基因完美匹配。父母母校，校友圈直通。' },
+  { id:'zju', name:'浙江大学', tier:'T1', loc:'hz', c9:true, rankMin:1, rankMax:2200,
+    subjects:{cs:{majors:'CS(A+)/光工(A+)/控制(A+)',recommend:5}, ee:{majors:'信息大类',recommend:4}, data:{majors:'数据科学',recommend:4}, mech:{majors:'机械/控制',recommend:4}, bio:{majors:'医学院',recommend:4}},
+    strength:'CS/工科极强，杭州互联网生态', desc:'CS与上交持平/略优。高铁1小时回沪。杭州阿里/蚂蚁/网易实习资源丰富。' },
+  { id:'nju', name:'南京大学', tier:'T1', loc:'nj', c9:true, rankMin:1, rankMax:2000,
+    subjects:{phys:{majors:'物理(A+)/天文(A+)',recommend:5}, math:{majors:'数学(A-)',recommend:4}, cs:{majors:'CS(A+)',recommend:5}},
+    strength:'基础科学底蕴深厚', desc:'物理A+/天文A+全国顶尖，CS新晋A+。理科基因与USTC最接近的非母校C9。高铁1.5h回沪。' },
+  // T2
+  { id:'tongji', name:'同济大学', tier:'T2', loc:'sh', c9:false, rankMin:2000, rankMax:5500,
+    subjects:{cs:{majors:'智能科学与技术',recommend:5}, mech:{majors:'车辆工程(新能源)',recommend:4}, elec:{majors:'电气/能源',recommend:3}},
+    strength:'工科硬核+上海985', desc:'土木(A+)建筑传统强势，AI/智能科学上升迅速。上海985，留沪最优工科选择之一。' },
+  { id:'ecnu', name:'华东师范大学', tier:'T2', loc:'sh', c9:false, rankMin:1500, rankMax:5000,
+    subjects:{math:{majors:'统计学院(A+)',recommend:5}, cs:{majors:'软件工程',recommend:4}, data:{majors:'数据学院',recommend:5}},
+    strength:'统计/数据科学被低估', desc:'统计学A+全国顶尖，数据学院新兴强势。被名字耽误的工科强校。' },
+  { id:'hitsz', name:'哈工大(深圳)', tier:'T2', loc:'sz', c9:true, rankMin:3000, rankMax:6000,
+    subjects:{cs:{majors:'计算机',recommend:4}, mech:{majors:'机械/控制(A+)',recommend:5}},
+    strength:'C9工科+深圳地域', desc:'哈工大C9身份+深圳校区，兼具学科实力与地域优势。若在沪招生值得高度关注。' },
+  { id:'hit', name:'哈尔滨工业大学', tier:'T2', loc:'hrb', c9:true, rankMin:3000, rankMax:6500,
+    subjects:{mech:{majors:'机械(A+)/控制(A+)/力学(A+)',recommend:5}, cs:{majors:'CS(A)',recommend:4}},
+    strength:'工科硬核C9', desc:'机械/控制/力学A+，焊接亚洲第一。用4年地域换C9工科学位。' },
+  { id:'xjtu', name:'西安交通大学', tier:'T2', loc:'xa', c9:true, rankMin:3500, rankMax:7500,
+    subjects:{elec:{majors:'电气(A+)/动力(A+)',recommend:5}, mech:{majors:'机械(A)',recommend:4}},
+    strength:'电气/能源顶尖C9', desc:'电气A+全国前二，能源电力行业统治力。用地域换学科精度。' },
+  // T3
+  { id:'shanghaitech', name:'上海科技大学', tier:'T3', loc:'sh', c9:false, rankMin:3000, rankMax:7500,
+    subjects:{cs:{majors:'CS/电子',recommend:4}, phys:{majors:'物质学院(物理)',recommend:4}, chem:{majors:'材料',recommend:3}, bio:{majors:'生命科学',recommend:4}},
+    strength:'最像"科"的上海高校', desc:'中科院共建，小班导师制，80%+深造率。上科大=上海的迷你版USTC。位次性价比之王。' },
+  { id:'ecust', name:'华东理工大学', tier:'T3', loc:'sh', c9:false, rankMin:5000, rankMax:11000,
+    subjects:{chem:{majors:'化工(A+)/材料(A)/制药',recommend:5}, bio:{majors:'生物工程',recommend:3}},
+    strength:'化工/材料全国顶尖', desc:'化工A+全国前三，材料A，制药工程强。211性价比之选。' },
+  // T4
+  { id:'shu', name:'上海大学', tier:'T4', loc:'sh', c9:false, rankMin:6000, rankMax:13000,
+    subjects:{cs:{majors:'CS/通信',recommend:3}, math:{majors:'数学',recommend:3}, mech:{majors:'机械',recommend:3}},
+    strength:'211保底，工科全面', desc:'上海211基本盘，CS/通信/机械/数学均可选。中外合作项目可关注。' },
+  { id:'dhu', name:'东华大学', tier:'T4', loc:'sh', c9:false, rankMin:8000, rankMax:16000,
+    subjects:{chem:{majors:'材料(A+)',recommend:4}},
+    strength:'材料A+特色校', desc:'材料A+全国领先，纺织独步。211保底选项之一。' },
+];
+
+// ============================== STATE ==============================
+let state = {
+  rank: null,
+  subject: null,
+  location: null,
+  plan: null,
+  currentStep: 0,
+  results: []
+};
+
+// ============================== WIZARD ==============================
+function startWizard() {
+  document.querySelector('.start-btn').style.display = 'none';
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('resetBar').style.display = 'block';
+  goStep(0);
+}
+
+function goStep(step) {
+  state.currentStep = step;
+  if (step < 4) {
+    document.querySelectorAll('.wizard').forEach(el => el.classList.remove('active'));
+    document.getElementById('step' + step).classList.add('active');
+    document.getElementById('resultsWrap').classList.remove('active');
+    document.getElementById('compareWrap').classList.remove('active');
   }
+  updateProgress();
+}
 
-  box.style.display = 'block';
-  box.innerHTML = `
-    <p><strong>${tier}</strong>（位次 ~${rank.toLocaleString()}）</p>
-    <p style="margin-top:8px"><strong>策略：</strong>${strategy}</p>
-    <table style="margin-top:10px;font-size:13px">
-      <tr><th style="width:80px">上海路径</th><td>${shanghai}</td></tr>
-      <tr><th>C9异地路径</th><td>${c9}</td></tr>
-    </table>
-    <p class="muted" style="margin-top:8px">⚠️ 基于2025年数据估算，仅供参考。最终决策以当年位次与招生计划为准。</p>
+function updateProgress() {
+  const dots = document.querySelectorAll('.progress-step');
+  dots.forEach((el, i) => {
+    el.classList.remove('active', 'done');
+    if (i < state.currentStep) el.classList.add('done');
+    else if (i === state.currentStep) el.classList.add('active');
+  });
+}
+
+function nextStep(step) {
+  if (step === 0) {
+    const rank = parseInt(document.getElementById('rankInput').value);
+    if (!rank || rank < 1 || rank > 63000) {
+      showToast('请输入有效的位次（1-63000）');
+      return;
+    }
+    state.rank = rank;
+  } else if (step === 1) {
+    if (!state.subject) { showToast('请选择学科方向'); return; }
+  } else if (step === 2) {
+    if (!state.location) { showToast('请选择地域偏好'); return; }
+  } else if (step === 3) {
+    if (!state.plan) { showToast('请选择未来规划'); return; }
+    generateResults();
+    return;
+  }
+  goStep(step + 1);
+}
+
+function prevStep(step) {
+  goStep(step - 1);
+}
+
+function selectSubject(val) {
+  state.subject = val;
+  document.querySelectorAll('#subjectGrid .option-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#subjectGrid .option-card')[['math','phys','cs','ee','data','chem','bio','mech','elec','any'].indexOf(val)]?.classList.add('selected');
+  document.getElementById('step1Btn').disabled = false;
+}
+
+function selectLocation(val) {
+  state.location = val;
+  document.querySelectorAll('#locationGrid .option-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#locationGrid .option-card')[['sh','both','c9','any'].indexOf(val)]?.classList.add('selected');
+  document.getElementById('step2Btn').disabled = false;
+}
+
+function selectPlan(val) {
+  state.plan = val;
+  document.querySelectorAll('#planGrid .option-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#planGrid .option-card')[['grad','job','undecided'].indexOf(val)]?.classList.add('selected');
+  document.getElementById('step3Btn').disabled = false;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2500);
+}
+
+function clearError() {
+  document.getElementById('toast').style.display = 'none';
+}
+
+// ============================== RECOMMENDATION ENGINE ==============================
+function generateResults() {
+  const { rank, subject, location, plan } = state;
+
+  // Determine tier range
+  let tierMatch;
+  if (rank <= 150) tierMatch = ['T0','T1'];
+  else if (rank <= 2200) tierMatch = ['T1'];
+  else if (rank <= 5500) tierMatch = ['T2'];
+  else if (rank <= 11000) tierMatch = ['T3'];
+  else tierMatch = ['T4'];
+
+  // Find matching schools
+  let candidates = SCHOOLS.filter(s => {
+    if (!tierMatch.includes(s.tier)) return false;
+    // Rank check (upper bound)
+    if (rank > s.rankMax && s.tier !== 'T4') return false;
+    // If we're above the normal range but not too far
+    if (rank > s.rankMax * 1.5 && s.tier !== 'T4') return false;
+    // Subject match
+    if (subject !== 'any' && !s.subjects[subject]) {
+      // School can still match for non-specific subjects
+      return false;
+    }
+    // Location preference
+    if (location === 'sh' && s.loc !== 'sh' && s.loc !== 'sz') {
+      // Still show T1 C9 if they have strong subject match
+      if (s.tier === 'T0' || (s.tier === 'T1' && s.c9 && subject !== 'any' && s.subjects[subject])) {
+        return true;
+      }
+      return false;
+    }
+    if (location === 'c9' && !s.c9) return false;
+    return true;
+  });
+
+  // Score each candidate
+  candidates = candidates.map(s => {
+    let score = 0;
+    const reasons = [];
+
+    // 1. Rank fit (0-30)
+    if (rank < s.rankMin) {
+      score += 15; reasons.push('位次达标，可冲刺');
+    } else if (rank <= s.rankMax) {
+      score += 30; reasons.push('位次匹配度高，稳妥选择');
+    } else if (rank <= s.rankMax * 1.5) {
+      score += 20; reasons.push('位次可触及，可作为保底');
+    } else {
+      score += 10; reasons.push('位次安全，绝对保底');
+    }
+
+    // 2. Subject match (0-30)
+    if (subject !== 'any' && s.subjects[subject]) {
+      const rec = s.subjects[subject].recommend;
+      score += rec * 6;
+      reasons.push(`${SUBJECT_NAMES[subject]}方向匹配度${'★★★★★'.substring(0,rec)}`);
+    } else if (subject === 'any') {
+      score += 15;
+    } else {
+      score += 5;
+    }
+
+    // 3. Location match (0-20)
+    if (location === 'sh' && s.loc === 'sh') {
+      score += 20; reasons.push('上海本地，留沪优势');
+    } else if (location === 'sh' && s.c9 && s.tier !== 'T4') {
+      score += 10; reasons.push('C9院校，虽异地但层次高');
+    } else if (location === 'c9' && s.c9) {
+      score += 20; reasons.push('C9院校，符合偏好');
+    } else if (location === 'both' || location === 'any') {
+      score += 10;
+    } else {
+      score += 5;
+    }
+
+    // 4. Future plan (0-20)
+    if (plan === 'grad') {
+      if (s.tier === 'T0' || s.tier === 'T1' || (s.id === 'shanghaitech')) {
+        score += 20; reasons.push('深造导向，科研资源丰富');
+      } else {
+        score += 10; reasons.push('可有深造机会');
+      }
+    } else if (plan === 'job') {
+      if (s.loc === 'sh' || s.loc === 'sz' || s.loc === 'hz') {
+        score += 20; reasons.push('就业导向，城市实习资源丰富');
+      } else {
+        score += 10; reasons.push('异地就业需提前规划');
+      }
+    } else {
+      score += 10; reasons.push('灵活选择，未来可塑');
+    }
+
+    // 5. USTC tie bonus
+    if (s.id === 'ustc') {
+      score += 15; reasons.push('父母母校，基因匹配+校友圈');
+    }
+
+    // 6. C9 bonus
+    if (s.c9) {
+      score += 5; reasons.push('C9联盟，全国认可');
+    }
+
+    return { ...s, score, reasons };
+  });
+
+  // Sort by score descending
+  candidates.sort((a, b) => b.score - a.score);
+
+  // Keep top 6
+  state.results = candidates.slice(0, 6);
+
+  // Categorize into chong/wen/bao
+  const withLabels = state.results.map(s => {
+    let label = 'wen';
+    if (state.rank <= s.rankMin * 0.8) label = 'chong'; // rank is well above min
+    else if (state.rank <= s.rankMin) label = 'chong';   // at lower bound
+    else if (state.rank > s.rankMax * 1.2) label = 'bao'; // well above max
+    else if (state.rank > s.rankMax) label = 'bao';
+    return { ...s, label };
+  });
+
+  // Ensure chong/wen/bao distribution
+  let finals = [];
+  let chong = withLabels.filter(s => s.label === 'chong');
+  let wen = withLabels.filter(s => s.label === 'wen');
+  let bao = withLabels.filter(s => s.label === 'bao');
+  // Grab top from each category
+  if (chong.length) finals.push(chong[0]);
+  if (wen.length) finals.push(wen[0]);
+  if (bao.length) finals.push(bao[0]);
+  // Fill remaining with top scores
+  withLabels.forEach(s => {
+    if (!finals.find(f => f.id === s.id)) finals.push(s);
+  });
+  state.results = finals.slice(0, 5);
+
+  renderResults();
+  renderCompare();
+
+  // Show results
+  document.querySelectorAll('.wizard').forEach(el => el.classList.remove('active'));
+  const progressDots = document.querySelectorAll('.progress-step');
+  progressDots.forEach(el => el.classList.add('done'));
+  document.getElementById('resultsWrap').classList.add('active');
+  state.currentStep = 4;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================== RENDER ==============================
+function renderResults() {
+  const { rank, subject, location, plan } = state;
+  const results = state.results;
+
+  // Summary
+  const summary = document.getElementById('resultSummary');
+  const tierNames = { T0:'顶尖', T1:'核心', T2:'上海985+C9工科', T3:'特色强校', T4:'保底' };
+  let tierLabel = '';
+  if (rank <= 150) tierLabel = 'T0-T1（清北/复交）';
+  else if (rank <= 2200) tierLabel = 'T1（复交+C9核心）';
+  else if (rank <= 5500) tierLabel = 'T2（上海985+C9工科）';
+  else if (rank <= 11000) tierLabel = 'T3（上海特色强校）';
+  else tierLabel = 'T4（上海211保底）';
+
+  summary.innerHTML = `
+    <h2>你的个性化选校方案</h2>
+    <p>
+      位次 ${rank.toLocaleString()} |
+      学科 ${SUBJECT_NAMES[subject]} |
+      地域 ${LOCATION_NAMES[location]} |
+      规划 ${PLAN_NAMES[plan]}
+    </p>
+    <p style="margin-top:4px;font-size:12px">
+      对应层级：<strong>${tierLabel}</strong> | 以下按匹配度排序，
+      <span style="color:var(--red)">红色=冲刺</span>，
+      <span style="color:var(--blue)">蓝色=稳妥</span>，
+      <span style="color:var(--green)">绿色=保底</span>
+    </p>
   `;
+
+  // Cards
+  const cardsDiv = document.getElementById('resultCards');
+  cardsDiv.innerHTML = '';
+  results.forEach((s, idx) => {
+    let labelClass = s.label === 'chong' ? 'chong' : s.label === 'wen' ? 'wen' : 'bao';
+    let labelText = s.label === 'chong' ? '冲刺' : s.label === 'wen' ? '稳妥' : '保底';
+
+    const majors = subject !== 'any' && s.subjects[subject]
+      ? s.subjects[subject].majors
+      : Object.values(s.subjects).map(v => v.majors).join(' / ');
+
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    card.innerHTML = `
+      <div class="rc-header">
+        <span class="rc-name">${s.name}</span>
+        <span class="result-tag ${s.tier.toLowerCase()}">${s.tier}</span>
+        <span class="result-tag ${labelClass}">${labelText}</span>
+        ${s.c9 ? '<span class="result-tag c9">C9</span>' : ''}
+        <span class="result-tag ${s.loc === 'sh' ? 'sh' : ''}" style="background:${s.loc === 'sh' ? '#e3f2fd' : '#f5f5f5'};color:#666;font-weight:400">
+          ${LOC_SH[s.loc] || s.loc}
+        </span>
+      </div>
+      <div class="rc-sub">
+        <strong>推荐专业：</strong>${majors}
+      </div>
+      <div class="rc-reason">
+        <strong>推荐理由：</strong>${s.desc} ${s.reasons.slice(0,3).join('；')}
+      </div>
+      <dl class="rc-detail">
+        <dt>学科强项</dt><dd>${s.strength}</dd>
+        <dt>匹配度评分</dt><dd>${s.score}/100</dd>
+      </dl>
+    `;
+    cardsDiv.appendChild(card);
+  });
+}
+
+function renderCompare() {
+  const tbl = document.getElementById('compareTable');
+  const results = state.results;
+  if (!results.length) { tbl.innerHTML = ''; return; }
+
+  let html = '<table><thead><tr><th>院校</th><th>层级</th><th>地域</th><th>C9</th><th>梯次</th><th>推荐专业</th><th>匹配理由</th><th>评分</th></tr></thead><tbody>';
+  results.forEach(s => {
+    const majors = state.subject !== 'any' && s.subjects[state.subject]
+      ? s.subjects[state.subject].majors
+      : Object.values(s.subjects).map(v => v.majors).join(' / ');
+    html += `<tr>
+      <td><strong>${s.name}</strong></td>
+      <td>${s.tier}</td>
+      <td>${LOC_SH[s.loc]}</td>
+      <td>${s.c9 ? '是' : '否'}</td>
+      <td><span style="color:${s.label === 'chong' ? 'var(--red)' : s.label === 'wen' ? 'var(--blue)' : 'var(--green)'}">${s.label === 'chong' ? '冲刺' : s.label === 'wen' ? '稳妥' : '保底'}</span></td>
+      <td>${majors}</td>
+      <td style="font-size:11px">${s.reasons.slice(0,2).join(' | ')}</td>
+      <td>${s.score}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  tbl.innerHTML = html;
+}
+
+let compareVisible = false;
+function toggleCompare() {
+  compareVisible = !compareVisible;
+  document.getElementById('compareWrap').classList.toggle('active', compareVisible);
+}
+
+// ============================== RESET ==============================
+function resetAll() {
+  state = { rank: null, subject: null, location: null, plan: null, currentStep: 0, results: [] };
+  document.getElementById('rankInput').value = '';
+  document.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.btn-next').forEach(el => el.disabled = true);
+  document.getElementById('resultsWrap').classList.remove('active');
+  document.getElementById('compareWrap').classList.remove('active');
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('resetBar').style.display = 'none';
+  document.querySelector('.start-btn').style.display = 'inline-block';
+  compareVisible = false;
+  document.querySelectorAll('.wizard').forEach(el => el.classList.remove('active'));
+  document.getElementById('step0').classList.add('active');
+  document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('done', 'active'));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================== GUIDE ==============================
+// Simplified guide content embedded as static HTML
+const GUIDE_HTML = `
+<section style="max-width:1120px;margin:0 auto;padding:24px 16px">
+<h2 style="font-size:20px;font-weight:700;color:var(--ustc);margin-bottom:16px;border-bottom:2px solid var(--ustc-light);padding-bottom:10px">参考指南速览</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px">
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">1. 科二代画像</h3>
+    <p style="font-size:12px;color:var(--text-muted)">物化双选、STEM优先、上海本地+ C9双维度。学科硬实力 &gt; 城市便利。</p>
+  </div>
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">2. 院校分层(T0-T4)</h3>
+    <p style="font-size:12px;color:var(--text-muted)">T0清北 | T1复旦/上交/中科大/浙大/南大 | T2同济/华师大/哈工大/西交 | T3上科大/华理 | T4上大/东华</p>
+  </div>
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">3. C9出沪权衡</h3>
+    <p style="font-size:12px;color:var(--text-muted)">中科大父母母校但合肥vs上海差距；浙大CS极强高铁1h；南大物理A+；哈工大西交C9但地域偏远。</p>
+  </div>
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">4. 学科-院校匹配</h3>
+    <p style="font-size:12px;color:var(--text-muted)">数学复旦/中科大 | CS上交/浙大 | 物理中科大/南大 | 统计华师大 | 化工华理 | 电气西交</p>
+  </div>
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">5. 分位次路径</h3>
+    <p style="font-size:12px;color:var(--text-muted)">前150清北 | 150-2000复交 | 2000-5000同济/华师大 | 5000-10000上科大/华理 | 10000+上大/东华</p>
+  </div>
+  <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
+    <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">6-8. 更多参考</h3>
+    <p style="font-size:12px;color:var(--text-muted)">查看 <a href="%E7%A7%91%E4%BA%8C%E4%BB%A3%E4%B8%8A%E6%B5%B7%E9%AB%98%E8%80%83%E9%80%89%E6%A0%A1%E6%8C%87%E5%AF%BC%E6%89%8B%E5%86%8C.pdf" target="_blank" style="color:var(--ustc)">PDF完整版</a> 或 <a href="%E7%A7%91%E4%BA%8C%E4%BB%A3%E4%B8%8A%E6%B5%B7%E9%AB%98%E8%80%83%E9%80%89%E6%A0%A1%E6%8C%87%E5%AF%BC%E6%89%8B%E5%86%8C.md" target="_blank" style="color:var(--ustc)">Markdown版</a></p>
+  </div>
+</div>
+</section>
+`;
+document.getElementById('guideContent').innerHTML = GUIDE_HTML;
+
+function toggleGuide() {
+  document.getElementById('guideContent').classList.toggle('open');
 }
 </script>
-
 </body>
 </html>
