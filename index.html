@@ -852,9 +852,9 @@ function generateResults() {
   let tierMatch;
   if (rank <= 150) tierMatch = ['T0','T1','T2','T3','T4','T5'];
   else if (rank <= 2200) tierMatch = ['T0','T1','T2','T3','T4','T5']; // +T0供冲刺
-  else if (rank <= 5500) tierMatch = ['T1','T2','T3','T4'];      // +T1供冲刺
-  else if (rank <= 11000) tierMatch = ['T2','T3','T4'];          // +T2供冲刺
-  else tierMatch = ['T3','T4'];                                    // +T3供冲刺
+  else if (rank <= 5500) tierMatch = ['T1','T2','T3','T4','T5'];      // +T1供冲刺
+  else if (rank <= 11000) tierMatch = ['T2','T3','T4','T5'];          // +T2供冲刺
+  else tierMatch = ['T3','T4','T5'];                                    // +T3供冲刺
 
   // Find matching schools
   let candidates = SCHOOLS.filter(s => {
