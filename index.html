@@ -906,38 +906,25 @@ function generateResults() {
   state.results = candidates.slice(0, 6);
 
   // Categorize into chong/wen/bao
-  // 排名规则：数字越小=成绩越好。rankMin=最低分(最好)录取者，rankMax=最高分(最差)录取者
+  // 排名规律：rank数字越小=成绩越好。rankMin=最佳录取位次，rankMax=最低录取位次
   const withLabels = state.results.map(s => {
-    const mid = (s.rankMin + s.rankMax) / 2;
     let label;
-    if (state.rank <= s.rankMin) {
-      label = 'wen';   // 位次 <= 最佳录取位次 -> 稳妥
-    } else if (state.rank <= mid) {
-      label = 'wen';   // 在上半区间内 -> 稳妥
-    } else if (state.rank <= s.rankMax) {
-      label = 'wen';   // 在下半区间内 -> 稳妥(接近边缘)
-    } else if (state.rank <= Math.round(s.rankMax * 1.3)) {
-      label = 'chong'; // 略超区间上限 -> 可以冲刺
+    if (state.rank > s.rankMax) {
+      label = 'chong'; // 位次超区间上限 -> 冲刺
+    } else if (state.rank > s.rankMin) {
+      label = 'wen';   // 在区间内(rankMin<位次≤rankMax) -> 稳妥
     } else {
-      label = 'chong'; // 远超区间上限 -> 冲刺(需超常发挥)
+      label = 'bao';   // 位次≤最佳录取位次 -> 保底
     }
     return { ...s, label };
   });
 
-  // Ensure chong/wen/bao distribution
-  let finals = [];
-  let chong = withLabels.filter(s => s.label === 'chong');
-  let wen = withLabels.filter(s => s.label === 'wen');
-  let bao = withLabels.filter(s => s.label === 'bao');
-  // Grab top from each category
-  if (chong.length) finals.push(chong[0]);
-  if (wen.length) finals.push(wen[0]);
-  if (bao.length) finals.push(bao[0]);
-  // Fill remaining with top scores
-  withLabels.forEach(s => {
-    if (!finals.find(f => f.id === s.id)) finals.push(s);
-  });
-  state.results = finals.slice(0, 5);
+  // 按 冲刺→稳妥→保底 排序，各组内按得分降序
+  const labelOrder = { chong: 0, wen: 1, bao: 2 };
+  state.results = withLabels.sort((a, b) => {
+    const lo = labelOrder[a.label] - labelOrder[b.label];
+    return lo !== 0 ? lo : b.score - a.score;
+  }).slice(0, 5);
 
   renderResults();
   renderCompare();
