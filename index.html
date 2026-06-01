@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
 <title>科二代 · 高考选校个人定制</title>
 <style>
 :root {
@@ -136,14 +137,78 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
 @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
 
 /* responsive */
-@media (max-width: 640px) {
-  .options-grid { grid-template-columns: repeat(2, 1fr); }
-  .big-input { width: 100%; }
-  .big-input-group { flex-direction: column; }
-  .big-btn { width: 100%; }
-  .progress-label { font-size: 9px; }
-  .compare-wrap { overflow-x: auto; }
-  .progress-steps::before { left: 20px; right: 20px; }
+/* ── Responsive: tablet + mobile ── */
+@media (max-width: 768px) {
+  .hero { padding: 40px 16px 32px; }
+  .hero h1 { font-size: 20px; }
+  .hero .subtitle { font-size: 13px; }
+  .hero .start-btn { padding: 10px 28px; font-size: 14px; }
+  .wizard-card { padding: 20px 16px; }
+  .wizard h2 { font-size: 16px; }
+  .result-summary { padding: 16px; }
+  .result-card { padding: 14px 16px; }
+  .rc-name { font-size: 14px; }
+  .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 32px 12px 24px; }
+  .hero h1 { font-size: 18px; }
+  .hero .badge { font-size: 10px; }
+  .hero .start-btn { margin-top: 14px; width: 100%; max-width: 280px; }
+
+  .progress-wrap { padding: 16px 8px 0; }
+  .progress-steps::before { top: 10px; left: 12px; right: 12px; }
+  .progress-dot { width: 22px; height: 22px; font-size: 10px; }
+  .progress-label { font-size: 8px; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+  .progress-step { gap: 3px; }
+
+  .wizard-card { padding: 16px 12px; border-radius: 8px; }
+  .wizard h2 { font-size: 15px; }
+  .wizard .desc { font-size: 12px; }
+
+  .options-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .option-card { padding: 10px 8px; }
+  .option-card .opt-icon { font-size: 16px; }
+  .option-card .opt-label { font-size: 12px; }
+  .option-card .opt-desc { font-size: 9px; }
+
+  .big-input-group { flex-direction: column; gap: 8px; }
+  .big-input { width: 100%; font-size: 18px; padding: 12px 16px; }
+  .big-btn { width: 100%; padding: 12px 20px; font-size: 14px; }
+
+  .wizard-actions { flex-direction: column; gap: 8px; }
+  .wizard-actions .btn-prev,
+  .wizard-actions .btn-next { width: 100%; text-align: center; }
+
+  .result-summary { padding: 12px 14px; }
+  .result-summary h2 { font-size: 14px; }
+  .result-summary p { font-size: 11px; }
+  .result-card { padding: 12px 14px; margin-bottom: 8px; }
+  .rc-header { gap: 4px; }
+  .rc-name { font-size: 13px; }
+  .rc-sub { font-size: 11px; }
+  .rc-reason { font-size: 11px; padding: 8px 10px; }
+  .rc-detail { font-size: 10px; }
+
+  .compare-wrap table { font-size: 10px; }
+  .compare-wrap th,
+  .compare-wrap td { padding: 4px 6px; }
+
+  .guide-section { margin: 24px auto; }
+  .guide-toggle { font-size: 11px; padding: 6px 12px; }
+
+  .reset-link { font-size: 11px; }
+
+  footer { font-size: 10px; padding: 16px; }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .options-grid { grid-template-columns: 1fr; }
+  .progress-label { max-width: 40px; font-size: 7px; }
+  .progress-steps::before { left: 6px; right: 6px; }
+  .progress-dot { width: 18px; height: 18px; font-size: 8px; }
 }
 
 /* Subject badge */
