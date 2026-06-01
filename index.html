@@ -263,7 +263,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       <span style="font-size:14px;color:var(--text-muted)">名</span>
     </div>
     <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">
-      <span>位次参考：前150→清北 | 前2000→复交 | 前5000→同济/华师大 | 前10000→上科大/华理 | 前15000→上大</span>
+      <span>位次参考：前150→清北 | 前2200→复交 | 前5500→同济/华师大 | 前7500→上科大 | 前11000→华理/上大</span>
     </div>
     <div class="wizard-actions">
       <span></span>
@@ -748,12 +748,12 @@ function clearError() {
 function generateResults() {
   const { rank, subject, location, plan } = state;
 
-  // Determine tier range
+  // Determine tier range — 包含目标档及以下所有档，保证低档位学校作为选项
   let tierMatch;
-  if (rank <= 150) tierMatch = ['T0','T1'];
-  else if (rank <= 2200) tierMatch = ['T1'];
-  else if (rank <= 5500) tierMatch = ['T2'];
-  else if (rank <= 11000) tierMatch = ['T3'];
+  if (rank <= 150) tierMatch = ['T0','T1','T2','T3','T4'];
+  else if (rank <= 2200) tierMatch = ['T1','T2','T3','T4'];
+  else if (rank <= 5500) tierMatch = ['T2','T3','T4'];
+  else if (rank <= 11000) tierMatch = ['T3','T4'];
   else tierMatch = ['T4'];
 
   // Find matching schools
@@ -1128,7 +1128,7 @@ const GUIDE_HTML = `
   </div>
   <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
     <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">5. 分位次路径</h3>
-    <p style="font-size:12px;color:var(--text-muted)">前150清北 | 150-2000复交 | 2000-5000同济/华师大 | 5000-10000上科大/华理 | 10000+上大/东华</p>
+    <p style="font-size:12px;color:var(--text-muted)">前150清北 | 150-2200复交 | 2000-5500同济/华师大 | 3000-7500上科大 | 5000-11000华理/上大 | 8000-16000东华</p>
   </div>
   <div style="background:var(--card);border-radius:10px;padding:16px;border:1px solid var(--border)">
     <h3 style="font-size:14px;color:var(--ustc);margin-bottom:8px">6-8. 更多参考</h3>
