@@ -762,21 +762,19 @@ function clearError() {
 function generateResults() {
   const { rank, subject, location, plan } = state;
 
-  // Determine tier range — 包含目标档及以下所有档，保证低档位学校作为选项
+  // Determine tier range — 含目标档向上1级(供冲刺)+向下所有档(供保底)
   let tierMatch;
   if (rank <= 150) tierMatch = ['T0','T1','T2','T3','T4'];
-  else if (rank <= 2200) tierMatch = ['T1','T2','T3','T4'];
-  else if (rank <= 5500) tierMatch = ['T2','T3','T4'];
-  else if (rank <= 11000) tierMatch = ['T3','T4'];
-  else tierMatch = ['T4'];
+  else if (rank <= 2200) tierMatch = ['T0','T1','T2','T3','T4']; // +T0供冲刺
+  else if (rank <= 5500) tierMatch = ['T1','T2','T3','T4'];      // +T1供冲刺
+  else if (rank <= 11000) tierMatch = ['T2','T3','T4'];          // +T2供冲刺
+  else tierMatch = ['T3','T4'];                                    // +T3供冲刺
 
   // Find matching schools
   let candidates = SCHOOLS.filter(s => {
     if (!tierMatch.includes(s.tier)) return false;
-    // Rank check (upper bound)
-    if (rank > s.rankMax && s.tier !== 'T4') return false;
-    // If we're above the normal range but not too far
-    if (rank > s.rankMax * 1.5 && s.tier !== 'T4') return false;
+    // 仅过滤远超区间上限(完全没机会)的学校，保留略超的作为冲刺候选
+    if (rank > s.rankMax * 1.5) return false;
     // Subject match
     if (subject !== 'any' && !s.subjects[subject]) {
       // School can still match for non-specific subjects
@@ -883,9 +881,9 @@ function generateResults() {
 
     // ── 生成理由 ──
     const reasons = [];
-    if (rank <= s.rankMax) reasons.push(`位次${rank}在区间[${s.rankMin}-${s.rankMax}]内，匹配度高`);
-    else if (rank <= s.rankMax * 1.5) reasons.push(`位次${rank}接近区间[${s.rankMin}-${s.rankMax}]，可作保底`);
-    else reasons.push(`位次${rank}超过区间，作为安全保底`);
+    if (rank > s.rankMax) reasons.push(`位次${rank}略超区间上限，可作为冲刺选项`);
+    else if (rank > s.rankMin) reasons.push(`位次${rank}在录取区间[${s.rankMin}-${s.rankMax}]内，稳妥选择`);
+    else reasons.push(`位次${rank}优于最佳录取生源(区间下限${s.rankMin})，保底安全`);
     if (subject !== 'any' && s.subjects[subject]) {
       const rec = s.subjects[subject].recommend;
       reasons.push(`${SUBJECT_NAMES[subject]}方向${'★★★★★'.substring(0,rec)}`);
