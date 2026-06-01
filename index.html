@@ -491,9 +491,62 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
         <strong style="color:var(--ustc)">总分公式：</strong>
         位次(0-30) + 学科(0-25) + 地域(0-15) + 规划(0-15) + 实力(0-10) + 校友(0/15) + C9(0/5)，
         上限100分。
-        <span style="color:var(--text-muted);display:block;margin-top:4px">
-        冲刺/稳妥/保底判定独立于总分，基于位次与该校录取区间的关系。
-        </span>
+      </div>
+
+      <div style="margin-top:12px;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:8px;font-size:12px">
+        <h4 style="font-size:13px;color:var(--ustc);margin-bottom:6px">冲刺/保底 波动比例（基于历年录取线波动设定）</h4>
+        <p style="font-size:11px;color:var(--text-muted);margin-bottom:8px">
+          冲刺上浮比例 = 位次超出区间上限仍可视为冲刺的幅度。
+          保底下浮比例 = 位次需优于区间下限多少才算真正保底。
+          不同层级学校录取线稳定性不同，比例有所区别。
+        </p>
+        <table style="width:100%;border-collapse:collapse;font-size:11px">
+          <tr style="background:var(--ustc);color:#fff">
+            <th style="padding:4px 8px;text-align:left">层级</th>
+            <th style="padding:4px 8px;text-align:center">代表校</th>
+            <th style="padding:4px 8px;text-align:center">冲刺上浮</th>
+            <th style="padding:4px 8px;text-align:center">保底下浮</th>
+            <th style="padding:4px 8px;text-align:left">说明</th>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:4px 8px;font-weight:600">T0</td>
+            <td style="padding:4px 8px;text-align:center">清北</td>
+            <td style="padding:4px 8px;text-align:center">5%</td>
+            <td style="padding:4px 8px;text-align:center">8%</td>
+            <td style="padding:4px 8px;font-size:10px">零志愿批次极稳定</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
+            <td style="padding:4px 8px;font-weight:600">T1</td>
+            <td style="padding:4px 8px;text-align:center">复交/中科大/浙大/南大</td>
+            <td style="padding:4px 8px;text-align:center">8%</td>
+            <td style="padding:4px 8px;text-align:center">10%</td>
+            <td style="padding:4px 8px;font-size:10px">综评+普通批，波动较小</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:4px 8px;font-weight:600">T2</td>
+            <td style="padding:4px 8px;text-align:center">同济/华师大/哈工大/西交</td>
+            <td style="padding:4px 8px;text-align:center">10%</td>
+            <td style="padding:4px 8px;text-align:center">12%</td>
+            <td style="padding:4px 8px;font-size:10px">专业组间梯度大</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
+            <td style="padding:4px 8px;font-weight:600">T3</td>
+            <td style="padding:4px 8px;text-align:center">上科大/华理</td>
+            <td style="padding:4px 8px;text-align:center">12%</td>
+            <td style="padding:4px 8px;text-align:center">15%</td>
+            <td style="padding:4px 8px;font-size:10px">特色校波动较大</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:4px 8px;font-weight:600">T4</td>
+            <td style="padding:4px 8px;text-align:center">上大/东华</td>
+            <td style="padding:4px 8px;text-align:center">15%</td>
+            <td style="padding:4px 8px;text-align:center">18%</td>
+            <td style="padding:4px 8px;font-size:10px">保底校位次波动明显</td>
+          </tr>
+        </table>
+        <p style="font-size:10px;color:var(--text-muted);margin-top:6px">
+          示例：位次8000看上科大(T3,区间3000-7500) -> 超区间上限500位 -> 7500x1.12=8400 -> 8000&lt;8400 -> <strong>冲刺</strong>（在上浮12%范围内）
+        </p>
       </div>
     </div>
 
@@ -903,18 +956,31 @@ function generateResults() {
   // Keep top 6
   state.results = candidates.slice(0, 6);
 
-  // Categorize into chong/wen/bao
-  // 排名规律：rank数字越小=成绩越好。rankMin=最佳录取位次，rankMax=最低录取位次
+  // Categorize into chong/wen/bao with historical波动 buffers
+  // 冲刺上浮比例: 位次超出区间上限多少%仍可冲刺(基于历年录取线波动)
+  // 保底下浮比例: 位次优于rankMin多少%才算真正保底
+  const TIER_BUFFERS = {
+    T0: { up: 0.05, down: 0.08 },  // 清北零志愿极稳定
+    T1: { up: 0.08, down: 0.10 },  // 复交综评/C9波动较小
+    T2: { up: 0.10, down: 0.12 },  // 同济华师梯度较大
+    T3: { up: 0.12, down: 0.15 },  // 上科大华理波动更大
+    T4: { up: 0.15, down: 0.18 },  // 上大东华保底校波动明显
+  };
   const withLabels = state.results.map(s => {
+    const buf = TIER_BUFFERS[s.tier] || TIER_BUFFERS.T3;
+    const chongUpper = Math.round(s.rankMax * (1 + buf.up));   // 冲刺上限
+    const baoLower = Math.round(s.rankMin * (1 - buf.down));   // 保底下限
     let label;
-    if (state.rank > s.rankMax) {
-      label = 'chong'; // 位次超区间上限 -> 冲刺
-    } else if (state.rank > s.rankMin) {
-      label = 'wen';   // 在区间内(rankMin<位次≤rankMax) -> 稳妥
+    if (state.rank > s.rankMax && state.rank <= chongUpper) {
+      label = 'chong'; // 略超区间上限,在上浮比例内,冲刺够得着
+    } else if (state.rank > s.rankMax) {
+      label = 'chong'; // 大幅超区间,冲刺需较大运气
+    } else if (state.rank >= baoLower) {
+      label = 'wen';   // 在区间内或略优于rankMin,在下浮比例内
     } else {
-      label = 'bao';   // 位次≤最佳录取位次 -> 保底
+      label = 'bao';   // 远优于rankMin,超出下浮比例,真正保底
     }
-    return { ...s, label };
+    return { ...s, label, _buf: { chongUpper, baoLower } };
   });
 
   // 按 冲刺→稳妥→保底 排序，各组内按得分降序
