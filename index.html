@@ -161,7 +161,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
   .progress-wrap { padding: 16px 8px 0; }
   .progress-steps::before { top: 10px; left: 12px; right: 12px; }
   .progress-dot { width: 22px; height: 22px; font-size: 10px; }
-  .progress-label { font-size: 8px; max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; }
+  .progress-label { font-size: 9px; max-width: 70px; overflow: visible; text-align: center; line-height:1.2; }
   .progress-step { gap: 3px; }
 
   .wizard-card { padding: 16px 12px; border-radius: 8px; }
@@ -591,12 +591,15 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
 
 <footer style="text-align:center;padding:24px;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border)">
   科二代·高考选校个人定制（模拟｜公益）v3.0 | 数据基于2025年招生季 | 仅供参考，以官方发布为准
+</footer>
+
+<!-- VIX高价值信息表 -->
 <section style="max-width:800px;margin:0 auto;padding:0 16px 24px">
   <div style="background:linear-gradient(135deg,#fdf2f2,#fff5f5);border-radius:12px;padding:20px 24px;border:1px solid #f5c6c6;margin-top:24px">
     <h3 style="font-size:15px;color:#c0392b;margin-bottom:8px">📡 最新高价值信息更新</h3>
     <p style="font-size:12px;color:#999;margin-bottom:8px">提供日期：2026年6月1日 · 基于VIX框架深度扫描 · 多源交叉验证</p>
     <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px">
-      <tr style="background:#0a1628;color:#fff">
+      <tr style="background:var(--ustc);color:#fff">
         <th style="padding:6px 10px;text-align:left;font-size:11px">VIX</th>
         <th style="padding:6px 10px;text-align:left;font-size:11px">置信度</th>
         <th style="padding:6px 10px;text-align:left;font-size:11px">发现</th>
@@ -654,7 +657,7 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
       <p style="font-size:11px;color:#0a1628;font-weight:600;margin-bottom:6px">VIX评分算法参考（信息价值指数）</p>
       <p style="font-size:10px;color:#666;margin-bottom:4px">VIX总分 = I冲击力 + U时效性 + A可行动性 + C可信度（各0-25分，满分100）</p>
       <table style="width:100%;border-collapse:collapse;font-size:10px;margin-top:4px">
-        <tr style="background:#0a1628;color:#fff">
+        <tr style="background:var(--ustc);color:#fff">
           <th style="padding:4px 8px;text-align:left">VIX区间</th>
           <th style="padding:4px 8px;text-align:left">等级</th>
           <th style="padding:4px 8px;text-align:left">含义</th>
@@ -689,7 +692,6 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
     </div>
   </div>
 </section>
-</footer>
 
 <script>
 // ============================== DATA ==============================
