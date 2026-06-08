@@ -454,41 +454,29 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
           <th style="padding:6px 8px;text-align:center">权重</th>
           <th style="padding:6px 8px;text-align:left">评分逻辑</th>
         </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:6px 8px;font-weight:600">位次匹配</td>
-          <td style="padding:6px 8px;text-align:center">30</td>
-          <td style="padding:6px 8px;font-size:11px">用户位次距该校录取区间中心的距离。在区间内=高分(21-30)，略超=中等(15-20)，远离=保底分(8-14)</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
-          <td style="padding:6px 8px;font-weight:600">学科方向</td>
-          <td style="padding:6px 8px;text-align:center">25</td>
-          <td style="padding:6px 8px;font-size:11px">该校对所选学科的推荐度(1-5星) x 5。无对应学科=4分，选"不限"=13分</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:6px 8px;font-weight:600">地域偏好</td>
-          <td style="padding:6px 8px;text-align:center">15</td>
-          <td style="padding:6px 8px;font-size:11px">留沪+上海校=15，留沪+C9异地=8~14(距离折扣)，C9优先+C9校=15，中立=8</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
-          <td style="padding:6px 8px;font-weight:600">未来规划</td>
-          <td style="padding:6px 8px;text-align:center">15</td>
-          <td style="padding:6px 8px;font-size:11px">深造导向=深造率归一化得分(0-15)，就业导向=实习评分x3(3-15)，未定=8</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:6px 8px;font-weight:600">综合实力</td>
-          <td style="padding:6px 8px;text-align:center">10</td>
-          <td style="padding:6px 8px;font-size:11px">每校strengthScore(1-10)直接得分。清北=10，复交浙科=9，同济华师=7，华理=5，上大=4</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border);background:#f8f9fb">
-          <td style="padding:6px 8px;font-weight:600">校友加成</td>
-          <td style="padding:6px 8px;text-align:center">0-15（可调）</td>
-          <td style="padding:6px 8px;font-size:11px">仅中科大(父母母校) 可调0-15，默认15。结果页滑块可即时调整</td>
-        </tr>
-        <tr style="border-bottom:1px solid var(--border)">
-          <td style="padding:6px 8px;font-weight:600">C9加成</td>
-          <td style="padding:6px 8px;text-align:center">5</td>
-          <td style="padding:6px 8px;font-size:11px">C9联盟成员 +5，非C9=0</td>
-        </tr>
+        
+      <tr style="background:#fff">
+        <td style="padding:6px 8px;color:#c0392b;font-weight:700;font-size:13px">85</td>
+        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+        <td style="padding:6px 8px;font-weight:600">二、综评批次2026年关键变化</td>
+        <td style="padding:6px 8px;font-size:11px">变化</td>
+        <td style="padding:6px 8px;font-size:11px;color:#c0392b"></td>
+      </tr>
+      <tr style="background:#fafafa">
+        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">78</td>
+        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+        <td style="padding:6px 8px;font-weight:600">三、STEM方向选科策略分析</td>
+        <td style="padding:6px 8px;font-size:11px">专业覆盖率</td>
+        <td style="padding:6px 8px;font-size:11px;color:#e67e22"></td>
+      </tr>
+      <tr style="background:#fff">
+        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">72</td>
+        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+        <td style="padding:6px 8px;font-weight:600">四、科技特长与综评的联动</td>
+        <td style="padding:6px 8px;font-size:11px">科技特长影响</td>
+        <td style="padding:6px 8px;font-size:11px;color:#e67e22"></td>
+      </tr>
+
       </table>
 
       <div style="background:var(--ustc-light);border-radius:8px;padding:10px 14px;font-size:12px;margin-top:8px">
@@ -600,60 +588,58 @@ body { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft
 <section style="max-width:800px;margin:0 auto;padding:0 16px 24px">
   <div style="background:linear-gradient(135deg,#fdf2f2,#fff5f5);border-radius:12px;padding:20px 24px;border:1px solid #f5c6c6;margin-top:24px">
     <h3 style="font-size:15px;color:#c0392b;margin-bottom:8px">📡 最新高价值信息更新</h3>
-    <p style="font-size:12px;color:#999;margin-bottom:8px">提供日期：2026年6月7日 · 基于VIX框架深度扫描 · 多源交叉验证</p>
-    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:8px">
-      <tr style="background:var(--ustc);color:#fff">
-        <th style="padding:6px 10px;text-align:left;font-size:11px">VIX</th>
-        <th style="padding:6px 10px;text-align:left;font-size:11px">置信度</th>
-        <th style="padding:6px 10px;text-align:left;font-size:11px">发现</th>
-        <th style="padding:6px 10px;text-align:left;font-size:11px">关键数据</th>
-        <th style="padding:6px 10px;text-align:left;font-size:11px">行动</th>
-      </tr>
-      <tr style="background:#fff">
-        <td style="padding:6px 8px;color:#c0392b;font-weight:700;font-size:13px">80</td>
-        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
-        <td style="padding:6px 8px;font-weight:600">交大综评新增具身智能/机器人工程</td>
-	        <td style="padding:6px 8px;font-size:11px">2026年新增具身智能、机器人工程、电气工程自动化、海洋智能、生物医学工程</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#c0392b">科二代STEM方向新选择</td>
-	      </tr>
-	      <tr style="background:#fafafa">
-	        <td style="padding:6px 8px;color:#c0392b;font-weight:700;font-size:13px">82</td>
-	        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
-	        <td style="padding:6px 8px;font-weight:600">复旦"数学英才班"专业组</td>
-	        <td style="padding:6px 8px;font-size:11px">2026年综评新增数学英才班;校测提前至6月下旬</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#c0392b">关注数学方向新机会</td>
-	      </tr>
-	      <tr style="background:#fff">
-	        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">80</td>
-	        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
-	        <td style="padding:6px 8px;font-weight:600">2026年高考核心框架</td>
-	        <td style="padding:6px 8px;font-size:11px">总分660;3+3;物化+生覆盖率96%;综评10校;高考85%+校测15%</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#e67e22">物化双选是STEM硬门槛</td>
-	      </tr>
-	      <tr style="background:#fafafa">
-	        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">75</td>
-	        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
-	        <td style="padding:6px 8px;font-weight:600">上海大学综评专业更新</td>
-	        <td style="padding:6px 8px;font-size:11px">钱伟长理科试验班+未来技术学院(AI/微电子/机器人)</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#e67e22">上海本地保底选择关注</td>
-	      </tr>
-	      <tr style="background:#fff">
-	        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">70</td>
-	        <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
-	        <td style="padding:6px 8px;font-weight:600">同济工科试验班(智能化制造)</td>
-	        <td style="padding:6px 8px;font-size:11px">面向上海综评招生，工科试验班智能化制造方向</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#e67e22">综评层备选方向</td>
-	      </tr>
-	      <tr style="background:#fafafa">
-	        <td style="padding:6px 8px;color:#e67e22;font-weight:700;font-size:13px">65</td>
-	        <td style="padding:6px 8px"><span style="background:#fff3e0;color:#e65100;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">中</span></td>
-	        <td style="padding:6px 8px;font-weight:600">浙江大学继续面向上海综评</td>
-	        <td style="padding:6px 8px;font-size:11px">浙大在上海综评批次持续招生</td>
-	        <td style="padding:6px 8px;font-size:11px;color:#e67e22">出沪综评选项</td>
-	      </tr>
-      </tr>
-    </table>
-    <p style="font-size:10px;color:#999;margin-top:8px">来源：上海教育考试院/各校招生网/新东方白皮书/多源交叉验证</p>
+    <p style="font-size:12px;color:#999;margin-bottom:8px">提供日期：2026年06月07日 · 基于VIX框架深度扫描 · 多源交叉验证</p>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px">
+          <tr style="background:#1d4ed8;color:#fff">
+            <th style="padding:6px 10px;text-align:left;font-size:11px">VIX</th>
+            <th style="padding:6px 10px;text-align:left;font-size:11px">置信度</th>
+            <th style="padding:6px 10px;text-align:left;font-size:11px">发现 + 验证</th>
+            <th style="padding:6px 10px;text-align:left;font-size:11px">关键数据 + 信源</th>
+            <th style="padding:6px 10px;text-align:left;font-size:11px">行动</th>
+          </tr>
+          <tr style="background:#fff">
+            <td style="padding:6px 8px;color:#b91c1c;font-weight:700;font-size:13px">80</td>
+            <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+            <td style="padding:6px 8px;font-weight:600">2026年高考核心框架&nbsp;<span style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e2; 基础</span></td>
+            <td style="padding:6px 8px;font-size:11px">总分660;3+3;物化+生覆盖率96%;综评10校;高考85%+校测15%<br><span style="font-size:9px;color:#888">&#x1f517; 上海教育考试院</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#b91c1c">物化双选是STEM硬门槛</td>
+          </tr>
+          <tr style="background:#fafafa">
+            <td style="padding:6px 8px;color:#b91c1c;font-weight:700;font-size:13px">85</td>
+            <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+            <td style="padding:6px 8px;font-weight:600">交大综评新增具身智能/机器人工程&nbsp;<span style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e2; 新专业</span></td>
+            <td style="padding:6px 8px;font-size:11px">2026年新增具身智能、机器人工程、电气工程自动化、海洋智能、生物医学工程<br><span style="font-size:9px;color:#888">&#x1f517; 交大招生网</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#b91c1c">科二代STEM方向新选择</td>
+          </tr>
+          <tr style="background:#fff">
+            <td style="padding:6px 8px;color:#c2410c;font-weight:700;font-size:13px">82</td>
+            <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+            <td style="padding:6px 8px;font-weight:600">复旦"数学英才班"专业组&nbsp;<span style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e2; 新设</span></td>
+            <td style="padding:6px 8px;font-size:11px">2026年综评新增数学英才班;校测提前至6月下旬<br><span style="font-size:9px;color:#888">&#x1f517; 复旦招生网</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#c2410c">关注数学方向新机会</td>
+          </tr>
+          <tr style="background:#fafafa">
+            <td style="padding:6px 8px;color:#c2410c;font-weight:700;font-size:13px">75</td>
+            <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+            <td style="padding:6px 8px;font-weight:600">上海大学综评专业更新&nbsp;<span style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e2; 保底</span></td>
+            <td style="padding:6px 8px;font-size:11px">钱伟长理科试验班+未来技术学院(AI/微电子/机器人)<br><span style="font-size:9px;color:#888">&#x1f517; 上大招生网</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#c2410c">上海本地保底选择关注</td>
+          </tr>
+          <tr style="background:#fff">
+            <td style="padding:6px 8px;color:#c2410c;font-weight:700;font-size:13px">70</td>
+            <td style="padding:6px 8px"><span style="background:#e8f5e9;color:#2e7d32;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">高</span></td>
+            <td style="padding:6px 8px;font-weight:600">同济工科试验班(智能化制造)&nbsp;<span style="background:#e8f5e9;color:#2e7d32;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e2; 备选</span></td>
+            <td style="padding:6px 8px;font-size:11px">面向上海综评招生，工科试验班智能化制造方向<br><span style="font-size:9px;color:#888">&#x1f517; 同济招生网</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#c2410c">综评层备选方向</td>
+          </tr>
+          <tr style="background:#fafafa">
+            <td style="padding:6px 8px;color:#888;font-weight:700;font-size:13px">65</td>
+            <td style="padding:6px 8px"><span style="background:#fff8e8;color:#c2410c;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700">中</span></td>
+            <td style="padding:6px 8px;font-weight:600">浙江大学继续面向上海综评&nbsp;<span style="background:#fff8e8;color:#c2410c;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:700">&#x1f7e1; 出沪</span></td>
+            <td style="padding:6px 8px;font-size:11px">浙大在上海综评批次持续招生<br><span style="font-size:9px;color:#888">&#x1f517; 浙大招生网</span></td>
+            <td style="padding:6px 8px;font-size:11px;color:#888">出沪综评选项</td>
+          </tr>
+        </table>    <p style="font-size:10px;color:#999;margin-top:8px">来源：上海教育考试院/各校招生网/新东方白皮书/多源交叉验证</p>
     <div style="margin-top:10px">
       <a href="高考择校高价值信息清单.pdf" style="background:#c0392b;color:#fff;padding:6px 16px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;display:inline-block">📥 下载完整PDF报告（VIX量化评分+行动清单）</a>
     </div>
